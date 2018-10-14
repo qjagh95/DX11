@@ -117,7 +117,6 @@ XMMATRIX Matrix::Scaling(const Vector3 & Scale)
 	return matrix;
 }
 
-
 XMMATRIX Matrix::Rotation(float x, float y, float z)
 {
 	XMMATRIX matRotX, matRotY, matRotZ;

@@ -28,6 +28,9 @@ struct VertexColor
 	VertexColor(const Vector3& vec3, const Vector4& vec4) { m_Pos = vec3, m_Color = vec4; }
 };
 
+//UV좌표란 이미지크기에 상관없이 무조건 0에서 1까지의 범위를 갖는 숫자이다. (좌상단 좌표를 사용한다)
+//Left = 0 , Right = 1
+//Top = 0 , Bottom = 1
 struct VertexUV
 {
 	Vector3 m_Pos;

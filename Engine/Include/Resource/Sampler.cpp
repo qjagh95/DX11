@@ -24,7 +24,11 @@ bool Sampler::CreateSampler(const string & TagName, D3D11_FILTER eFilter, D3D11_
 	SamplerDesc.AddressW = eW;
 	SamplerDesc.MinLOD = -FLT_MAX;
 	SamplerDesc.MaxLOD = FLT_MAX;
-	SamplerDesc.MipLODBias = 0.0f; //테셀레이션 (버텍스를 쪼개거나 할때 사용)
+
+	//테셀레이션 (버텍스를 쪼개거나 할때 사용)
+	//거리가 멀때는 정점을 줄이고, 거리가 가까울때는 가까운 사물의 정점을 늘린다.
+	//LOD (Level of DeTail의 약자) 크기 확대축소시 세부묘사되는 수준을 말한다. 디폴트 0
+	SamplerDesc.MipLODBias = 0.0f;
 	SamplerDesc.MaxAnisotropy = 1;
 	SamplerDesc.ComparisonFunc = D3D11_COMPARISON_NEVER;
 
@@ -37,7 +41,7 @@ bool Sampler::CreateSampler(const string & TagName, D3D11_FILTER eFilter, D3D11_
 	return true;
 }
 
-void Sampler::SetSampler(int RegisterNumber)
+void Sampler::SetSamplerState(int RegisterNumber)
 {
 	Device::Get()->GetContext()->PSSetSamplers(RegisterNumber, 1, &m_SamplerState);
 }
