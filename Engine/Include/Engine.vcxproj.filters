@@ -94,6 +94,12 @@
     <Filter Include="Core\Object\Component\BaseComponent\Camera">
       <UniqueIdentifier>{aad8710b-9099-4132-8dbd-128b08a03f1d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Object\Component\BaseComponent\Base">
+      <UniqueIdentifier>{0388481b-b7dd-4c0d-a8a2-8c7756ef52cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Texture">
+      <UniqueIdentifier>{d0316049-0b79-47ad-a19b-b02bf72e7dea}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -153,9 +159,6 @@
     <ClInclude Include="GameObject.h">
       <Filter>Core\Object\Base</Filter>
     </ClInclude>
-    <ClInclude Include="Component\Component_Base.h">
-      <Filter>Core\Object\Component\BaseComponent</Filter>
-    </ClInclude>
     <ClInclude Include="Component\Renderer_Com.h">
       <Filter>Core\Object\Component\BaseComponent\Render</Filter>
     </ClInclude>
@@ -176,6 +179,12 @@
     </ClInclude>
     <ClInclude Include="Component\Camera_Com.h">
       <Filter>Core\Object\Component\BaseComponent\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Component_Base.h">
+      <Filter>Core\Object\Component\BaseComponent\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Texture.h">
+      <Filter>Core\Resource\Texture</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +235,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Core\Object\Base</Filter>
     </ClCompile>
-    <ClCompile Include="Component\Component_Base.cpp">
-      <Filter>Core\Object\Component\BaseComponent</Filter>
-    </ClCompile>
     <ClCompile Include="Component\Renderer_Com.cpp">
       <Filter>Core\Object\Component\BaseComponent\Render</Filter>
     </ClCompile>
@@ -249,6 +255,12 @@
     </ClCompile>
     <ClCompile Include="Component\Camera_Com.cpp">
       <Filter>Core\Object\Component\BaseComponent\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Component_Base.cpp">
+      <Filter>Core\Object\Component\BaseComponent\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Texture.cpp">
+      <Filter>Core\Resource\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

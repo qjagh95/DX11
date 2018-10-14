@@ -77,6 +77,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);	///__uuidof 클래스의 고유 식별번호를 알아오는 키워드
 	//랜더타겟뷰에 어떤 버퍼를 지정해놓으면 이 뷰에 묶여있는 버퍼에다 출력을해준다.
 	m_Device->CreateRenderTargetView(pBuffer, NULLPTR, &m_TargerView);
+	
 	SAFE_RELEASE(pBuffer);
 
 	//백버퍼 자체는 스왑체인이 만들어지는 순간 같이 만들어진다.	거기서 백버퍼를 얻어올 것이다.

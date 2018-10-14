@@ -35,7 +35,7 @@ void Mesh::Render()
 		//스트라이드 : 해당 버텍스버퍼에서 사용될 크기(사이즈)
 		UINT Stride = m_vecMeshContainer[i]->vertexBuffer.vSize;
 		UINT Offset = 0;
-		//버텍스버퍼를 셋팅한다. (버텍스 쉐이더에 정점정보를 넣는 준비를 한다. (입력 레지스터에 넣는다)
+		//버텍스버퍼를 셋팅한다. (버텍스 쉐이더에 정점정보를 넣는 준비를 한다) (인풋 어셈블러에 넣는다)
 		Device::Get()->GetContext()->IASetVertexBuffers(0, 1, &m_vecMeshContainer[i]->vertexBuffer.vBuffer, &Stride, &Offset);
 		//인덱스버퍼가 있는지 체크한다.
 		if (m_vecMeshContainer[i]->vecIndexBuffer.empty())

@@ -28,14 +28,13 @@ Scene::~Scene()
 
 bool Scene::Init()
 {
-	AddLayer("Default", 0);
+	AddLayer("BackGround", 0);
+	AddLayer("Default", 2);
 	AddLayer("UI", INT_MAX);
 
 	m_MainCameraObject = CreateCamera("MainCamera", Vector3(0.0f, 0.0f, -5.0f), CT_PERSPECTIVE, (float)Device::Get()->GetWinSize().Width, (float)Device::Get()->GetWinSize().Height, 60.0f, 0.03f, 1000.0f);
 	m_MainCameraTransform = m_MainCameraObject->GetTransform();
 	m_MainCamera = m_MainCameraObject->FindComponentFromType<Camera_Com>(CT_CAMERA);
-
-	SAFE_RELEASE(m_MainCamera);
 
 	return true;
 }
@@ -422,7 +421,7 @@ GameObject * Scene::CreateCamera(const string & TagName, const Vector3 & Pos, CA
 	newCameraObject = GameObject::CreateObject(TagName);
 	newCameraObject->GetTransform()->SetWorldPos(Pos);
 
-	Camera_Com* newCameraCom = newCameraObject->AddComponent<Camera_Com>("Camera");
+	Camera_Com* newCameraCom = newCameraObject->AddComponent<Camera_Com>(TagName);
 	newCameraCom->SetCameraInfo(eType, Width, Height, ViewAngle, Near, Far);
 	SAFE_RELEASE(newCameraCom);
 
@@ -457,4 +456,22 @@ GameObject * Scene::FindCamera(const string & TagName)
 		return NULLPTR;
 
 	return FindIter->second;
+}
+
+GameObject * Scene::GetMainCameraObject() const
+{
+	m_MainCameraObject->AddRefCount();
+	return m_MainCameraObject;
+}
+
+Transform_Com * Scene::GetMainCameraTransform() const
+{
+	m_MainCameraTransform->AddRefCount();
+	return m_MainCameraTransform;
+}
+
+Camera_Com * Scene::GetMainCamera() const
+{
+	m_MainCamera->AddRefCount();
+	return m_MainCamera;
 }

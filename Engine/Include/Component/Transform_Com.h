@@ -34,6 +34,8 @@ public:
 	Vector3 GetWorldAxis(AXIS eAxis) const { return m_WorldAxis[eAxis]; }
 	const Vector3* GetWorldAxis() const { return m_WorldAxis; }
 	Matrix GetWorldMatrix()	const { return m_MatWorld; }
+	float GetAngle(GameObject* Target);
+	float GetAngle(Transform_Com* Target);
 
 	//안움직이는 놈인가용?
 	void SetIsStatic(bool isStatic) { m_isStatic = isStatic; }

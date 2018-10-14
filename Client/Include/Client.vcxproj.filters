@@ -36,14 +36,14 @@
     <ClInclude Include="UserComponent\Player_Com.h">
       <Filter>UserComponent</Filter>
     </ClInclude>
-    <ClInclude Include="ClienHeader.h">
-      <Filter>WinMain</Filter>
-    </ClInclude>
     <ClInclude Include="UserComponent\Bullet_Com.h">
       <Filter>UserComponent</Filter>
     </ClInclude>
     <ClInclude Include="UserComponent\Monster_Com.h">
       <Filter>UserComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientHeader.h">
+      <Filter>WinMain</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

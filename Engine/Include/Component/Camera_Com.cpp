@@ -65,15 +65,41 @@ Camera_Com * Camera_Com::Clone()
 
 void Camera_Com::SetCameraType(CAMERA_TYPE eType)
 {
+	m_CameraType = eType;
+
 	switch (eType)
 	{
 		case CT_PERSPECTIVE:
-			//투영행렬을 만든다(PERSPECTIVE)
 			m_Projection = XMMatrixPerspectiveFovLH(DegreeToRadian(m_ViewAngle), m_Width / m_Height, m_Near, m_Far);
 			break;
+
 		case CT_ORTHO:
-			//ORTHO
-			m_Projection = XMMatrixOrthographicOffCenterLH(0, m_Width, m_Height, 0, m_Near, m_Far);
+			/*
+			(버텍스 데이터)     (월드행렬)
+			0, 0.5, 0, 1		100 0   0 0
+			0.5, -0.5, 0, 1		0   100 0 0
+			-0.5, -0.5, 0, 1	0   0   1 0
+
+			//위에서 곱한 최종 월드행렬을 직교투영공식에 변환과정.
+			100 100 0 1
+			100, 150, 0, 1		1/400 0      0 0
+			150, 50, 0, 1		0     1/-300 0 0
+			50, 50, 0, 1		0     0      1 0
+								-1    1      1 1
+
+			//곱한 값
+			-0.75, 0.5
+			-0.625, 0.83
+
+			//직교투영 공식
+			2/(right-left)      0					0            0
+			0					2/(top-bottom)      0            0
+			0					0					1/(zf-zn)	 0
+			(left+right)/(left-right)  (top+bottom)/(bottom-top)  zn/(zn-zf)  
+			*/
+
+			//여기서 Pos가 뒤집어진 결과가 나온다. (좌상단기준)
+			m_Projection = XMMatrixOrthographicOffCenterLH(0.0f, m_Width, 0.0f, m_Height, m_Near, m_Far);
 			break;
 	}
 }
@@ -87,4 +113,47 @@ void Camera_Com::SetCameraInfo(CAMERA_TYPE eType, float Width, float Height, flo
 	m_ViewAngle = ViewAngle;
 	
 	SetCameraType(eType);
+}
+
+void Camera_Com::SetWidth(float Width)
+{
+	m_Width = Width;
+	SetCameraType(m_CameraType);
+}
+
+void Camera_Com::SetHeight(float Height)
+{
+	m_Height = Height;
+	SetCameraType(m_CameraType);
+}
+
+void Camera_Com::SetViewAngle(float Angle)
+{
+	m_ViewAngle = Angle;
+	SetCameraType(m_CameraType);
+}
+
+void Camera_Com::SetNear(float Near)
+{
+	m_Near = Near;
+	SetCameraType(m_CameraType);
+}
+
+void Camera_Com::SetFar(float Far)
+{
+	m_Far = Far;
+	SetCameraType(m_CameraType);
+}
+
+Matrix Camera_Com::GetViewMatrix() const
+{
+	return m_View;
+}
+Matrix Camera_Com::GetProjection() const
+{
+	char Buffer[255];
+	sprintf(Buffer, "tq : %f \n", m_Projection._11);
+	_cprintf(Buffer);
+
+	return m_Projection;
 }

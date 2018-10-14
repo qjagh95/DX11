@@ -7,6 +7,7 @@
 #include "Component/Component_Base.h"
 #include "Component/Transform_Com.h"
 #include "Component/Renderer_Com.h"
+#include "Component/Camera_Com.h"
 
 #include "../UserComponent/Player_Com.h"
 #include "../UserComponent/Bullet_Com.h"
@@ -23,6 +24,10 @@ MainScene::~MainScene()
 
 bool MainScene::Init()
 {
+	Camera_Com* mainCamera = m_Scene->GetMainCamera();
+	mainCamera->SetCameraType(CT_ORTHO);
+	mainCamera->SetNear(0.0f);
+
 	Layer* Default = m_Scene->FindLayer("Default");
 
 	GameObject* PlayerObject = GameObject::CreateObject("Player", Default);
@@ -34,6 +39,7 @@ bool MainScene::Init()
 	GameObject* MonsterObject = GameObject::CreateObject("Monster", Default);
 	Monster_Com* monster_Com = MonsterObject->AddComponent<Monster_Com>("Monster_Com");
 
+	SAFE_RELEASE(mainCamera);
 	SAFE_RELEASE(MonsterObject);
 	SAFE_RELEASE(monster_Com);
 	SAFE_RELEASE(bullet_Com);

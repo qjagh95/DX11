@@ -338,7 +338,7 @@ void Transform_Com::Rotation(const Vector3 & vRot)
 {
 	m_WorldRotation += vRot;
 	m_MatWorldRotation.Rotation(m_WorldRotation);
-	//단위벡터로만들어서 방향을 만든다.
+	//회전행렬값에따라서 내 WorldAxis값을 변환한다.
 	ComputeWorldAxis();
 	m_isUpdate = true;
 }
@@ -348,7 +348,7 @@ void Transform_Com::ComputeWorldAxis()
 {
 	for (int i = 0; i < 3; ++i)
 	{
-		//행렬 곱함수.
+		//지정된 매트릭스(회전행렬)에 따라 벡터를 반환한다.
 		m_WorldAxis[i] = Vector3::Axis[i].TransformNormal(m_MatWorldRotation);
 		//크기1벡터로 만들어서 방향값을 얻어오기 위함.
 		m_WorldAxis[i].Nomallize();
@@ -377,7 +377,7 @@ void Transform_Com::LookAt(const Vector3 & Vec, AXIS eAxis)
 	//가상축과 바라보려는 방향(View)의 각도를 구한다 (내적)
 	float Angle = Axis.GetAngle(View);
 
-	//가상축과 외적을한다 (2D상에서 외적을하면 Z축이 나오게됨으로 무조건 Z축회전이 일어난다.)
+	//가상축과 외적을한다 (2D상에서 외적을하면 Z축이 나오게됨으로 무조건 Z축회전이 일어난다)
 	Vector3 vRotAxis = Axis.Cross(View);
 	vRotAxis.Nomallize();
 
@@ -385,4 +385,14 @@ void Transform_Com::LookAt(const Vector3 & Vec, AXIS eAxis)
 	m_MatWorldRotation.RotationAxis(Angle, vRotAxis);
 
 	m_isUpdate = true;
+}
+
+float Transform_Com::GetAngle(GameObject * Target)
+{
+	return GetAngle(Target->GetTransform());
+}
+
+float Transform_Com::GetAngle(Transform_Com * Target)
+{
+	return m_WorldPos.GetAngle(Target->GetWorldPos());
 }

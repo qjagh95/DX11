@@ -47,6 +47,10 @@ public:
 	GameObject* CreateCamera(const string& TagName, const Vector3& Pos,CAMERA_TYPE eType, float Width, float Height, float ViewAngle, float Near, float Far);
 	void ChangeCamera(const string& TagName);
 
+	GameObject* GetMainCameraObject() const;
+	Transform_Com* GetMainCameraTransform() const;
+	Camera_Com* GetMainCamera() const;
+
 private:
 	class GameObject* FindCamera(const string& TagName);
 

@@ -21,8 +21,12 @@ bool Core::m_isLoop = true;
 Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(423);
+	//_CrtSetBreakAlloc(384);
 	ZeroMemory(ClearColor, sizeof(float) * 4);
+
+#ifdef _DEBUG
+	AllocConsole();
+#endif
 }
 
 Core::~Core()
@@ -34,6 +38,10 @@ Core::~Core()
 	SceneManager::Delete();
 	RenderManager::Delete();
 	TimeManager::Delete();
+
+#ifdef _DEBUG
+	FreeConsole();
+#endif
 }
 
 bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const TCHAR * TitleName, const TCHAR * ClassName, int iIconID, int iSmallIconID, bool bWindowMode)

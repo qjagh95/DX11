@@ -20,8 +20,10 @@ Player_Com::~Player_Com()
 bool Player_Com::Init()
 {
 	Renderer_Com* RenderComponent = m_Object->AddComponent<Renderer_Com>("PlayerRender");
-	RenderComponent->SetMesh("ColorTri");
+	RenderComponent->SetMesh("ColorRect");
 	SAFE_RELEASE(RenderComponent);
+
+	m_Transform->SetWorldScale(100.0f, 100.0f, 1.0f);
 
 	return true;
 }

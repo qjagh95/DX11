@@ -173,7 +173,7 @@
     <ClCompile Include="UserComponent\Player_Com.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ClienHeader.h" />
+    <ClInclude Include="ClientHeader.h" />
     <ClInclude Include="SceneComponent\MainScene.h" />
     <ClInclude Include="UserComponent\Bullet_Com.h" />
     <ClInclude Include="UserComponent\Monster_Com.h" />

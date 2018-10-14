@@ -54,8 +54,8 @@ GameObject * Component_Base::GetGameObject() const
 	m_Object->AddRefCount();
 	return m_Object;
 }
+
 Transform_Com * Component_Base::GetTransform() const
 {
-	m_Transform->AddRefCount();
 	return m_Transform;
 }

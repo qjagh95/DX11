@@ -17,6 +17,14 @@ public:
 
 	void SetCameraType(CAMERA_TYPE eType);
 	void SetCameraInfo(CAMERA_TYPE eType, float Width, float Height, float ViewAngle, float Near, float Far);
+	void SetWidth(float Width);
+	void SetHeight(float Height);
+	void SetViewAngle(float Angle);
+	void SetNear(float Near);
+	void SetFar(float Far);
+
+	Matrix GetViewMatrix() const;
+	Matrix GetProjection() const;
 
 private:
 	Matrix m_View;

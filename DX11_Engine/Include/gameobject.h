@@ -87,8 +87,8 @@ public:
 	template <typename T>
 	T* FindComponentFromType(COMPONENT_TYPE eType)
 	{
-		list<Component_Base*>::iterator	StartIter = m_FindComList.begin();
-		list<Component_Base*>::iterator	EndIter = m_FindComList.end();
+		list<Component_Base*>::iterator	StartIter = m_ComponentList.begin();
+		list<Component_Base*>::iterator	EndIter = m_ComponentList.end();
 
 		for (; StartIter != EndIter; ++StartIter)
 		{
@@ -98,8 +98,7 @@ public:
 				return (T*)*StartIter;
 			}
 		}
-
-		return nullptr;
+		return NULLPTR;
 	}
 	///////////////////////////////////////////////////////////////////////////////////////////////
 	static GameObject* FindProtoType(Scene* scene, const string& TagName);

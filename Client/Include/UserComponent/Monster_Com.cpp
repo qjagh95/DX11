@@ -25,7 +25,8 @@ bool Monster_Com::Init()
 	RenderComponent->SetMesh("ColorTri");
 	SAFE_RELEASE(RenderComponent);
 
-	m_Transform->SetWorldPos(Vector3(1.0f, 1.0f, 0.0f));
+	m_Transform->SetWorldPos(100.0f, 100.0f, 0.0f);
+	m_Transform->SetWorldScale(100.0f, 100.0f, 1.0f);
 
 	Target = GameObject::FindObject("Player");
 

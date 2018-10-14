@@ -1,5 +1,8 @@
 #include "Renderer_Com.h"
 #include "Transform_Com.h"
+#include "Camera_Com.h"
+
+#include "../Scene/Scene.h"
 
 #include "../Resource/ResourceManager.h"
 #include "../Resource/Mesh.h"
@@ -47,6 +50,7 @@ int Renderer_Com::Input(float DeltaTime)
 
 int Renderer_Com::Update(float DeltaTime)
 {
+	int a = 0;
 	return 0;
 }
 
@@ -135,11 +139,12 @@ void Renderer_Com::UpdateTransform()
 	//m_Transform은 GameObject가 생성될때 동적할당으로 자동생성되며 자동초기화를 한다.
 	//AddComponent를 할때 Component가 가진 Transform_Com변수는 오브젝트가 가진 Transform_Com
 	//변수로 이미 초기화가 되어있다.
+
+	Camera_Com* getCamera = m_Scene->GetMainCamera();
+
 	cBuffer.World = m_Transform->GetWorldMatrix();
-	//뷰 행렬을 만든다 (일단 상수) 1.눈의 위치(카메라위치) 2. 초점의 위치 3. 카메라의 위쪽방향(일반적으로Y)
-	cBuffer.View = XMMatrixLookAtLH(Vector3(0.0f, 0.0f, -5.0f).Convert(), Vector3(0.0f, 0.0f, 0.0f).Convert(), Vector3::Axis[AXIS_Y].Convert());
-	//프로젝션 행렬을 만든다 (일단상수) 1. 시야각, 2. 종횡비, 3. Z값이 0.03부터 1000까지 보겠다.
-	cBuffer.Projection = XMMatrixPerspectiveFovLH(JEONG_PI / 3.0f, 1280.0f / 720.0f, 0.03f, 1000.0f);
+	cBuffer.View = getCamera->GetViewMatrix();
+	cBuffer.Projection = getCamera->GetProjection();
 
 	cBuffer.WV = cBuffer.World * cBuffer.View;
 	cBuffer.WVP = cBuffer.WV * cBuffer.Projection;
@@ -151,7 +156,9 @@ void Renderer_Com::UpdateTransform()
 	cBuffer.WV.Transpose();
 	cBuffer.WVP.Transpose();
 
-	//미리 정의해놓은 버퍼(ID3D11Buffer)를 가져와서 업데이트 시킨다.
+	//미리 정의해놓은 상수버퍼(ID3D11Buffer)를 가져와서 업데이트 시킨다.
 	//버텍스쉐이더와 픽셀쉐이더에 위에서 값을 가져온 행렬들을 (상수버퍼) 셋팅해준다. 
 	ShaderManager::Get()->UpdateCBuffer("Transform", &cBuffer);
+
+	SAFE_RELEASE(getCamera);
 }

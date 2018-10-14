@@ -34,8 +34,18 @@ int Bullet_Com::Input(float DeltaTime)
 
 int Bullet_Com::Update(float DeltaTime)
 {
+	//생성할때 로테이션 함수에서 이미 WorldAxis변수를 갱신한다.
 	m_Transform->Move(AXIS_Y, 2.0f, DeltaTime);
-	//0 1 0
+
+	if (m_Transform->GetWorldPos().x <= -6.0f)
+		m_Object->SetIsActive(false);
+	else if(m_Transform->GetWorldPos().x >= 6.0f)
+		m_Object->SetIsActive(false);
+
+	if(m_Transform->GetWorldPos().y <= -6.0f)
+		m_Object->SetIsActive(false);
+	else if(m_Transform->GetWorldPos().y >= 6.0f)
+		m_Object->SetIsActive(false);
 
 	return 0;
 }
