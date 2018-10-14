@@ -1,8 +1,14 @@
 #include "Vector4.h"
 
-Vector4	Vector4::Axis[4] = { Vector4(1.f, 0.f, 0.f, 0.f), Vector4(0.f, 1.f, 0.f, 0.f), Vector4(0.f, 0.f, 1.f, 0.f) , Vector4(0.f, 0.f, 0.f, 1.f) };
-Vector4	Vector4::Zero = Vector4(0.f, 0.f, 0.f, 0.f);
-Vector4	Vector4::One = Vector4(1.f, 1.f, 1.f, 1.f);
+Vector4	Vector4::Axis[4] = { Vector4(1.0f, 0.0f, 0.0f, 0.0f), Vector4(0.0f, 1.0f, 0.0f, 0.0f), Vector4(0.0f, 0.0f, 1.0f, 0.0f) , Vector4(0.0f, 0.0f, 0.0f, 1.0f) };
+Vector4	Vector4::Zero = Vector4(0.0f, 0.0f, 0.0f, 0.0f);
+Vector4	Vector4::One = Vector4(1.0f, 1.0f, 1.0f, 1.0f);
+Vector4	Vector4::Red = Vector4(1.0f, 0.0f, 0.0f, 1.0f);
+Vector4	Vector4::Green = Vector4(0.0f, 1.0f, 0.0f, 1.0f);
+Vector4	Vector4::Blue = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+Vector4	Vector4::Black = Vector4(0.0f, 0.0f, 0.0f, 1.0f);
+Vector4	Vector4::Yellow = Vector4(1.0f, 1.0f, 0.0f, 1.0f);
+Vector4	Vector4::Magenta = Vector4(1.0f, 0.0f, 1.0f, 1.0f);
 
 float & Vector4::operator[](unsigned int Index)
 {

@@ -1,5 +1,12 @@
 #pragma once
+#include "Macro.h"
+
 #include "Vector3.h"
+#include "Vector4.h"
+#include "Vector2.h"
+#include "Matrix.h"
+
+JEONG_BEGIN
 
 struct JEONG_DLL WinSize
 {
@@ -10,3 +17,15 @@ struct JEONG_DLL WinSize
 	WinSize(const WinSize& size) {*this = size;}
 	WinSize(unsigned int Width, unsigned Height) : Width(Width), Height(Height) {}
 };
+
+struct VertexColor
+{
+	Vector3 m_Pos;
+	Vector4 m_Color;
+
+	VertexColor() {}
+	VertexColor(const VertexColor& Value) { *this = Value; }
+	VertexColor(const Vector3& vec3, const Vector4& vec4) { m_Pos = vec3, m_Color = vec4; }
+};
+
+JEONG_END

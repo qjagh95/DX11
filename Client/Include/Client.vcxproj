@@ -168,11 +168,6 @@
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Mathlib\Mathlib.vcxproj">
-      <Project>{bc993d7f-3c50-412d-a85b-472c7138aec9}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

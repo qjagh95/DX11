@@ -4,6 +4,8 @@
 #define JEONG_END }
 #define JEONG_USING using namespace JEONG;
 
+#define NULLPTR nullptr
+
 //클라이언트 프로젝트냐 엔진프로젝트냐에 다라서 자동으로 DLL의 import export가 정해진다.
 //프로젝트속성-> 전처리기 -> 클라이언트(JEONG_IMPORT;) , 엔진(JEONG_EXPORT)
 #ifdef JEONG_EXPORT
@@ -12,9 +14,9 @@
 #define JEONG_DLL __declspec(dllimport)
 #endif
 
-#define SAFE_DELETE(p) if(p) {delete p; p = NULL;}
-#define SAFE_RELEASE(p) if(p) {p->Release(); p = NULL;}
-#define SAFE_DELETE_ARRARY(p) if(p){delete[] p; p = NULL;}
+#define SAFE_DELETE(p) if(p) {delete p; p = NULLPTR;}
+#define SAFE_RELEASE(p) if(p) {p->Release(); p = NULLPTR;}
+#define SAFE_DELETE_ARRARY(p) if(p){delete[] p; p = NULLPTR;}
 
 #define GET_SINGLE(Type) Type::Get()
 #define DELETE_SINGLE(Type) Type::Delete()
@@ -81,10 +83,10 @@ void Safe_Delete_Map(T& p)
 		Type();\
 		~Type();
 
-#define SINGLETON_VAR_INIT(Type) Type* Type::Instance = NULL; \
+#define SINGLETON_VAR_INIT(Type) Type* Type::Instance = NULLPTR; \
 	Type* Type::Get()\
 	{\
-		if (Instance == NULL)\
+		if (Instance == NULLPTR)\
 			Instance = new Type;\
 		return Instance;\
 	}\

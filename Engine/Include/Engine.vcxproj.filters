@@ -13,9 +13,6 @@
     <Filter Include="Core\Device">
       <UniqueIdentifier>{a49ff980-6464-4c48-bb82-eb4332917466}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Math">
-      <UniqueIdentifier>{9d0b7afc-6561-4c93-a03a-147d71994a6a}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -36,12 +33,6 @@
     <ClInclude Include="resource.h">
       <Filter>Core\Window</Filter>
     </ClInclude>
-    <ClInclude Include="EngineMath.h">
-      <Filter>Header</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Core\Math</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
@@ -54,9 +45,6 @@
     </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>Core\Device</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>Core\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

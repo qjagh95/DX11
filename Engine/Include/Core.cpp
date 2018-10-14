@@ -99,7 +99,7 @@ void Core::Register(const TCHAR * ClassName, int iIconID, int iSmallIconID)
 	wcex.hIcon = LoadIcon(m_hIstance, MAKEINTRESOURCE(iIconID));
 	wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
 	wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
-	wcex.lpszMenuName = NULL;
+	wcex.lpszMenuName = NULLPTR;
 	wcex.lpszClassName = ClassName;
 	wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(iSmallIconID));
 
@@ -108,7 +108,7 @@ void Core::Register(const TCHAR * ClassName, int iIconID, int iSmallIconID)
 
 void Core::CreateWnd(const TCHAR * TitleName, const TCHAR * ClassName)
 {
-	m_hWnd = CreateWindow(ClassName, TitleName, WS_OVERLAPPEDWINDOW,	CW_USEDEFAULT, 0, m_WinSize.Width, m_WinSize.Height, NULL, NULL, m_hIstance, NULL);
+	m_hWnd = CreateWindow(ClassName, TitleName, WS_OVERLAPPEDWINDOW,	CW_USEDEFAULT, 0, m_WinSize.Width, m_WinSize.Height, NULLPTR, NULLPTR, m_hIstance, NULLPTR);
 
 	if (!m_hWnd)
 		return;

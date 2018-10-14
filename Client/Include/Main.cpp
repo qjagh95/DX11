@@ -10,8 +10,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hIstance, _In_opt_ HINSTANCE hPrevInstance,
 		Core::Delete();
 		return 0;
 	}
-
-
+	
 	int Result = Core::Get()->Run();
 	Core::Delete();
 

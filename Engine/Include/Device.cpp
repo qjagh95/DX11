@@ -5,7 +5,7 @@ JEONG_USING
 SINGLETON_VAR_INIT(Device);
 
 Device::Device()
-	:m_Device(NULL), m_Context(NULL), m_SwapChain(NULL), m_TargerView(NULL), m_DepthView(NULL)
+	:m_Device(NULLPTR), m_Context(NULLPTR), m_SwapChain(NULLPTR), m_TargerView(NULLPTR), m_DepthView(NULLPTR)
 {
 }
 
@@ -15,7 +15,7 @@ Device::~Device()
 	SAFE_RELEASE(m_TargerView);
 	SAFE_RELEASE(m_SwapChain);
 
-	if (m_Context != NULL)
+	if (m_Context != NULLPTR)
 		m_Context->ClearState();
 
 	SAFE_RELEASE(m_Context);
@@ -46,31 +46,31 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	SwapDesc.BufferDesc.RefreshRate.Denominator = 1;							 ///분모 (초당 60번을 쏴주겠다)
 	SwapDesc.BufferCount = 1;													 ///백버퍼의 갯수
 	SwapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;						 ///출력용 랜더타겟(내가 출력할 대상)을 만들어낸다
-	SwapDesc.OutputWindow = hWnd;												 ///어느윈대상으로??
+	SwapDesc.OutputWindow = hWnd;												 ///어느윈도우대상으로??
 	SwapDesc.SampleDesc.Count = 1;												 ///안티앨리어싱기능 (개느려서 안쓸꺼야)
 	SwapDesc.SampleDesc.Quality = 0;											 ///직접 쉐이더로 만드는게 빨라 (하나는있다, 퀄리티0)
 	SwapDesc.Windowed = isWindowMode;											 ///창모드 풀스크린모드 설정.
 	SwapDesc.SwapEffect = DXGI_SWAP_EFFECT_DISCARD;								 ///옵션 설정에따라 다르다. 필요한것에 따라서 하자.
 	//여기까지 백버퍼를 만들긴 한것이다.
 	
-	//1. 어댑터 타입 (그래픽카드가 2개이상일경우, 하지만 그런경우는 거의 없기때문에 NULL)
+	//1. 어댑터 타입 (그래픽카드가 2개이상일경우, 하지만 그런경우는 거의 없기때문에 NULLPTR)
 	//2. 드라이버 타입 - 그래픽카드가 DX11을 지원하지 않을경우 CPU가 해주도록하는 설정 (DX11을 지원하지 않으면 느리다. (나중에 드라이버가속등을 사용하기위함.)
 	//3. HMOUDLE - DirceX를 돌려주는 별도의 소프트웨어가 있다면 설정. == 의미없엉
 	//4. Flag - 이 디바이스를 만들어낼때 어떤 옵션정보를 넣을것인가를 or연산으로 집어넣는다. (위 주석)
 	//5. 피쳐레벨 - 장치지원수준 (11버전 지원이 안되면 ㅂ2ㅂ2)
 	//6. SDK버전 - 고정값
 	//나머지 변수들 더블포인터 주소값~
-	if (FAILED(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, 0, Flag, &eLevel1, 1, D3D11_SDK_VERSION, &SwapDesc, &m_SwapChain, &m_Device, &eLevel2, &m_Context)))
+	if (FAILED(D3D11CreateDeviceAndSwapChain(NULLPTR, D3D_DRIVER_TYPE_HARDWARE, 0, Flag, &eLevel1, 1, D3D11_SDK_VERSION, &SwapDesc, &m_SwapChain, &m_Device, &eLevel2, &m_Context)))
 		return false;
 
 	//스왑체인이 가지고있는 백버퍼를 출력병합기에 묶어줘야한다. 깊이버퍼도 같이묶어야한다.
 	//뷰포트도 셋팅해줘야한다.
 
-	ID3D11Texture2D* pBuffer = NULL;										///com객체를 얻어오면 래퍼런스카운트가 +1 증가한다.
+	ID3D11Texture2D* pBuffer = NULLPTR;										///com객체를 얻어오면 래퍼런스카운트가 +1 증가한다.
 	//스왑체인에서 백버퍼를 뽑아온다.
 	m_SwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer);	///__uuidof 클래스의 고유 식별번호를 알아오는 키워드
 	//랜더타겟뷰에 어떤 버퍼를 지정해놓으면 이 뷰에 묶여있는 버퍼에다 출력을해준다.
-	m_Device->CreateRenderTargetView(pBuffer, NULL, &m_TargerView);
+	m_Device->CreateRenderTargetView(pBuffer, NULLPTR, &m_TargerView);
 	SAFE_RELEASE(pBuffer);
 
 	//백버퍼 자체는 스왑체인이 만들어지는 순간 같이 만들어진다.	거기서 백버퍼를 얻어올 것이다.
@@ -97,11 +97,11 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	//4.STAGING - 완전 오픈형. (출력이 되지않음. 데이터 저장용 버퍼.)
 
 	//Texture2D Desc, 채워줄 픽셀정보, Texture2D 변수
-	if (FAILED(m_Device->CreateTexture2D(&DepthDesc, NULL, &pBuffer))) 
+	if (FAILED(m_Device->CreateTexture2D(&DepthDesc, NULLPTR, &pBuffer))) 
 		return false;
 
 	//해당 버퍼에 깊이-스탠실 뷰를 만든다.
-	m_Device->CreateDepthStencilView(pBuffer, NULL, &m_DepthView);
+	m_Device->CreateDepthStencilView(pBuffer, NULLPTR, &m_DepthView);
 
 	SAFE_RELEASE(pBuffer);
 

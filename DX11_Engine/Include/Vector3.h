@@ -1,9 +1,5 @@
 #pragma once
-#include "EngineMath.h"
-
-JEONG_BEGIN
-
-#define TrueAssert(Type) assert(!(Type))
+#include "MathHeader.h"
 
 union JEONG_DLL Vector3
 {
@@ -121,7 +117,14 @@ union JEONG_DLL Vector3
 	float Lenth() const;
 	//노말라이즈
 	void Nomallize();
-	
+
+	//Vector3의 값을 강제로 Vector4로 바꾸고 연산한다.
+	//그러면 w값이 추가되는데 w값이 0 -> Normal, 1 -> Coord
+	Vector3 TransformNormal(const union Matrix& mat);
+	Vector3 TransformNormal(const XMMATRIX& mat);
+	Vector3 TransformCoord(const union Matrix& mat);
+	Vector3 TransformCoord(const XMMATRIX& mat);
+
 	//내적
 	float Dot(const Vector3& vec) const;
 	float Dot(const XMVECTOR& Xmvec) const;
@@ -136,9 +139,7 @@ union JEONG_DLL Vector3
 	Vector3 Cross(int Val[3]) const;
 
 	static Vector3 Nomallize(const Vector3& vec);
-	static Vector3	Axis[3];
-	static Vector3	Zero;
-	static Vector3	One;
+	static Vector3 Axis[3];
+	static Vector3 Zero;
+	static Vector3 One;
 };
-
-JEONG_END

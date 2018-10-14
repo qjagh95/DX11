@@ -1,17 +1,7 @@
 #pragma once
+#include "MathHeader.h"
 
-//DirectX11에서 제공하는 수학 기능을 사용하기위함
-#include <d3d11.h>
-#include <DirectXMath.h>
-#include <DirectXPackedVector.h> //제공되는 벡터들을 사용하기위함
-
-using namespace std;
-using namespace DirectX;
-using namespace DirectX::PackedVector;
-
-#define TrueAssert(Type) assert(!(Type))
-
-union  __declspec(dllexport) Vector4
+union JEONG_DLL Vector4
 {
 	struct
 	{
@@ -136,7 +126,13 @@ union  __declspec(dllexport) Vector4
 	float Dot(int Val[4]) const;
 
 	static Vector4 Nomallize(const Vector4& vec);
-	static Vector4	Axis[4];
-	static Vector4	Zero;
-	static Vector4	One;
+	static Vector4 Axis[4];
+	static Vector4 Zero;
+	static Vector4 One;
+	static Vector4 Red;
+	static Vector4 Green;
+	static Vector4 Blue;
+	static Vector4 Black;
+	static Vector4 Yellow;
+	static Vector4 Magenta;
 };

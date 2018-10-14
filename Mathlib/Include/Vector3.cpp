@@ -1,10 +1,9 @@
 #include "Vector3.h"
+#include "Matrix.h"
 
-JEONG_USING
-
-Vector3	Vector3::Axis[3] = { Vector3(1.f, 0.f, 0.f), Vector3(0.f, 1.f, 0.f), Vector3(0.f, 0.f, 1.f) };
-Vector3	Vector3::Zero = Vector3(0.f, 0.f, 0.f);
-Vector3	Vector3::One = Vector3(1.f, 1.f, 1.f);
+Vector3	Vector3::Axis[3] = { Vector3(1.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 1.0f) };
+Vector3	Vector3::Zero = Vector3(0.0f, 0.0f, 0.0f);
+Vector3	Vector3::One = Vector3(1.0f, 1.0f, 1.0f);
 
 float & Vector3::operator[](unsigned int Index)
 {
@@ -402,6 +401,7 @@ void Vector3::operator+=(int Val)
 
 	*this = (Src += Dest);
 }
+
 void Vector3::operator+=(float ValArr[3])
 {
 	XMVECTOR Src, Dest;
@@ -684,47 +684,80 @@ bool Vector3::operator!=(const Vector3 & vec) const
 bool Vector3::operator!=(const XMVECTOR & Xmvec) const
 {
 	Vector3 Temp = Vector3(Xmvec);
+
 	return (!(x == Temp.x && y == Temp.y && z == Temp.z));
 }
 
 bool Vector3::operator!=(const XMFLOAT3 & XmFloat) const
 {
 	Vector3 Temp = Vector3(XmFloat);
+
 	return (!(x == Temp.x && y == Temp.y && z == Temp.z));
 }
+
 bool Vector3::operator!=(float Val) const
 {
 	Vector3 Temp = Vector3(Val);
 	return (!(x == Temp.x && y == Temp.y && z == Temp.z));
 }
+
 bool Vector3::operator!=(int Val) const
 {
 	Vector3 Temp = Vector3(Val);
 
 	return (!(x == Temp.x && y == Temp.y && z == Temp.z));
 }
+
 bool Vector3::operator!=(float ValArr[3]) const
 {
 	Vector3 Temp = Vector3(ValArr);
+
 	return (!(x == Temp.x && y == Temp.y && z == Temp.z));
 }
+
 bool Vector3::operator!=(int ValArr[3]) const
 {
 	Vector3 Temp = Vector3(ValArr);
+
 	return (!(x == Temp.x && y == Temp.y && z == Temp.z));
 }
+
 float Vector3::Lenth() const
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 
 	return XMVectorGetX(XMVector3Length(Src));
 }
+
 void Vector3::Nomallize()
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 
 	*this = XMVector3Normalize(Src);
 }
+Vector3 Vector3::TransformNormal(const Matrix & mat)
+{
+	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
+	return Vector3(XMVector3TransformNormal(Src, mat.matrix));
+}
+
+Vector3 Vector3::TransformNormal(const XMMATRIX & mat)
+{
+	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
+	return Vector3(XMVector3TransformNormal(Src, mat));
+}
+
+Vector3 Vector3::TransformCoord(const Matrix & mat)
+{
+	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
+	return Vector3(XMVector3TransformCoord(Src, mat.matrix));
+}
+Vector3 Vector3::TransformCoord(const XMMATRIX & mat)
+{
+	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
+	return Vector3(XMVector3TransformCoord(Src, mat));
+}
+
 /////////////////////////////////////////////////////////////////////////
 float Vector3::Dot(const Vector3 & vec) const
 {
@@ -733,12 +766,14 @@ float Vector3::Dot(const Vector3 & vec) const
 
 	return XMVectorGetX(XMVector3Dot(Src, Dest));
 }
+
 float Vector3::Dot(const XMVECTOR & Xmvec) const
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 
 	return XMVectorGetX(XMVector3Dot(Src, Xmvec));
 }
+
 float Vector3::Dot(const XMFLOAT3 & XmFloat) const
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
@@ -746,6 +781,7 @@ float Vector3::Dot(const XMFLOAT3 & XmFloat) const
 
 	return XMVectorGetX(XMVector3Dot(Src, Dest));
 }
+
 float Vector3::Dot(float Val[3]) const
 {
 	Vector3 Temp = Vector3(Val);
@@ -756,6 +792,7 @@ float Vector3::Dot(float Val[3]) const
 	return XMVectorGetX(XMVector3Dot(Src, Dest));
 
 }
+
 float Vector3::Dot(int Val[3]) const
 {
 	Vector3 Temp = Vector3(Val);
@@ -775,6 +812,7 @@ Vector3 Vector3::Cross(const Vector3 & vec) const
 
 	return Vector3(XMVector3Cross(Src, Dest));
 }
+
 Vector3 Vector3::Cross(const XMVECTOR & Xmvec) const
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
@@ -782,6 +820,7 @@ Vector3 Vector3::Cross(const XMVECTOR & Xmvec) const
 
 	return Vector3(XMVector3Cross(Src, Dest));
 }
+
 Vector3 Vector3::Cross(const XMFLOAT3 & XmFloat) const
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
@@ -789,6 +828,7 @@ Vector3 Vector3::Cross(const XMFLOAT3 & XmFloat) const
 
 	return Vector3(XMVector3Cross(Src, Dest));
 }
+
 Vector3 Vector3::Cross(float Val[3]) const
 {
 	Vector3 Temp = Vector3(Val);
@@ -798,6 +838,7 @@ Vector3 Vector3::Cross(float Val[3]) const
 
 	return Vector3(XMVector3Cross(Src, Dest));
 }
+
 Vector3 Vector3::Cross(int Val[3]) const
 {
 	Vector3 Temp = Vector3(Val);
@@ -806,8 +847,8 @@ Vector3 Vector3::Cross(int Val[3]) const
 	XMVECTOR Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
 	return Vector3(XMVector3Cross(Src, Dest));
-
 }
+
 Vector3 Vector3::Nomallize(const Vector3 & vec)
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)&vec);
