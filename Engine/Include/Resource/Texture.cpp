@@ -73,12 +73,6 @@ bool Texture::LoadTextureFromFullPath(const string & TextureName, const TCHAR * 
 	return CreateShaderResource();
 }
 
-void Texture::SetShaderResource(int RegisterNumber)
-{
-	//픽셀쉐이더에 정보를 넘긴다.
-	Device::Get()->GetContext()->PSSetShaderResources(RegisterNumber, 1, &m_ShaderResourceView);
-}
-
 bool Texture::CreateShaderResource()
 {
 	//기본제공함수를 사용하여 이미지의 픽셀정보를 ShaderResourceView변수로 넘긴다.
@@ -86,4 +80,10 @@ bool Texture::CreateShaderResource()
 		return false;
 
 	return true;
+}
+
+void Texture::SetShaderResource(int RegisterNumber)
+{
+	//픽셀쉐이더에 정보를 넘긴다.
+	Device::Get()->GetContext()->PSSetShaderResources(RegisterNumber, 1, &m_ShaderResourceView);
 }

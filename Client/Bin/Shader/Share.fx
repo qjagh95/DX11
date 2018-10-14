@@ -36,6 +36,8 @@ struct VS_OUTPUT_UV
     float2 vUV : TEXCOORD;
 };
 
+/////////////////////////////////////////////////////////////////////
+
 Texture2D Diffuse : register(t0);
 SamplerState DiffuseSampler : register(s0);
 
@@ -54,10 +56,15 @@ cbuffer Transform : register(b0)
     matrix g_View;        //뷰행렬
     matrix g_Projection;  //투영행렬
 
-    //두개를 더 선언하는 이유는 버텍스마다 도는 것보다
+    //두개를 더 선언하는 이유는 버텍스마다 곱하는 것 보다
     //이미 곱해진 값이 들어와서 연산하는게 훨씬더 빠르기때문이다.
     matrix g_WV;    //World * View
     matrix g_WVP;   //World * View * Projection
+
+    float3 g_Pivot;
+    float g_Empty1;
+    float3 g_Length;
+    float g_Empty2;
 }
 
 cbuffer Material : register(b1)

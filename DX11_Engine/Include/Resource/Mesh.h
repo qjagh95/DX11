@@ -55,10 +55,21 @@ public:
 	size_t GetContainerCount() const { return m_vecMeshContainer.size(); }
 	size_t GetSubsetCount(int Container) const { return m_vecMeshContainer[Container]->vecIndexBuffer.size(); }
 
+	Vector3 GetMin() const { return m_Min; }
+	Vector3 GetMax() const { return m_Max; }
+	Vector3 GetCenter() const { return m_Center; }
+	Vector3 GetLanth() const { return m_Lanth; }
+	float GetRadius() const { return m_Radius; }
+
 private:
 	vector<MeshContainer*> m_vecMeshContainer;
 	string m_ShaderKeyName;
 	string m_LayOutKeyName;
+	Vector3 m_Center;
+	Vector3 m_Min;
+	Vector3 m_Max;
+	Vector3 m_Lanth;
+	float m_Radius;
 
 private:
 	Mesh();

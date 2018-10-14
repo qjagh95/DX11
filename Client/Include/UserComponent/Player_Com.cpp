@@ -22,14 +22,16 @@ bool Player_Com::Init()
 {
 	Renderer_Com* RenderComponent = m_Object->AddComponent<Renderer_Com>("PlayerRender");
 	RenderComponent->SetMesh("TextureRect");
+	RenderComponent->SetRenderState(ALPHA_BLEND);
 	SAFE_RELEASE(RenderComponent);
 
 	Material_Com* MaterialComponent = m_Object->FindComponentFromType<Material_Com>(CT_MATERIAL);
 	MaterialComponent->SetMaterial(Vector4::Yellow);
-	MaterialComponent->SetDiffuseTexture(0, "yso", TEXT("yso.jpg"));
+	MaterialComponent->SetDiffuseTexture(0, "Player", TEXT("Player.png"));
 	SAFE_RELEASE(MaterialComponent);
 
 	m_Transform->SetWorldScale(100.0f, 100.0f, 1.0f);
+	m_Transform->SetWorldPivot(0.5f, 0.0f, 0.0f);
 
 	return true;
 }
@@ -51,18 +53,18 @@ int Player_Com::Input(float DeltaTime)
 
 	if (GetAsyncKeyState('W') & 0x8000)
 	{
-		m_Transform->Move(AXIS_Y, 2.0f, DeltaTime);
+		m_Transform->Move(AXIS_Y, 200.0f, DeltaTime);
 	}
 	else if (GetAsyncKeyState('S') & 0x8000)
 	{
-		m_Transform->Move(AXIS_Y, -2.0f, DeltaTime);
+		m_Transform->Move(AXIS_Y, -200.0f, DeltaTime);
 	}
 
 	if (GetAsyncKeyState(VK_SPACE) & 0x8000)
 	{
 		GameObject* newClone = GameObject::CreateClone("BulletObject", "Bullet_Clone", m_Layer);
-		newClone->GetTransform()->Rotation(m_Transform->GetWorldRotation());
 		newClone->GetTransform()->SetWorldPos(m_Transform->GetWorldPos());
+		newClone->GetTransform()->Rotation(m_Transform->GetWorldRotation());
 		SAFE_RELEASE(newClone);
 
 		getMaterial->SetMaterial(Vector4::DarkCyan);

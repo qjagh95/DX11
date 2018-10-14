@@ -19,8 +19,7 @@ struct JEONG_DLL SubsetMaterial
 	SubsetMaterial() : DiffuseTexture(NULLPTR), TextureRegister(-1), DiffuseSampler(NULLPTR), SamplerRegister(0)
 	{
 		DiffuseSampler = ResourceManager::Get()->FindSampler(LINER_SAMPLER);
-	}
-
+	}  
 };
 
 class JEONG_DLL Material_Com : public Component_Base
@@ -43,7 +42,8 @@ public:
 	void SetShader(int Container = 0, int Subset = 0);
 
 private:
-	vector<vector<SubsetMaterial*>> m_vecMaterial;
+	//메쉬도 컨테이너와 서브셋개념으로 나눠져있기때문에 재질정보도 각 부위마다 달라질 수 있다.
+	vector<vector<SubsetMaterial*>> m_vecMaterial; 
 
 private:
 	Material_Com();

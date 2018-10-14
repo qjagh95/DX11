@@ -5,6 +5,7 @@ JEONG_BEGIN
 class Mesh;
 class Shader;
 class Material_Com;
+class RenderState;
 class JEONG_DLL Renderer_Com : public Component_Base
 {
 public:
@@ -23,16 +24,20 @@ public:
 	void SetShader(Shader* shader);
 	void SetShader(const string& KeyName);
 	void SetLayOut(const string& KeyName);
+	void SetRenderState(const string& KeyName);
 
 private:
 	void UpdateTransform();
 
 private:
-	Mesh* m_Mesh;
+	//랜더 컴포넌트가 매쉬, 쉐이더, 재질정보를 갖고있는다.
+	//기본으로 초기화구문에서 바로 White(1, 1, 1, 1) = 곱하면 원색상을 가지고 있다.
+
+	Mesh* m_Mesh;				
 	Shader* m_Shader;
 	Material_Com* m_Material;
 	ID3D11InputLayout* m_LayOut;
-	float Temp;
+	RenderState* m_RenderState[RS_END];
 
 private:
 	Renderer_Com();

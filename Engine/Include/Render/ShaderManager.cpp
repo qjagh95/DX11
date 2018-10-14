@@ -22,6 +22,7 @@ ShaderManager::~ShaderManager()
 		SAFE_RELEASE(StartIter->second->cBuffer);
 		SAFE_DELETE(StartIter->second);
 	}
+
 	m_CBufferMap.clear();
 }
 

@@ -58,6 +58,8 @@ public:
 	void SetWorldRotZ(float z);
 	void SetWorldPos(const Vector3& vPos);
 	void SetWorldPos(float x, float y, float z);
+	void SetWorldPivot(const Vector3& vPos);
+	void SetWorldPivot(float x, float y, float z);
 	void ComputeWorldAxis();
 
 	void Move(AXIS eAxis, float Speed);
@@ -102,6 +104,8 @@ private:
 	Vector3 m_WorldRotation;
 	Vector3 m_WorldPos;
 	Vector3 m_WorldAxis[AXIS_MAX];
+
+	Vector3 m_Pivot;
 
 	Matrix m_MatWorldScale;
 	Matrix m_MatWorldPos;

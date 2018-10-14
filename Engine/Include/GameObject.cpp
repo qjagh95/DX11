@@ -42,6 +42,7 @@ GameObject::GameObject(const GameObject& copyObject)
 GameObject::~GameObject()
 {
 	SAFE_RELEASE(m_Transform);
+	Safe_Release_VecList(m_FindComList);
 	Safe_Release_VecList(m_ComponentList);
 }
 

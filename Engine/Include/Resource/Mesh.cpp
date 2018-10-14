@@ -129,6 +129,47 @@ bool Mesh::CreateVertexBuffer(void * vertexInfo, int vertexCount, int vertexSize
 		return false;
 	}
 
+	char* Vertices =(char*)vertexInfo;
+	Vector3 TempPos;
+	//주소값 memcpy (첫번째 주소)
+	memcpy(&TempPos, Vertices, sizeof(Vector3));
+
+	m_Min = TempPos;
+	m_Max = TempPos;
+
+	for (size_t i = 0; i < vertexCount; i++)
+	{
+		//주소값을 늘려서 계속 값을 받는다. (void*를 쓰면 안됨)
+		memcpy(&TempPos, Vertices + (vertexSize * i), sizeof(Vector3));
+
+		if (m_Min.x > TempPos.x)
+			m_Min.x = TempPos.x;
+
+		if (m_Min.y > TempPos.y)
+			m_Min.y = TempPos.y;
+
+		if (m_Min.z > TempPos.z)
+			m_Min.z = TempPos.z;
+
+		//////////////////////////
+
+		if (m_Max.x < TempPos.x)
+			m_Max.x = TempPos.x;
+
+		if (m_Max.y < TempPos.y)
+			m_Max.y = TempPos.y;
+
+		if (m_Max.z < TempPos.z)
+			m_Max.z = TempPos.z;
+	}
+
+	//중심점
+	m_Center = (m_Min + m_Max) * 0.5f;
+	//길이
+	m_Lanth = m_Max - m_Min;
+	//반지름
+	m_Radius = m_Lanth.Lenth() * 0.5f;
+
 	return true;
 }
 
@@ -184,9 +225,9 @@ void Mesh::UpdateVertexBuffer(void * vertexInfo, int ContainerIndex)
 			D3D11_MAPPED_SUBRESOURCE mapData;
 			//메모리락을걸고 실행 후 락을 푼다. (컨텍스트 스위칭시 조작방지) Map ~ UnMap
 			Device::Get()->GetContext()->Map(m_vecMeshContainer[ContainerIndex]->vertexBuffer.vBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapData);
-
-			memcpy(mapData.pData, vertexInfo, m_vecMeshContainer[ContainerIndex]->vertexBuffer.vSize *m_vecMeshContainer[ContainerIndex]->vertexBuffer.vCount);
-
+			{
+				memcpy(mapData.pData, vertexInfo, m_vecMeshContainer[ContainerIndex]->vertexBuffer.vSize *m_vecMeshContainer[ContainerIndex]->vertexBuffer.vCount);
+			}
 			Device::Get()->GetContext()->Unmap(m_vecMeshContainer[ContainerIndex]->vertexBuffer.vBuffer, 0);
 		}
 			break;

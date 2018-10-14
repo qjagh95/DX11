@@ -37,6 +37,9 @@
 //Sampler
 #define LINER_SAMPLER "Linear"
 
+//AlphaBlend
+#define ALPHA_BLEND "AlphaBlend"
+
 template<typename T>
 void Safe_Delete_VecList(T& p)
 {

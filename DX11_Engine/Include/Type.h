@@ -64,6 +64,10 @@ struct JEONG_DLL TransformCBuffer
 	Matrix Projection;
 	Matrix WV;
 	Matrix WVP;
+	Vector3 Pivot;
+	float Empty1;	//4바이트
+	Vector3 Lenth;
+	float Empty2;   //4바이트 (16바이트패딩으로 바이트 맞춰주기위함)
 };
 
 struct JEONG_DLL Material

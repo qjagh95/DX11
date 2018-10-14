@@ -1,6 +1,7 @@
 #include "Share.fx"
-
 //fx파일은 버텍스와 픽셀쉐이더 두개 동시에 처리가 가능하다.
+
+//////////////////////////////////ColorShader//////////////////////////
 
 VS_OUTPUT_COLOR Standard_Color_VS(VS_INPUT_COLOR input)
 {
@@ -23,13 +24,19 @@ PS_OUTPUT_SINGLE Standard_Color_PS(VS_OUTPUT_COLOR input)
     return output;
 }
 
-///////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////ColorShader//////////////////////////
+
+
+//////////////////////////////////UVShader/////////////////////////////
 
 VS_OUTPUT_UV Standard_UV_VS(VS_INPUT_UV input)
 {
     VS_OUTPUT_UV output = (VS_OUTPUT_UV)0;
 
-    output.vPos = mul(float4(input.vPos, 1.0f), g_WVP);
+    //API때 했던 중심점공식 (newPos = Pos - Size * Pivot)이거랑 똑같음.
+    float3 TempPos = input.vPos - (g_Pivot * g_Length);
+
+    output.vPos = mul(float4(TempPos, 1.0f), g_WVP);
     output.vUV = input.vUV;
 
     return output;
@@ -38,8 +45,11 @@ VS_OUTPUT_UV Standard_UV_VS(VS_INPUT_UV input)
 PS_OUTPUT_SINGLE Standard_UV_PS(VS_OUTPUT_UV input)
 {
     PS_OUTPUT_SINGLE output = (PS_OUTPUT_SINGLE)0;
-
+    
+    //Diffuse(Texture2D)에 SampleState(재질정보와 UV)를 넣어주고 재질 색상정보를 곱한다
     output.vTarget0 = Diffuse.Sample(DiffuseSampler, input.vUV) * g_MaterialDiffuse;
 
     return output;
 }
+
+//////////////////////////////////UVShader/////////////////////////////

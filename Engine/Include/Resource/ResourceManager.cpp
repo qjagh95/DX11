@@ -4,7 +4,6 @@
 #include "Sampler.h"
 
 JEONG_USING
-
 SINGLETON_VAR_INIT(ResourceManager)
 
 ResourceManager::ResourceManager()
@@ -44,6 +43,7 @@ bool ResourceManager::Init()
 	CreateMesh("ColorTri", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, ColorTri, 3, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexTri, 3, 2);
 	CreateMesh("ColorRect", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, ColorRect, 4, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexRect, 6, 2);
 
+	//UV정보를 위한 버텍스 구조체 초기화
 	VertexUV UVRect[4] =
 	{
 		VertexUV(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 0.0f)),

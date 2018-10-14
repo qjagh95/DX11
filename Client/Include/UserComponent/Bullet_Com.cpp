@@ -24,6 +24,8 @@ bool Bullet_Com::Init()
 	RenderComponent->SetMesh("ColorTri");
 	SAFE_RELEASE(RenderComponent);
 
+	m_Transform->SetWorldScale(100.0f, 100.0f, 0.0f);
+
 	return true;
 }
 
@@ -35,16 +37,16 @@ int Bullet_Com::Input(float DeltaTime)
 int Bullet_Com::Update(float DeltaTime)
 {
 	//생성할때 로테이션 함수에서 이미 WorldAxis변수를 갱신한다.
-	m_Transform->Move(AXIS_Y, 2.0f, DeltaTime);
+	m_Transform->Move(AXIS_Y, 500.0f, DeltaTime);
 
-	if (m_Transform->GetWorldPos().x <= -6.0f)
+	if (m_Transform->GetWorldPos().x <= 0.0f)
 		m_Object->SetIsActive(false);
-	else if(m_Transform->GetWorldPos().x >= 6.0f)
+	else if(m_Transform->GetWorldPos().x >= 1000.0f)
 		m_Object->SetIsActive(false);
 
-	if(m_Transform->GetWorldPos().y <= -6.0f)
+	if(m_Transform->GetWorldPos().y <= 0.0f)
 		m_Object->SetIsActive(false);
-	else if(m_Transform->GetWorldPos().y >= 6.0f)
+	else if(m_Transform->GetWorldPos().y >= 700.0f)
 		m_Object->SetIsActive(false);
 
 	return 0;
