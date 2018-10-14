@@ -24,9 +24,13 @@ public:
 	void SetLayOut(const string& KeyName);
 
 private:
+	void UpdateTransform();
+
+private:
 	Mesh* m_Mesh;
 	Shader* m_Shader;
 	ID3D11InputLayout* m_LayOut;
+	float Temp;
 
 private:
 	Renderer_Com();

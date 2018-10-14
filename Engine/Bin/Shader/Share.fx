@@ -5,6 +5,9 @@
 
 //변수 뒤에 : (시맨틱)
 
+//쉐이더는 1줄짜리코드라도 갯수만큼 실행되기때문에 한줄이짜리가 아니다
+//버텍스가 2만개라면 한줄짜리코드가 2만줄짜리 코드가된다.
+
 struct VS_INPUT_COLOR
 {
     //시맨틱은 이름 뒤에 숫자를 붙여준다. 안붙일경우 기본으로 0
@@ -24,3 +27,17 @@ struct PS_OUTPUT_SINGLE
 {
     float4 vTarget0 : SV_Target;
 };
+
+//CBuffer는 상수버퍼 (C++코드에서 쉐이더로 값을 받아오기 위함)
+//cbuffer 함수명 : 레지스터에 b0에 저장하겠다.
+cbuffer Transform : register(b0)
+{
+    matrix g_World;       //월드행렬
+    matrix g_View;        //뷰행렬
+    matrix g_Projection;  //투영행렬
+
+    //두개를 더 선언하는 이유는 버텍스마다 도는 것보다
+    //이미 곱해진 값이 들어와서 연산하는게 훨씬더 빠르기때문이다.
+    matrix g_WV;    //World * View
+    matrix g_WVP;   //World * View * Projection
+}

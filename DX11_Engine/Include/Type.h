@@ -35,4 +35,21 @@ enum JEONG_DLL SHADER_TYPE
 	ST_MAX,
 };
 
+//CBuffer은 상수버퍼 (C++코드에서 쉐이더로 보내기위함)
+struct JEONG_DLL CBuffer
+{
+	ID3D11Buffer* cBuffer;
+	int BufferSize;
+	int ShaderType;
+};
+
+struct JEONG_DLL TransformCBuffer
+{
+	Matrix World;
+	Matrix View;
+	Matrix Projection;
+	Matrix WV;
+	Matrix WVP;
+};
+
 JEONG_END

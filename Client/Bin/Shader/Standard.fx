@@ -6,8 +6,8 @@ VS_OUTPUT_COLOR StandardColorVS(VS_INPUT_COLOR input)
 {
     //0으로 초기화
     VS_OUTPUT_COLOR output = (VS_OUTPUT_COLOR)0;
-
-    output.vPos = float4(input.vPos, 1.0f);
+    //mul = 곱하기 (벡터행렬곱)
+    output.vPos = mul(float4(input.vPos, 1.0f), g_WVP);
     output.vColor = input.vColor;
 
     return output;

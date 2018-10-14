@@ -14,6 +14,15 @@ ShaderManager::~ShaderManager()
 {
 	Safe_Release_Map(m_ShaderMap);
 	Safe_Release_Map(m_LayOutMap);
+
+	unordered_map<string, CBuffer*>::iterator StartIter = m_CBufferMap.begin();
+	unordered_map<string, CBuffer*>::iterator EndIter = m_CBufferMap.end();
+	for (;StartIter != EndIter; StartIter++)
+	{
+		SAFE_RELEASE(StartIter->second->cBuffer);
+		SAFE_DELETE(StartIter->second);
+	}
+	m_CBufferMap.clear();
 }
 
 bool ShaderManager::Init()
@@ -38,6 +47,8 @@ bool ShaderManager::Init()
 		TrueAssert(true);
 		return false;
 	}
+
+	CreateCBuffer("Transform", sizeof(TransformCBuffer), CST_VERTEX | CST_PIXEL);
 
 	return true;
 }
@@ -110,6 +121,63 @@ bool ShaderManager::CreateInputLayOut(const string & InputLayoutKeyName, const s
 	m_LayOutMap.insert(make_pair(InputLayoutKeyName, newLayout));
 
 	return true;
+}
+
+bool ShaderManager::CreateCBuffer(const string & KeyName, int BufferSize, int ShaderType)
+{
+	CBuffer* newCBuffer = FindCBuffer(KeyName);
+
+	if (newCBuffer != NULLPTR)
+		return false;
+
+	newCBuffer = new CBuffer();
+	newCBuffer->BufferSize = BufferSize;
+	newCBuffer->ShaderType = ShaderType;
+
+	D3D11_BUFFER_DESC bufferDesc = {};
+	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
+	bufferDesc.ByteWidth = BufferSize;
+	bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+
+	if (FAILED(Device::Get()->GetDevice()->CreateBuffer(&bufferDesc, NULLPTR, &newCBuffer->cBuffer)))
+		return false;
+
+	m_CBufferMap.insert(make_pair(KeyName, newCBuffer));
+
+	return true;
+}
+
+bool ShaderManager::UpdateCBuffer(const string& KeyName, void * Info)
+{
+	CBuffer* getBuffer = FindCBuffer(KeyName);
+
+	if (getBuffer == NULLPTR)
+		return false;
+
+	D3D11_MAPPED_SUBRESOURCE mapDesc = {};
+	Device::Get()->GetContext()->Map(getBuffer->cBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapDesc);
+
+	memcpy(mapDesc.pData, Info, getBuffer->BufferSize);
+
+	Device::Get()->GetContext()->Unmap(getBuffer->cBuffer, 0);
+
+	if (getBuffer->ShaderType & CST_VERTEX)
+		Device::Get()->GetContext()->VSSetConstantBuffers(0, 1, &getBuffer->cBuffer);//시작위치, 번호
+	if(getBuffer->ShaderType & CST_PIXEL)
+		Device::Get()->GetContext()->PSSetConstantBuffers(0, 1, &getBuffer->cBuffer);//시작위치, 번호
+
+	return true;
+}
+
+CBuffer * ShaderManager::FindCBuffer(const string & KeyName)
+{
+	unordered_map<string, CBuffer*>::iterator FindIter = m_CBufferMap.find(KeyName);
+
+	if (FindIter == m_CBufferMap.end())
+		return NULLPTR;
+
+	return FindIter->second;
 }
 
 Shader * ShaderManager::FindShader(const string & KeyName)

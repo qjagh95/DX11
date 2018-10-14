@@ -735,12 +735,13 @@ void Vector3::Nomallize()
 
 	*this = XMVector3Normalize(Src);
 }
+//벡터 행렬 곱
 Vector3 Vector3::TransformNormal(const Matrix & mat)
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	return Vector3(XMVector3TransformNormal(Src, mat.matrix));
 }
-
+//벡터 행렬곱
 Vector3 Vector3::TransformNormal(const XMMATRIX & mat)
 {
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
@@ -802,6 +803,7 @@ float Vector3::Dot(int Val[3]) const
 
 	return XMVectorGetX(XMVector3Dot(Src, Dest));
 }
+
 /////////////////////////////////////////////////////////////////////////
 Vector3 Vector3::Cross(const Vector3 & vec) const
 {
@@ -856,3 +858,86 @@ Vector3 Vector3::Nomallize(const Vector3 & vec)
 	return Vector3(XMVector3Normalize(Src));
 }
 /////////////////////////////////////////////////////////////////////////
+
+float Vector3::GetAngle(const Vector3 & vec) const
+{
+	//단위벡터로만든다
+	Vector3 Src = Nomallize(*this);
+	Vector3 Dest = Nomallize(vec);
+
+	//단위벡터를 내적한다(cos각도가 나온다)
+	float Angle = Src.Dot(Dest);
+
+	//나온 cos각도를 역함수로 진짜각도로 변환한다
+	Angle = acosf(Angle);
+
+	//Degree로 변환한다.
+	return RadianToDegree(Angle);
+}
+float Vector3::GetAngle(const XMVECTOR & Xmvec) const
+{
+	//단위벡터로만든다
+	Vector3 Src = Nomallize(*this);
+	Vector3 Dest = Nomallize(Xmvec);
+
+	//단위벡터를 내적한다(cos각도가 나온다)
+	float Angle = Src.Dot(Dest);
+
+	//나온 cos각도를 역함수로 진짜각도로 변환한다
+	Angle = acosf(Angle);
+
+	//Degree로 변환한다.
+	return RadianToDegree(Angle);
+}
+
+float Vector3::GetAngle(const XMFLOAT3 & XmFloat) const
+{
+	//단위벡터로만든다
+	Vector3 Src = Nomallize(*this);
+	Vector3 Dest = Nomallize(XmFloat);
+
+	//단위벡터를 내적한다(cos각도가 나온다)
+	float Angle = Src.Dot(Dest);
+
+	//나온 cos각도를 역함수로 진짜각도로 변환한다
+	Angle = acosf(Angle);
+
+	//Degree로 변환한다.
+	return RadianToDegree(Angle);
+}
+
+float Vector3::GetAngle(float Val[3]) const
+{
+	//단위벡터로만든다
+	Vector3 Src = Nomallize(*this);
+	Vector3 Dest = Nomallize(Val);
+
+	//단위벡터를 내적한다(cos각도가 나온다)
+	float Angle = Src.Dot(Dest);
+
+	//나온 cos각도를 역함수로 진짜각도로 변환한다
+	Angle = acosf(Angle);
+
+	//Degree로 변환한다.
+	return RadianToDegree(Angle);
+}
+float Vector3::GetAngle(int Val[3]) const
+{
+	//단위벡터로만든다
+	Vector3 Src = Nomallize(*this);
+	Vector3 Dest = Nomallize(Val);
+
+	//단위벡터를 내적한다(cos각도가 나온다)
+	float Angle = Src.Dot(Dest);
+
+	//나온 cos각도를 역함수로 진짜각도로 변환한다
+	Angle = acosf(Angle);
+
+	//Degree로 변환한다.
+	return RadianToDegree(Angle);
+}
+
+XMVECTOR Vector3::Convert()
+{
+	return XMLoadFloat3((XMFLOAT3*)this);;
+}

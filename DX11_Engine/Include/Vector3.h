@@ -131,12 +131,22 @@ union MATH_DLL Vector3
 	float Dot(const XMFLOAT3& XmFloat) const;
 	float Dot(float Val[3]) const;
 	float Dot(int Val[3]) const;
+
+	//각도
+	float GetAngle(const Vector3& vec) const;
+	float GetAngle(const XMVECTOR& Xmvec) const;
+	float GetAngle(const XMFLOAT3& XmFloat) const;
+	float GetAngle(float Val[3]) const;
+	float GetAngle(int Val[3]) const;
+
 	//외적
 	Vector3 Cross(const Vector3& vec) const;
 	Vector3 Cross(const XMVECTOR& Xmvec) const;
 	Vector3 Cross(const XMFLOAT3& XmFloat) const;
 	Vector3 Cross(float Val[3])	const;
 	Vector3 Cross(int Val[3]) const;
+
+	XMVECTOR Convert();
 
 	static Vector3 Nomallize(const Vector3& vec);
 

@@ -25,15 +25,18 @@ union MATH_DLL __declspec(align(16)) Matrix
 	Matrix(const Matrix& mat);
 	Matrix(const XMMATRIX& mat);
 
-	XMMATRIX operator * (const Matrix& mat)	const;
-	XMMATRIX operator * (const XMMATRIX& mat)	const;
-	XMMATRIX operator * (float val)	const;
-	XMMATRIX operator * (int val)	const;
+	void operator = (const Matrix& mat);
+	void operator = (const XMMATRIX& mat);
+
+	Matrix operator * (const Matrix& mat) const;
+	Matrix operator * (const XMMATRIX& mat)	const;
+	Matrix operator * (float val) const;
+	Matrix operator * (int val)	const;
 	// *=
-	XMMATRIX& operator *= (const Matrix& mat);
-	XMMATRIX& operator *= (const XMMATRIX& mat);
-	XMMATRIX& operator *= (float val);
-	XMMATRIX& operator *= (int val);
+	Matrix& operator *= (const Matrix& mat);
+	Matrix& operator *= (const XMMATRIX& mat);
+	Matrix& operator *= (float val);
+	Matrix& operator *= (int val);
 
 	Vector4& operator[] (unsigned int Index);
 

@@ -23,44 +23,62 @@ Matrix::Matrix(const XMMATRIX & mat)
 	matrix = mat;
 }
 
-XMMATRIX Matrix::operator*(const union Matrix & mat) const
+Matrix Matrix::operator*(const union Matrix & mat) const
 {
 	return matrix * mat.matrix;
 }
 
-XMMATRIX Matrix::operator*(const XMMATRIX & mat) const
+Matrix Matrix::operator*(const XMMATRIX & mat) const
 {
 	return matrix * mat;
 }
 
-XMMATRIX Matrix::operator*(float val) const
+Matrix Matrix::operator*(float val) const
 {
 	return matrix * val;
 }
 
-XMMATRIX Matrix::operator*(int val) const
+Matrix Matrix::operator*(int val) const
 {
 	return matrix * (float)val;
 }
 
-XMMATRIX & Matrix::operator*=(const union Matrix & mat)
+Matrix & Matrix::operator*=(const union Matrix & mat)
 {
-	return matrix *= mat.matrix;
+	matrix *= mat.matrix;
+
+	return *this;
 }
 
-XMMATRIX & Matrix::operator*=(const XMMATRIX & mat)
+void Matrix::operator=(const Matrix & mat)
 {
-	return matrix *= mat;
+	matrix = mat.matrix;
 }
 
-XMMATRIX & Matrix::operator*=(float val)
+void Matrix::operator=(const XMMATRIX & mat)
 {
-	return matrix *= val;
+	matrix = mat;
 }
 
-XMMATRIX & Matrix::operator*=(int val)
+Matrix & Matrix::operator*=(const XMMATRIX & mat)
 {
-	return matrix *= (float)val;
+	matrix *= mat;
+
+	return *this;
+}
+
+Matrix & Matrix::operator*=(float val)
+{
+	matrix *= val;
+
+	return *this;
+}
+
+Matrix & Matrix::operator*=(int val)
+{
+	matrix *= (float)val;
+
+	return *this;
 }
 
 //(항등행렬로 만든다)
