@@ -1,4 +1,5 @@
 #include "Device.h"
+
 JEONG_USING
 
 SINGLETON_VAR_INIT(Device);
@@ -45,7 +46,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	SwapDesc.BufferDesc.RefreshRate.Denominator = 1;							 ///분모 (초당 60번을 쏴주겠다)
 	SwapDesc.BufferCount = 1;													 ///백버퍼의 갯수
 	SwapDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;						 ///출력용 랜더타겟(내가 출력할 대상)을 만들어낸다
-	SwapDesc.OutputWindow = hWnd;												 ///어느윈도우를 대상으로??
+	SwapDesc.OutputWindow = hWnd;												 ///어느윈대상으로??
 	SwapDesc.SampleDesc.Count = 1;												 ///안티앨리어싱기능 (개느려서 안쓸꺼야)
 	SwapDesc.SampleDesc.Quality = 0;											 ///직접 쉐이더로 만드는게 빨라 (하나는있다, 퀄리티0)
 	SwapDesc.Windowed = isWindowMode;											 ///창모드 풀스크린모드 설정.
@@ -53,7 +54,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	//여기까지 백버퍼를 만들긴 한것이다.
 	
 	//1. 어댑터 타입 (그래픽카드가 2개이상일경우, 하지만 그런경우는 거의 없기때문에 NULL)
-	//2. 드라이버 타입 - 그래픽카드가 DX11을 지원하지 않을경우 CPU가 해주도록하는 설정 (DX11을 지원하지 않으면 느리다)
+	//2. 드라이버 타입 - 그래픽카드가 DX11을 지원하지 않을경우 CPU가 해주도록하는 설정 (DX11을 지원하지 않으면 느리다. (나중에 드라이버가속등을 사용하기위함.)
 	//3. HMOUDLE - DirceX를 돌려주는 별도의 소프트웨어가 있다면 설정. == 의미없엉
 	//4. Flag - 이 디바이스를 만들어낼때 어떤 옵션정보를 넣을것인가를 or연산으로 집어넣는다. (위 주석)
 	//5. 피쳐레벨 - 장치지원수준 (11버전 지원이 안되면 ㅂ2ㅂ2)
@@ -111,7 +112,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	ViewPort.Width = (float)Width;
 	ViewPort.Height = (float)Height;
 	ViewPort.MaxDepth = 1;
-
+	//컨텍스트에 뷰포트를 셋팅한다.  (갯수, 포인터배열) 
 	m_Context->RSSetViewports(1, &ViewPort);
 
 	return true;
@@ -119,6 +120,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 
 void Device::Clear(float ClearColor[4])
 {
+	//계속해서 화면을 지워줄것이다.
 	m_Context->ClearRenderTargetView(m_TargerView, ClearColor);
 	m_Context->ClearDepthStencilView(m_DepthView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 }

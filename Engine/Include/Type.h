@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Macro.h"
+#include "Vector3.h"
 
 struct JEONG_DLL WinSize
 {

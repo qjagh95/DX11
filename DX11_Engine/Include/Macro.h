@@ -19,6 +19,8 @@
 #define GET_SINGLE(Type) Type::Get()
 #define DELETE_SINGLE(Type) Type::Delete()
 
+#define NULLPTR nullptr
+
 template<typename T>
 void Safe_Delete_VecList(T& p)
 {

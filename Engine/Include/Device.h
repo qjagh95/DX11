@@ -1,5 +1,4 @@
 #pragma once
-
 #include "stdafx.h"
 
 JEONG_BEGIN
@@ -40,6 +39,7 @@ private:
 	IDXGISwapChain* m_SwapChain;			///스왑체인 - 백버퍼를 관리한다.
 	ID3D11RenderTargetView* m_TargerView;   ///랜더타겟뷰 - 출력할 랜더타겟 (디바이스에 등록해놓을 것)
 	ID3D11DepthStencilView* m_DepthView;    ///깊이스탠실뷰
+
 
 public:
 	CLASS_IN_SINGLE(Device)
