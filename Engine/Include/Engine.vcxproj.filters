@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Core">
+      <UniqueIdentifier>{0c16694f-fe62-4aac-ad5a-5fa6b94f89fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header">
+      <UniqueIdentifier>{642d290c-399b-4462-9eda-78d5c20537d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Window">
+      <UniqueIdentifier>{0a405531-5ea1-47dc-9998-e5baf4697afa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Device">
+      <UniqueIdentifier>{a49ff980-6464-4c48-bb82-eb4332917466}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Macro.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Type.h">
+      <Filter>Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Core\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Device.h">
+      <Filter>Core\Device</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Core\Window</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Copy.bat">
+      <Filter>Header</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Core.cpp">
+      <Filter>Core\Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Device.cpp">
+      <Filter>Core\Device</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico">
+      <Filter>Core\Window</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Engine.rc">
+      <Filter>Core\Window</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
