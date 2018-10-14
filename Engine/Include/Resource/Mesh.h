@@ -47,7 +47,9 @@ public:
 
 	string GetShaderKey() const { return m_ShaderKeyName; }
 	string GetLayOutKey() const { return m_LayOutKeyName; }
-	VertexBuffer& GetVertexBuffer() const { return m_vecMeshContainer[0]->vertexBuffer; }
+	void* GetVertexInfo(int Index) const { return m_vecMeshContainer[Index]->vertexBuffer.vInfo; }
+
+	void UpdateVertexBuffer(void* vertexInfo, int ContainerIndex = 0);
 
 private:
 	vector<MeshContainer*> m_vecMeshContainer;

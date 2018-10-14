@@ -15,7 +15,7 @@ bool PathManager::Init()
 {
 	TCHAR strPath[MAX_PATH];
 	//실행파일 있는곳의 경로를 뽑아낸다.
-	GetModuleFileName(NULL, strPath, MAX_PATH);
+	GetModuleFileName(NULLPTR, strPath, MAX_PATH);
 
 	//뒤에서부터 돌아서 //이 있으면 그이후 0으로 초기화
 	for (int i = lstrlen(strPath); i >= 0; i--)
@@ -37,13 +37,13 @@ bool PathManager::Init()
 
 bool PathManager::AddPath(const string & KeyName, const wstring & PathName, const string & BaseKeyName)
 {
-	if (FindPath(KeyName) != NULL)
+	if (FindPath(KeyName) != NULLPTR)
 		return false;
 
 	const TCHAR * pPath = FindPath(BaseKeyName);
 	wstring FullPath;
 
-	if (pPath != NULL)
+	if (pPath != NULLPTR)
 		FullPath = pPath;
 
 	FullPath += PathName;
@@ -57,7 +57,7 @@ const TCHAR * PathManager::FindPath(const string & KeyName)
 	unordered_map<string, wstring>::iterator FindIter = PathMap.find(KeyName);
 
 	if (FindIter == PathMap.end())
-		return NULL;
+		return NULLPTR;
 
 	return FindIter->second.c_str();
 }
@@ -66,8 +66,8 @@ const char * PathManager::FindPathMultiByte(const string & KeyName)
 {
 	const TCHAR* mPath = FindPath(KeyName);
 
-	if (mPath == NULL)
-		return NULL;
+	if (mPath == NULLPTR)
+		return NULLPTR;
 
 	memset(m_MultiBytePath, 0, sizeof(char) * MAX_PATH);
 

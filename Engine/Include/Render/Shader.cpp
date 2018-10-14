@@ -51,7 +51,7 @@ bool Shader::LoadVertexShader(const TCHAR * FileName, char * Entry, const string
 
 #ifdef _DEBUG
 	Flag = D3DCOMPILE_DEBUG;
-#endif
+#endif 
 	//쉐이더 컴파일 중 에러메세지를 내보내기 위함.
 	ID3DBlob* ErrorMessage = NULLPTR;
 
@@ -59,12 +59,16 @@ bool Shader::LoadVertexShader(const TCHAR * FileName, char * Entry, const string
 	if (FAILED(D3DCompileFromFile(FullPath.c_str(), NULLPTR, D3D_COMPILE_STANDARD_FILE_INCLUDE, Entry, "vs_5_0", Flag, 0, &m_VsBlob, &ErrorMessage)))
 	{
 		OutputDebugStringA((char*)ErrorMessage->GetBufferPointer());
+		TrueAssert(true);
 		return false;
 	}
 
 	//Blob에 컴파일된 HLSL코드를 사용하여 버텍스쉐이더 객체를 만들어낸다.
 	if (FAILED(Device::Get()->GetDevice()->CreateVertexShader(m_VsBlob->GetBufferPointer(), m_VsBlob->GetBufferSize(), NULLPTR, &m_Vs)))
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	return true;
 }

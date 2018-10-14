@@ -1,6 +1,10 @@
 #include "Core.h"
 #include "resource.h"
 
+#include "Scene/SceneManager.h"
+#include "SceneComponent\MainScene.h"
+#include "Scene/Scene.h"
+
 JEONG_USING
 
 int APIENTRY wWinMain(_In_ HINSTANCE hIstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
@@ -11,6 +15,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hIstance, _In_opt_ HINSTANCE hPrevInstance,
 		return 0;
 	}	
 	//DLL에서 생성된 싱글톤객체와 여기서 생성된 싱글톤객체는 서로 다른객체임.
+
+	//MainScene추가
+	SceneManager::Get()->AddSceneComponent<MainScene>("MainScene");
 
 	//Run에서 메세지 무한루프를(로직) 돈다.
 	//꺼지면 Delete, Result = 0

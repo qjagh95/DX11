@@ -28,7 +28,7 @@ struct VertexColor
 	VertexColor(const Vector3& vec3, const Vector4& vec4) { m_Pos = vec3, m_Color = vec4; }
 };
 
-enum SHADER_TYPE
+enum JEONG_DLL SHADER_TYPE
 {
 	ST_VERTEX,
 	ST_PIXEL,

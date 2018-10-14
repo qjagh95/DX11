@@ -9,9 +9,9 @@
 #include "Render/ShaderManager.h"
 #include "Render/RenderManager.h"
 
+#include "Scene/SceneManager.h"
 
 JEONG_USING
-
 SINGLETON_VAR_INIT(Core)
 bool Core::m_isLoop = true;
 
@@ -19,7 +19,6 @@ Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(5399);
-	Temp = 0.0f;
 	ZeroMemory(ClearColor, sizeof(float) * 4);
 }
 
@@ -29,7 +28,7 @@ Core::~Core()
 	ResourceManager::Delete();
 	ShaderManager::Delete();
 	PathManager::Delete();
-
+	SceneManager::Delete();
 }
 
 bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const TCHAR * TitleName, const TCHAR * ClassName, int iIconID, int iSmallIconID, bool bWindowMode)
@@ -53,16 +52,34 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 
 	//DirectX11 DeviceÃÊ±âÈ­
 	if (Device::Get()->Init(hWnd, Width, Height, bWindowMode) == false)
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	if (PathManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	if (ResourceManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	if (RenderManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
 		return false;
+	}
+
+	if (SceneManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
+		return false;
+	}
 
 	SetClearColor(0, 150, 255, 0);
 
@@ -95,7 +112,7 @@ void Core::Logic()
 	Update(0.0f);
 	LateUpdate(0.0f);
 	Collsion(0.0f);
-	CollsionAfterUpdate(0.0f);
+	CollsionLateUpdate(0.0f);
 	Render(1.0f);
 }
 
@@ -112,7 +129,6 @@ void Core::Register(const TCHAR * ClassName, int iIconID, int iSmallIconID)
 	WNDCLASSEX wcex;
 
 	wcex.cbSize = sizeof(WNDCLASSEX);
-
 	wcex.style = CS_HREDRAW | CS_VREDRAW;
 	wcex.lpfnWndProc = Core::WndProc;
 	wcex.cbClsExtra = 0;
@@ -130,7 +146,7 @@ void Core::Register(const TCHAR * ClassName, int iIconID, int iSmallIconID)
 
 void Core::CreateWnd(const TCHAR * TitleName, const TCHAR * ClassName)
 {
-	m_hWnd = CreateWindow(ClassName, TitleName, WS_OVERLAPPEDWINDOW,	CW_USEDEFAULT, 0, m_WinSize.Width, m_WinSize.Height, NULLPTR, NULLPTR, m_hIstance, NULLPTR);
+	m_hWnd = CreateWindow(ClassName, TitleName, WS_OVERLAPPEDWINDOW, CW_USEDEFAULT, 0, m_WinSize.Width, m_WinSize.Height, NULLPTR, NULLPTR, m_hIstance, NULLPTR);
 
 	if (!m_hWnd)
 		return;
@@ -161,25 +177,30 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 int Core::Input(float DeltaTime)
 {
+	SceneManager::Get()->Input(DeltaTime);
 	return 0;
 }
 
 int Core::Update(float DeltaTime)
 {
+	SceneManager::Get()->Update(DeltaTime);
 	return 0;
 }
 
 int Core::LateUpdate(float DeltaTime)
 {
+	SceneManager::Get()->LateUpdate(DeltaTime);
 	return 0;
 }
 
 void Core::Collsion(float DeltaTime)
 {
+	SceneManager::Get()->Input(DeltaTime);
 }
 
-int Core::CollsionAfterUpdate(float DeltaTime)
+int Core::CollsionLateUpdate(float DeltaTime)
 {
+	SceneManager::Get()->CollsionLateUpdate(DeltaTime);
 	return 0;
 }
 
@@ -187,30 +208,7 @@ void Core::Render(float DeltaTime)
 {
 	Device::Get()->Clear(ClearColor);
 	{
-		Mesh* newMesh = ResourceManager::Get()->FindMesh("ColorTri");
-		Shader* newShader = ShaderManager::Get()->FindShader(newMesh->GetShaderKey());
-		ID3D11InputLayout* newLayout = ShaderManager::Get()->FindInputLayOut(newMesh->GetLayOutKey());
-
-		newShader->SetShader();
-		Device::Get()->GetContext()->IASetInputLayout(newLayout);
-		newMesh->Render();
-
-		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
-		{
-			Temp += 0.001f;
-
-			VertexColor a[3] =
-			{
-				VertexColor(Vector3(0.0f + Temp, 0.5f , 0.0f), Vector4::Chartreuse),
-				VertexColor(Vector3(0.5f + Temp, -0.5f, 0.0f), Vector4::DarkOrchid),
-				VertexColor(Vector3(-0.5f + Temp, -0.5f, 0.0f), Vector4::DarkGreen),
-			};
-
-			Device::Get()->GetContext()->UpdateSubresource(newMesh->GetVertexBuffer().vBuffer, 0, NULLPTR, &a, 0, 0);
-		}
-
-		SAFE_RELEASE(newShader);
-		SAFE_RELEASE(newMesh);
+		SceneManager::Get()->Render(DeltaTime);
 	}
 	Device::Get()->Present();
 }

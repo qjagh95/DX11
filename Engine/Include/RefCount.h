@@ -14,9 +14,17 @@ public:
 	int AddRefCount() { ReferanceCount++; return ReferanceCount; }
 	int Release();
 
+	bool GetIsActive() const { return isActive; }
+	bool GetIsShow() const { return isShow; }
+	
+	void SetIsActive(bool Val) { isActive = Val; };
+	void SetIsShow(bool Val) { isShow = Val; }
+
 protected:
 	string m_TagName;
 	int ReferanceCount;
+	bool isActive;
+	bool isShow;
 };
 
 JEONG_END

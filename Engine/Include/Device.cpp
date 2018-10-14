@@ -61,7 +61,10 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	//6. SDK버전 - 고정값
 	//나머지 변수들 더블포인터 주소값~
 	if (FAILED(D3D11CreateDeviceAndSwapChain(NULLPTR, D3D_DRIVER_TYPE_HARDWARE, 0, Flag, &eLevel1, 1, D3D11_SDK_VERSION, &SwapDesc, &m_SwapChain, &m_Device, &eLevel2, &m_Context)))
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	//스왑체인이 가지고있는 백버퍼를 출력병합기에 묶어줘야한다. 깊이버퍼도 같이묶어야한다.
 	//뷰포트도 셋팅해줘야한다.
@@ -97,9 +100,12 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	//4.STAGING - 완전 오픈형. (출력이 되지않음. 데이터 저장용 버퍼.)
 
 	//Texture2D Desc, 채워줄 픽셀정보, Texture2D 변수
-	if (FAILED(m_Device->CreateTexture2D(&DepthDesc, NULLPTR, &pBuffer))) 
+	if (FAILED(m_Device->CreateTexture2D(&DepthDesc, NULLPTR, &pBuffer)))
+	{
+		TrueAssert(true);
 		return false;
-
+	}
+	    
 	//해당 버퍼에 깊이-스탠실 뷰를 만든다.
 	m_Device->CreateDepthStencilView(pBuffer, NULLPTR, &m_DepthView);
 

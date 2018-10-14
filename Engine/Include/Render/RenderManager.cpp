@@ -16,7 +16,10 @@ RenderManager::~RenderManager()
 bool RenderManager::Init()
 {
 	if (ShaderManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	return true;
 }

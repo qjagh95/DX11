@@ -1,0 +1,13 @@
+#pragma once
+#include "Macro.h"
+
+JEONG_BEGIN
+
+enum JEONG_DLL COMPONENT_TYPE
+{
+	CT_NONE,
+	CT_TRANSFORM,
+	CT_RENDER,
+};
+
+JEONG_END

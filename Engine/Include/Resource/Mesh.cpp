@@ -29,7 +29,7 @@ void Mesh::Render()
 {
 	for (size_t i = 0; i < m_vecMeshContainer.size(); i++)
 	{
-		//도형 위상구조를 지정한다.
+		//인풋 어셈블러에 도형 위상구조를 지정한다.
 		Device::Get()->GetContext()->IASetPrimitiveTopology(m_vecMeshContainer[i]->PrimitiveType);
 
 		//스트라이드 : 해당 버텍스버퍼에서 사용될 크기(사이즈)
@@ -68,11 +68,16 @@ bool Mesh::CreateMesh(const string & TagName, const string & ShaderKeyName, cons
 	m_vecMeshContainer.push_back(newContainer);
 
 	if (CreateVertexBuffer(vertexInfo, vertexCount, vertexSize, vertexUsage) == false)
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	if (CreateIndexBuffer(indexInfo, indexCount, indexSize, indexUsage, indexFormat) == false)
+	{
+		TrueAssert(true);
 		return false;
-
+	}
 	return true;
 }
 
@@ -99,7 +104,10 @@ bool Mesh::CreateVertexBuffer(void * vertexInfo, int vertexCount, int vertexSize
 	SubResourceData.pSysMem = getContainer->vertexBuffer.vInfo; ///버텍스버퍼의 정보
 
 	if (FAILED(Device::Get()->GetDevice()->CreateBuffer(&bufferDesc, &SubResourceData, &getContainer->vertexBuffer.vBuffer)))
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	return true;
 }
@@ -129,10 +137,39 @@ bool Mesh::CreateIndexBuffer(void * indexInfo, int indexCount, int indexSize, D3
 	SubResourceData.pSysMem = TempIndexBuffer.iInfo; ///인덱스버퍼의 정보
 
 	if (FAILED(Device::Get()->GetDevice()->CreateBuffer(&bufferDesc, &SubResourceData, &TempIndexBuffer.iBuffer)))
+	{
+		TrueAssert(true);
 		return false;
+	}
 
 	getContainer->vecIndexBuffer.push_back(TempIndexBuffer);
 
 	return true;
 }
 
+void Mesh::UpdateVertexBuffer(void * vertexInfo, int ContainerIndex)
+{
+	if (ContainerIndex < 0 || ContainerIndex >= m_vecMeshContainer.size())
+		return;
+
+	VertexColor* Temp = (VertexColor*)m_vecMeshContainer[ContainerIndex]->vertexBuffer.vInfo;
+
+	switch (m_vecMeshContainer[ContainerIndex]->vertexBuffer.vUsage)
+	{
+		case D3D11_USAGE_DEFAULT:
+			Device::Get()->GetContext()->UpdateSubresource(m_vecMeshContainer[ContainerIndex]->vertexBuffer.vBuffer, 0, NULLPTR, vertexInfo, 0, 0);
+			break;
+		case D3D11_USAGE_DYNAMIC:
+		{
+			D3D11_MAPPED_SUBRESOURCE mapData;
+			//메모리락을걸고 실행 후 락을 푼다. (컨텍스트 스위칭시 조작방지) Map ~ UnMap
+			Device::Get()->GetContext()->Map(m_vecMeshContainer[ContainerIndex]->vertexBuffer.vBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapData);
+
+			mapData.pData = (VertexColor*)Temp;
+
+			Device::Get()->GetContext()->Unmap(m_vecMeshContainer[ContainerIndex]->vertexBuffer.vBuffer, 0);
+		}
+			break;
+	}
+
+}

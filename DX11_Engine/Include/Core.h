@@ -22,7 +22,7 @@ private:
 	int Update(float DeltaTime);
 	int LateUpdate(float DeltaTime);
 	void Collsion(float DeltaTime);
-	int CollsionAfterUpdate(float DeltaTime);
+	int CollsionLateUpdate(float DeltaTime);
 	void Render(float DeltaTime);
 
 private:
@@ -31,8 +31,6 @@ private:
 	WinSize m_WinSize;
 	HWND m_hWnd;
 	float ClearColor[4];
-
-	float Temp;
 
 public:
 	CLASS_IN_SINGLE(Core);

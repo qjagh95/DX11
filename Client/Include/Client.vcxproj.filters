@@ -5,10 +5,21 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="SceneComponent">
+      <UniqueIdentifier>{76cfdf33-402b-44a2-9ff5-942a6d123342}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
       <Filter>WinMain</Filter>
     </ClCompile>
+    <ClCompile Include="SceneComponent\MainScene.cpp">
+      <Filter>SceneComponent</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SceneComponent\MainScene.h">
+      <Filter>SceneComponent</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
