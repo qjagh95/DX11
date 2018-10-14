@@ -32,6 +32,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	Flag |= D3D11_CREATE_DEVICE_BGRA_SUPPORT;
 
 	D3D_FEATURE_LEVEL eLevel1 = D3D_FEATURE_LEVEL_11_0;
+	D3D_FEATURE_LEVEL eLevel2 = D3D_FEATURE_LEVEL_11_0;
 
 	//스왑체인은 페이지플리핑 역할을 한다. 그래서 백버퍼를 관리하는 역할을 한다. 이 정보를 이용하여 백버퍼를 만들어낸다
 	DXGI_SWAP_CHAIN_DESC SwapDesc = {};
@@ -58,7 +59,7 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	//5. 피쳐레벨 - 장치지원수준 (11버전 지원이 안되면 ㅂ2ㅂ2)
 	//6. SDK버전 - 고정값
 	//나머지 변수들 더블포인터 주소값~
-	if (FAILED(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, 0, Flag, &eLevel1, 1, D3D11_SDK_VERSION, &SwapDesc, &m_SwapChain, &m_Device, &eLevel1, &m_Context)))
+	if (FAILED(D3D11CreateDeviceAndSwapChain(NULL, D3D_DRIVER_TYPE_HARDWARE, 0, Flag, &eLevel1, 1, D3D11_SDK_VERSION, &SwapDesc, &m_SwapChain, &m_Device, &eLevel2, &m_Context)))
 		return false;
 
 	//스왑체인이 가지고있는 백버퍼를 출력병합기에 묶어줘야한다. 깊이버퍼도 같이묶어야한다.
@@ -83,14 +84,16 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 	DepthDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;       ///깊이에 24비트 스탠실에 8비트를 사용하겠다 라는뜻.
 	DepthDesc.Usage = D3D11_USAGE_DEFAULT;					
 	DepthDesc.MipLevels = 1;
+	DepthDesc.SampleDesc.Count = 1;
+	DepthDesc.SampleDesc.Quality = 0;
+
 	//CPU설정은 Usage타입에따라서 다르다. Default는 CPU에서 접근불가.
 
 	//Usage
-	//1.Default - 일반적으로 많이쓰는 옵션 (비디오메모리에 언제든지 올려놓고쓴다. 단 수정만 가능하다. 갱신가능, 메모리읽기X)
+	//1.DEFAULT - 일반적으로 많이쓰는 옵션 (비디오메모리에 언제든지 올려놓고쓴다. 단 수정만 가능하다. 갱신가능, 메모리읽기X)
 	//2.IMMUTABLE - 완전폐쇄적 (처음 셋팅시 모든 정보를 버퍼에 셋팅을하고 출력용으로만 사용한다. 출력성능은 올라간다 데이터를 아예 바꾸지않겠다라면 ㄱㅊ)
 	//3.DYNAMIC - 동적버퍼를만든다 실시간으로 CPU에서 접근해서 데이터를 갱신한다. (주로 파티클 에서쓴다) (차이 - CPU에 복사본을 만들어서 그것을 갱신해서 업데이트)
 	//4.STAGING - 완전 오픈형. (출력이 되지않음. 데이터 저장용 버퍼.)
-
 
 	//Texture2D Desc, 채워줄 픽셀정보, Texture2D 변수
 	if (FAILED(m_Device->CreateTexture2D(&DepthDesc, NULL, &pBuffer))) 
@@ -98,5 +101,29 @@ bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWin
 
 	//해당 버퍼에 깊이-스탠실 뷰를 만든다.
 	m_Device->CreateDepthStencilView(pBuffer, NULL, &m_DepthView);
+
+	SAFE_RELEASE(pBuffer);
+
+	//만들어준 타겟뷰와 뎁스뷰를 랜더링 파이프라인에 묶어준다. (Output Merser), 카운트와 포인터배열 즉 타겟뷰가 여러개일경우 사용
+	m_Context->OMSetRenderTargets(1, &m_TargerView, m_DepthView); 
+
+	D3D11_VIEWPORT ViewPort = {};
+	ViewPort.Width = (float)Width;
+	ViewPort.Height = (float)Height;
+	ViewPort.MaxDepth = 1;
+
+	m_Context->RSSetViewports(1, &ViewPort);
+
 	return true;
+}
+
+void Device::Clear(float ClearColor[4])
+{
+	m_Context->ClearRenderTargetView(m_TargerView, ClearColor);
+	m_Context->ClearDepthStencilView(m_DepthView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+}
+
+void Device::Present()
+{
+	m_SwapChain->Present(0, 0);
 }

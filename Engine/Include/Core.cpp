@@ -10,6 +10,8 @@ Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(5399);
+
+	ZeroMemory(ClearColor, sizeof(float) * 4);
 }
 
 Core::~Core()
@@ -27,8 +29,6 @@ bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const 
 	CreateWnd(TitleName, ClassName);
 	
 	return Init(m_hIstance,m_hWnd, Width, Height, bWindowMode);
-
-	return true;
 }
 
 bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Height, bool bWindowMode)
@@ -41,6 +41,8 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 	//DirectX11 Device초기화
 	if (Device::Get()->Init(hWnd, Width, Height, bWindowMode) == false)
 		return false;
+
+	SetClearColor(0, 150, 255, 0);
 
 	return true;
 }
@@ -59,10 +61,28 @@ int Core::Run()
 
 		else
 		{
-			//Logic();
+			Logic();
 		}
 	}
 	return (int)msg.wParam;
+}
+
+void Core::Logic()
+{
+	Input(0.0f);
+	Update(0.0f);
+	LateUpdate(0.0f);
+	Collsion(0.0f);
+	CollsionAfterUpdate(0.0f);
+	Render(0.0f);
+}
+
+void Core::SetClearColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
+{
+	ClearColor[0] = r / 255.0f;
+	ClearColor[1] = g / 255.0f;
+	ClearColor[2] = b / 255.0f;
+	ClearColor[3] = a / 255.0f;
 }
 
 void Core::Register(const TCHAR * ClassName, int iIconID, int iSmallIconID)
@@ -115,4 +135,37 @@ LRESULT Core::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	}
 
 	return 0;
+}
+
+int Core::Input(float DeltaTime)
+{
+	return 0;
+}
+
+int Core::Update(float DeltaTime)
+{
+	return 0;
+}
+
+int Core::LateUpdate(float DeltaTime)
+{
+	return 0;
+}
+
+void Core::Collsion(float DeltaTime)
+{
+}
+
+int Core::CollsionAfterUpdate(float DeltaTime)
+{
+	return 0;
+}
+
+void Core::Render(float DeltaTime)
+{
+	Device::Get()->Clear(ClearColor);
+	{
+		//여기에 출력한다.
+	}
+	Device::Get()->Present();
 }

@@ -8,6 +8,8 @@ class JEONG_DLL Device
 {
 public:
 	bool Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWindowMode);
+	void Clear(float ClearColor[4]);
+	void Present();
 
 private:
 	//Com - Component Object의 약자 - 전부 RefCount방식으로 돌아간다.
