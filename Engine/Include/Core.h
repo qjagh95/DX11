@@ -12,18 +12,19 @@ public:
 	void Logic();
 
 	void SetClearColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a);
+	void SetGameMode(GAME_MODE eMode);
 
 private:
-	void Register(const TCHAR* ClassName, int iIconID, int iSmallIconID);
-	void CreateWnd(const TCHAR* TitleName, const TCHAR* ClassName);
-	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
-
 	int Input(float DeltaTime);
 	int Update(float DeltaTime);
 	int LateUpdate(float DeltaTime);
 	void Collsion(float DeltaTime);
 	int CollsionLateUpdate(float DeltaTime);
 	void Render(float DeltaTime);
+
+	void Register(const TCHAR* ClassName, int iIconID, int iSmallIconID);
+	void CreateWnd(const TCHAR* TitleName, const TCHAR* ClassName);
+	static LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 private:
 	static bool m_isLoop;

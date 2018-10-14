@@ -127,7 +127,7 @@ int Player_Com::Input(float DeltaTime)
 	if (KeyInput::Get().KeyDown("S3"))
 	{
 		GameObject* newClone3 = GameObject::CreateClone("BulletObjectRot", "BulletRot_Clone", m_Layer);
-		newClone3->GetTransform()->SetWorldPos(m_Transform->GetWorldPos());
+		newClone3->GetTransform()->SetWorldPos(m_Transform->GetWorldPos());   
 		newClone3->SetMoveDir(MD_UP);
 
 		BulletRot_Com* getCom = newClone3->FindComponentFromTag<BulletRot_Com>("BulletRot_Com");

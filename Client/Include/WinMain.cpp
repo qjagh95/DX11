@@ -16,6 +16,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hIstance, _In_opt_ HINSTANCE hPrevInstance,
 	}	
 	//DLL¿¡¼­ »ý¼ºµÈ ½Ì±ÛÅæ°´Ã¼¿Í ¿©±â¼­ »ý¼ºµÈ ½Ì±ÛÅæ°´Ã¼´Â ¼­·Î ´Ù¸¥°´Ã¼ÀÓ.
 
+	Core::Get()->SetGameMode(GM_2D);
+
 	//MainSceneÃß°¡
 	SceneManager::Get()->AddSceneComponent<MainScene>("MainScene");
 

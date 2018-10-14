@@ -6,6 +6,8 @@
 #include "Vector2.h"
 #include "Matrix.h"
 
+#include "Flag.h"
+
 JEONG_BEGIN
 
 struct JEONG_DLL WinSize
@@ -76,6 +78,31 @@ struct JEONG_DLL Material
 	Vector4 Diffuse;
 
 	Material() : Diffuse(Vector4::White) {}
+};
+
+struct JEONG_DLL Clip2DFrame
+{
+	Vector2	LeftTop;
+	Vector2	RightBottom;
+};
+
+struct JEONG_DLL AnimationClip2D
+{
+	ANIMATION2D_TYPE AnimationType;
+	ANIMATION_OPTION AnimationOption;
+	string AnimationName;
+	class Texture* CurTexture;
+	float TextureWidth;
+	float TextureHeight;
+	vector<Clip2DFrame>	vecFrame;
+	int Frame;
+	float PlayTime;
+	float PlayLimitTime;
+};
+
+struct JEONG_DLL Animation2DCBuffer
+{
+
 };
 
 JEONG_END

@@ -43,6 +43,7 @@
 
 //AlphaBlend
 #define ALPHA_BLEND "AlphaBlend"
+#define DEPTH_DISABLE "DepthDisable"
 
 template<typename T>
 void Safe_Delete_VecList(T& p)

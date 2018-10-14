@@ -237,3 +237,8 @@ void Core::Render(float DeltaTime)
 	}
 	Device::Get()->Present();
 }
+
+void Core::SetGameMode(GAME_MODE eMode)
+{
+	RenderManager::Get()->SetGameMode(eMode);
+}

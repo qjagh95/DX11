@@ -61,13 +61,10 @@ int Monster_Com::Update(float DeltaTime)
 		Vector3 Cross = ShotDir.Cross(Look);
 		Cross.Nomallize();
 
-		if (Cross.z <= 0.0f)
-			newBullet->GetTransform()->RotationZ(-Angle);
-		else
-			newBullet->GetTransform()->RotationZ(Angle);
+		newBullet->GetTransform()->RotationZ(Angle * Cross.z);
 
 		SAFE_RELEASE(newBullet);
-		TimeVar = 0.0f;
+		TimeVar = 0.0f; 
 	}
 
 	return 0;

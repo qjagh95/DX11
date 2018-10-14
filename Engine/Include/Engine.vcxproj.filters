@@ -115,6 +115,12 @@
     <Filter Include="Core\11. Scene\Scene">
       <UniqueIdentifier>{5937b081-513f-4203-ac02-60942f2742b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\09. Render\RenderState\DepthStancilState">
+      <UniqueIdentifier>{162c073a-7463-431e-95d3-805a6d31ca54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\08. Object\Component\BaseComponent\Animation2D">
+      <UniqueIdentifier>{c4138794-dde1-4f21-bec5-9bfff7da8a8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -213,6 +219,12 @@
     <ClInclude Include="Render\BlendState.h">
       <Filter>Core\09. Render\RenderState\BlendState</Filter>
     </ClInclude>
+    <ClInclude Include="Render\DepthStancilState.h">
+      <Filter>Core\09. Render\RenderState\DepthStancilState</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Animation2D_Com.h">
+      <Filter>Core\08. Object\Component\BaseComponent\Animation2D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
@@ -300,6 +312,12 @@
     </ClCompile>
     <ClCompile Include="Render\BlendState.cpp">
       <Filter>Core\09. Render\RenderState\BlendState</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\DepthStancilState.cpp">
+      <Filter>Core\09. Render\RenderState\DepthStancilState</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Animation2D_Com.cpp">
+      <Filter>Core\08. Object\Component\BaseComponent\Animation2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

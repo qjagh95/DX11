@@ -177,6 +177,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Animation2D_Com.h" />
     <ClInclude Include="Component\Camera_Com.h" />
     <ClInclude Include="Component\Component_Base.h" />
     <ClInclude Include="Component\Material_Com.h" />
@@ -190,6 +191,7 @@
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="RefCount.h" />
     <ClInclude Include="Render\BlendState.h" />
+    <ClInclude Include="Render\DepthStancilState.h" />
     <ClInclude Include="Render\RenderManager.h" />
     <ClInclude Include="Render\RenderState.h" />
     <ClInclude Include="Render\Shader.h" />
@@ -211,6 +213,7 @@
     <ClInclude Include="UserComponent\UserComponent_Base.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Animation2D_Com.cpp" />
     <ClCompile Include="Component\Camera_Com.cpp" />
     <ClCompile Include="Component\Component_Base.cpp" />
     <ClCompile Include="Component\Material_Com.cpp" />
@@ -223,6 +226,7 @@
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="RefCount.cpp" />
     <ClCompile Include="Render\BlendState.cpp" />
+    <ClCompile Include="Render\DepthStancilState.cpp" />
     <ClCompile Include="Render\RenderManager.cpp" />
     <ClCompile Include="Render\RenderState.cpp" />
     <ClCompile Include="Render\Shader.cpp" />

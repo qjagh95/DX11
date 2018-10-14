@@ -23,6 +23,9 @@ Renderer_Com::Renderer_Com()
 {
 	m_ComType = CT_RENDER;
 	ZeroMemory(m_RenderState, sizeof(RenderState*) * RS_END);
+
+	if (RenderManager::Get()->GetGameMode() == GM_2D)
+		SetRenderState(DEPTH_DISABLE);
 }
 
 Renderer_Com::Renderer_Com(const Renderer_Com& copyObject)

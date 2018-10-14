@@ -14,19 +14,6 @@ BlendState::~BlendState()
 {
 }
 
-void BlendState::SetState()
-{
-	// Get함수를 이용해서 state를 얻어오게 되면 레퍼런스 카운트가 증가한다.
-	Device::Get()->GetContext()->OMGetBlendState((ID3D11BlendState**)&m_OldRenderState, m_OldBlendFactor, &m_OldSamplerMask);
-	Device::Get()->GetContext()->OMSetBlendState((ID3D11BlendState*)m_RenderState, m_BlendFactor, m_SamplerMask);
-}
-
-void BlendState::ResetState()
-{
-	Device::Get()->GetContext()->OMSetBlendState((ID3D11BlendState*)m_OldRenderState, m_OldBlendFactor, m_OldSamplerMask);
-	SAFE_RELEASE(m_OldRenderState);
-}
-
 //BlendDesc설정
 bool BlendState::CreateState(BOOL bAlphaCoverage, BOOL bIndependent)
 {
@@ -68,4 +55,18 @@ void BlendState::SetBlendFactor(float Factor[4])
 {
 	memcpy(m_BlendFactor, Factor, sizeof(float) * 4);
 }
+
+void BlendState::SetState()
+{
+	// Get함수를 이용해서 state를 얻어오게 되면 레퍼런스 카운트가 증가한다.
+	Device::Get()->GetContext()->OMGetBlendState((ID3D11BlendState**)&m_OldRenderState, m_OldBlendFactor, &m_OldSamplerMask);
+	Device::Get()->GetContext()->OMSetBlendState((ID3D11BlendState*)m_RenderState, m_BlendFactor, m_SamplerMask);
+}
+
+void BlendState::ResetState()
+{
+	Device::Get()->GetContext()->OMSetBlendState((ID3D11BlendState*)m_OldRenderState, m_OldBlendFactor, m_OldSamplerMask);
+	SAFE_RELEASE(m_OldRenderState);
+}
+
 
