@@ -1,7 +1,7 @@
 #pragma once
 #include "MathHeader.h"
-
-union JEONG_DLL Vector3
+//XMVector를 멤버로 들고있지않음, 바이트정렬필요X
+union MATH_DLL Vector3
 {
 	struct 
 	{
@@ -139,6 +139,7 @@ union JEONG_DLL Vector3
 	Vector3 Cross(int Val[3]) const;
 
 	static Vector3 Nomallize(const Vector3& vec);
+
 	static Vector3 Axis[3];
 	static Vector3 Zero;
 	static Vector3 One;

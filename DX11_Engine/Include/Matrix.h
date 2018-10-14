@@ -1,10 +1,10 @@
 #pragma once
-//워닝을 무시한다
+//경고를 무시한다
 #pragma warning(disable:4251)
 
 #include "MathHeader.h"
-
-union JEONG_DLL __declspec(align(16)) Matrix
+//바이트정렬 바이트를 16배수로 맞춰준다 (SIMD 레지스터를 사용한다)
+union MATH_DLL __declspec(align(16)) Matrix
 {
 	XMMATRIX matrix;
 	struct

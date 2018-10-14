@@ -9,6 +9,9 @@ public:
 	bool Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWindowMode);
 	void Clear(float ClearColor[4]);
 	void Present();
+	ID3D11Device* GetDevice() const { return m_Device; }
+	ID3D11DeviceContext* GetContext() const { return m_Context; }
+	IDXGISwapChain* GetSwapChain() const { return m_SwapChain; }
 
 private:
 	//Com - Component Object의 약자 - 전부 RefCount방식으로 돌아간다.

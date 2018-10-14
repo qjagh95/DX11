@@ -8,15 +8,15 @@ using namespace std;
 using namespace DirectX;
 using namespace DirectX::PackedVector;
 
-#ifdef JEONG_EXPORT
-#define JEONG_DLL __declspec(dllexport)
+#ifdef MATH_EXPORT
+#define MATH_DLL __declspec(dllexport)
 #else
-#define JEONG_DLL __declspec(dllimport)
+#define MATH_DLL __declspec(dllimport)
 #endif
 
 #define TrueAssert(Type) assert(!(Type))
 
 #define JEONG_PI 3.141592f
 
-float JEONG_DLL RadianToDegree(float radian);
-float JEONG_DLL DegreeToRadian(float degree);
+float MATH_DLL RadianToDegree(float radian);
+float MATH_DLL DegreeToRadian(float degree);

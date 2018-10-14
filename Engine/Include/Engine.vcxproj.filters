@@ -4,25 +4,37 @@
     <Filter Include="Core">
       <UniqueIdentifier>{0c16694f-fe62-4aac-ad5a-5fa6b94f89fd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header">
+    <Filter Include="Core\Device">
+      <UniqueIdentifier>{a49ff980-6464-4c48-bb82-eb4332917466}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Header">
       <UniqueIdentifier>{642d290c-399b-4462-9eda-78d5c20537d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource">
+      <UniqueIdentifier>{41fef778-ee65-4fbd-bc0e-f7820b4aeacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Mesh">
+      <UniqueIdentifier>{6abaa2fb-d831-48f9-8b85-17771f40e7fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Resource\Manager">
+      <UniqueIdentifier>{10cf602d-6006-4fcc-8de0-f42729f82423}</UniqueIdentifier>
     </Filter>
     <Filter Include="Core\Window">
       <UniqueIdentifier>{0a405531-5ea1-47dc-9998-e5baf4697afa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Device">
-      <UniqueIdentifier>{a49ff980-6464-4c48-bb82-eb4332917466}</UniqueIdentifier>
+    <Filter Include="Core\RefCount">
+      <UniqueIdentifier>{e24e819e-22fc-4c40-8635-1e8d175b6e71}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
-      <Filter>Header</Filter>
+      <Filter>Core\Header</Filter>
     </ClInclude>
     <ClInclude Include="Macro.h">
-      <Filter>Header</Filter>
+      <Filter>Core\Header</Filter>
     </ClInclude>
     <ClInclude Include="Type.h">
-      <Filter>Header</Filter>
+      <Filter>Core\Header</Filter>
     </ClInclude>
     <ClInclude Include="Core.h">
       <Filter>Core\Window</Filter>
@@ -33,10 +45,19 @@
     <ClInclude Include="resource.h">
       <Filter>Core\Window</Filter>
     </ClInclude>
+    <ClInclude Include="Resource\ResourceManager.h">
+      <Filter>Core\Resource\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="RefCount.h">
+      <Filter>Core\RefCount</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\Mesh.h">
+      <Filter>Core\Resource\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
-      <Filter>Header</Filter>
+      <Filter>Core\Header</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -45,6 +66,15 @@
     </ClCompile>
     <ClCompile Include="Device.cpp">
       <Filter>Core\Device</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\ResourceManager.cpp">
+      <Filter>Core\Resource\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="RefCount.cpp">
+      <Filter>Core\RefCount</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Mesh.cpp">
+      <Filter>Core\Resource\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

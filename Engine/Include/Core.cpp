@@ -1,5 +1,6 @@
 #include "Core.h"
 #include "Device.h"
+#include "./Resource/ResourceManager.h"
 
 JEONG_USING
 
@@ -17,6 +18,7 @@ Core::Core()
 Core::~Core()
 {
 	Device::Delete();
+	ResourceManager::Delete();
 }
 
 bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const TCHAR * TitleName, const TCHAR * ClassName, int iIconID, int iSmallIconID, bool bWindowMode)
@@ -40,6 +42,9 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 
 	//DirectX11 DeviceÃÊ±âÈ­
 	if (Device::Get()->Init(hWnd, Width, Height, bWindowMode) == false)
+		return false;
+
+	if (ResourceManager::Get()->Init() == false)
 		return false;
 
 	SetClearColor(0, 150, 255, 0);

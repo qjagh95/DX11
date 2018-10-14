@@ -1,7 +1,7 @@
 #pragma once
 #include "MathHeader.h"
-
-union JEONG_DLL Vector2
+//XMVector를 멤버로 들고있지않음, 바이트정렬필요X
+union MATH_DLL Vector2
 {
 	struct
 	{
