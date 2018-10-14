@@ -2,5 +2,5 @@ cd..
 cd..
 	
 xcopy .\Engine\Include\*.h .\DX11_Engine\Include\ /s /y /d
-xcopy .\Engine\Bin\*.* .\DX11_Engine\Bin\ /s /y /d
+xcopy .\Engine\Bin\*.* .\DX11_Engine\Bin\ /s /y /d /exclude:exclude.txt
 xcopy .\Engine\Bin\*.* .\Client\Bin\ /s /y /d /exclude:exclude.txt

@@ -1,6 +1,8 @@
 #pragma once
 
-struct WinSize
+#include "Macro.h"
+
+struct JEONG_DLL WinSize
 {
 	unsigned int Width;
 	unsigned int Height;

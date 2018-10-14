@@ -16,6 +16,9 @@
 #define SAFE_RELEASE(p) if(p) {p->Release(); p = NULL;}
 #define SAFE_DELETE_ARRARY(p) if(p){delete[] p; p = NULL;}
 
+#define GET_SINGLE(Type) Type::Get()
+#define DELETE_SINGLE(Type) Type::Delete()
+
 template<typename T>
 void Safe_Delete_VecList(T& p)
 {

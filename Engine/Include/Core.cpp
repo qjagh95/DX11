@@ -1,4 +1,5 @@
 #include "Core.h"
+#include "Device.h"
 
 JEONG_USING
 
@@ -13,6 +14,7 @@ Core::Core()
 
 Core::~Core()
 {
+	Device::Delete();
 }
 
 bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const TCHAR * TitleName, const TCHAR * ClassName, int iIconID, int iSmallIconID, bool bWindowMode)
@@ -31,6 +33,14 @@ bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const 
 
 bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Height, bool bWindowMode)
 {
+	m_hIstance = hInst;
+	m_hWnd = hWnd;
+	m_WinSize.Width = Width;
+	m_WinSize.Height = Height;
+
+	//DirectX11 DeviceÃÊ±âÈ­
+	if (Device::Get()->Init(hWnd, Width, Height, bWindowMode) == false)
+		return false;
 
 	return true;
 }

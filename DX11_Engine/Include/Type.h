@@ -1,7 +1,6 @@
 #pragma once
-#include "Macro.h"
 
-JEONG_BEGIN
+#include "Macro.h"
 
 struct JEONG_DLL WinSize
 {
@@ -12,5 +11,3 @@ struct JEONG_DLL WinSize
 	WinSize(const WinSize& size) {*this = size;}
 	WinSize(unsigned int Width, unsigned Height) : Width(Width), Height(Height) {}
 };
-
-JEONG_END

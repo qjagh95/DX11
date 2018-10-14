@@ -28,3 +28,5 @@ using namespace DirectX::PackedVector;
 
 #include "Type.h"
 #include "Macro.h"
+
+#define TrueAssert(Var) assert(!(Var))
