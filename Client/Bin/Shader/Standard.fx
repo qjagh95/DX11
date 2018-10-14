@@ -7,7 +7,7 @@ VS_OUTPUT_COLOR StandardColorVS(VS_INPUT_COLOR input)
     //0으로 초기화
     VS_OUTPUT_COLOR output = (VS_OUTPUT_COLOR)0;
 
-    output.vPos = float4(input.vPos, 0);
+    output.vPos = float4(input.vPos, 1.0f);
     output.vColor = input.vColor;
 
     return output;

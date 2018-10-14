@@ -51,8 +51,8 @@ void Mesh::Render()
 				//쉐이더에 정점정보를 넣는준비를 한다(입력 레지스터에 넣는다)
 				Device::Get()->GetContext()->IASetIndexBuffer(m_vecMeshContainer[i]->vecIndexBuffer[j].iBuffer, m_vecMeshContainer[i]->vecIndexBuffer[j].iFormat, 0);
 				Device::Get()->GetContext()->DrawIndexed(m_vecMeshContainer[i]->vecIndexBuffer[j].iCount, 0, 0); ///인덱스버퍼의 갯수, 위치(첫번째), 추가되는값(0)
-			}
-		}
+			} 
+		}//else
 	}
 }
 
@@ -60,6 +60,7 @@ bool Mesh::CreateMesh(const string & TagName, const string & ShaderKeyName, cons
 {
 	SetTag(TagName);
 	m_ShaderKeyName = ShaderKeyName;
+	m_LayOutKeyName = LayOutKeyName;
 
 	MeshContainer* newContainer = new MeshContainer();
 	newContainer->PrimitiveType = primitiveType;
@@ -68,6 +69,7 @@ bool Mesh::CreateMesh(const string & TagName, const string & ShaderKeyName, cons
 
 	if (CreateVertexBuffer(vertexInfo, vertexCount, vertexSize, vertexUsage) == false)
 		return false;
+
 	if (CreateIndexBuffer(indexInfo, indexCount, indexSize, indexUsage, indexFormat) == false)
 		return false;
 
@@ -83,7 +85,7 @@ bool Mesh::CreateVertexBuffer(void * vertexInfo, int vertexCount, int vertexSize
 	getContainer->vertexBuffer.vUsage = vertexUsage;
 	getContainer->vertexBuffer.vSize = vertexSize;
 
-	memcpy(getContainer->vertexBuffer.vInfo, vertexInfo, sizeof(vertexSize * vertexCount));
+	memcpy(getContainer->vertexBuffer.vInfo, vertexInfo, vertexSize * vertexCount);
 
 	D3D11_BUFFER_DESC bufferDesc = {}; ///버퍼의 정보를 설정한다
 	bufferDesc.ByteWidth = vertexSize * vertexCount; ///총 바이트수
@@ -104,17 +106,16 @@ bool Mesh::CreateVertexBuffer(void * vertexInfo, int vertexCount, int vertexSize
 
 bool Mesh::CreateIndexBuffer(void * indexInfo, int indexCount, int indexSize, D3D11_USAGE indexUsage, DXGI_FORMAT indexFormat)
 {
-	//항상 마지막에 추가된 것을 가져온다.
+	//항상 마지막에 추가된 것을 가져온다.  
 	MeshContainer* getContainer = m_vecMeshContainer[m_vecMeshContainer.size() - 1];
 
 	IndexBuffer TempIndexBuffer;
-
 	TempIndexBuffer.iCount = indexCount;
 	TempIndexBuffer.iInfo = new char[indexSize * indexCount];
 	TempIndexBuffer.iUsage = indexUsage;
 	TempIndexBuffer.iSize = indexSize;
 
-	memcpy(TempIndexBuffer.iInfo, indexInfo, sizeof(indexSize * indexCount));
+	memcpy(TempIndexBuffer.iInfo, indexInfo, indexSize * indexCount);
 
 	D3D11_BUFFER_DESC bufferDesc = {}; ///버퍼의 정보를 설정한다
 	bufferDesc.ByteWidth = indexSize * indexCount; ///총 바이트수

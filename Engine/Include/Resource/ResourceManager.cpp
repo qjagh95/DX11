@@ -19,14 +19,14 @@ bool ResourceManager::Init()
 	VertexColor vInfo[3] =
 	{
 		//투영공간은 -1 ~ 0의 범위를 갖는다.
-		VertexColor(Vector3(0.0f, 0.5f, 0.0f), Vector4::Azure),
-		VertexColor(Vector3(0.5f, -0.5f , 0.0f), Vector4::Linen),
-		VertexColor(Vector3(-0.5f, 0.5f, 0.0f), Vector4::OldLace),
+		VertexColor(Vector3(0.0f, 0.5f, 0.0f), Vector4::Chartreuse),
+		VertexColor(Vector3(0.5f, -0.5f , 0.0f), Vector4::DarkOrchid),
+		VertexColor(Vector3(-0.5f, -0.5f, 0.0f), Vector4::DarkGreen),
 	};
 
 	unsigned short Index[3] = { 0, 1, 2 };
 
-	CreateMesh("ColorTri", "", "", vInfo, 3, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, Index, 3, 2);
+	CreateMesh("ColorTri", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, vInfo, 3, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, Index, 3, 2);
 
 	return true;
 }

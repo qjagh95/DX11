@@ -45,9 +45,14 @@ public:
 	bool CreateMesh(const string& TagName, const string& ShaderKeyName, const string& LayOutKeyName, void* vertexInfo, int vertexCount, int vertexSize, D3D11_USAGE vertexUsage, D3D11_PRIMITIVE_TOPOLOGY primitiveType, void* indexInfo = NULLPTR, int indexCount = 0,	int indexSize = 0, D3D11_USAGE indexUsage = D3D11_USAGE_DEFAULT, DXGI_FORMAT indexFormat = DXGI_FORMAT_R16_UINT);
 	void Render();
 
+	string GetShaderKey() const { return m_ShaderKeyName; }
+	string GetLayOutKey() const { return m_LayOutKeyName; }
+	VertexBuffer& GetVertexBuffer() const { return m_vecMeshContainer[0]->vertexBuffer; }
+
 private:
 	vector<MeshContainer*> m_vecMeshContainer;
 	string m_ShaderKeyName;
+	string m_LayOutKeyName;
 
 private:
 	Mesh();

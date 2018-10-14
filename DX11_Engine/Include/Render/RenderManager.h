@@ -9,7 +9,7 @@ public:
 	bool Init();
 
 private:
-
+	
 public:
 	CLASS_IN_SINGLE(RenderManager)
 };

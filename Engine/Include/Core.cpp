@@ -1,7 +1,14 @@
 #include "Core.h"
 #include "Device.h"
-#include "./Resource/ResourceManager.h"
 #include "PathManager.h"
+
+#include "Resource\ResourceManager.h"
+#include "Resource/Mesh.h"
+
+#include "Render\Shader.h"
+#include "Render/ShaderManager.h"
+#include "Render/RenderManager.h"
+
 
 JEONG_USING
 
@@ -12,7 +19,7 @@ Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	//_CrtSetBreakAlloc(5399);
-
+	Temp = 0.0f;
 	ZeroMemory(ClearColor, sizeof(float) * 4);
 }
 
@@ -20,6 +27,9 @@ Core::~Core()
 {
 	Device::Delete();
 	ResourceManager::Delete();
+	ShaderManager::Delete();
+	PathManager::Delete();
+
 }
 
 bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const TCHAR * TitleName, const TCHAR * ClassName, int iIconID, int iSmallIconID, bool bWindowMode)
@@ -45,10 +55,13 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 	if (Device::Get()->Init(hWnd, Width, Height, bWindowMode) == false)
 		return false;
 
+	if (PathManager::Get()->Init() == false)
+		return false;
+
 	if (ResourceManager::Get()->Init() == false)
 		return false;
 
-	if (PathManager::Get()->Init() == false)
+	if (RenderManager::Get()->Init() == false)
 		return false;
 
 	SetClearColor(0, 150, 255, 0);
@@ -83,7 +96,7 @@ void Core::Logic()
 	LateUpdate(0.0f);
 	Collsion(0.0f);
 	CollsionAfterUpdate(0.0f);
-	Render(0.0f);
+	Render(1.0f);
 }
 
 void Core::SetClearColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)
@@ -174,7 +187,30 @@ void Core::Render(float DeltaTime)
 {
 	Device::Get()->Clear(ClearColor);
 	{
-		//여기에 출력한다.
+		Mesh* newMesh = ResourceManager::Get()->FindMesh("ColorTri");
+		Shader* newShader = ShaderManager::Get()->FindShader(newMesh->GetShaderKey());
+		ID3D11InputLayout* newLayout = ShaderManager::Get()->FindInputLayOut(newMesh->GetLayOutKey());
+
+		newShader->SetShader();
+		Device::Get()->GetContext()->IASetInputLayout(newLayout);
+		newMesh->Render();
+
+		if (GetAsyncKeyState(VK_SPACE) & 0x8000)
+		{
+			Temp += 0.001f;
+
+			VertexColor a[3] =
+			{
+				VertexColor(Vector3(0.0f + Temp, 0.5f , 0.0f), Vector4::Chartreuse),
+				VertexColor(Vector3(0.5f + Temp, -0.5f, 0.0f), Vector4::DarkOrchid),
+				VertexColor(Vector3(-0.5f + Temp, -0.5f, 0.0f), Vector4::DarkGreen),
+			};
+
+			Device::Get()->GetContext()->UpdateSubresource(newMesh->GetVertexBuffer().vBuffer, 0, NULLPTR, &a, 0, 0);
+		}
+
+		SAFE_RELEASE(newShader);
+		SAFE_RELEASE(newMesh);
 	}
 	Device::Get()->Present();
 }

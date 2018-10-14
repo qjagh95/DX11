@@ -32,6 +32,8 @@ private:
 	HWND m_hWnd;
 	float ClearColor[4];
 
+	float Temp;
+
 public:
 	CLASS_IN_SINGLE(Core);
 };
