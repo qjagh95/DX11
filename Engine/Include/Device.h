@@ -12,6 +12,7 @@ public:
 	ID3D11Device* GetDevice() const { return m_Device; }
 	ID3D11DeviceContext* GetContext() const { return m_Context; }
 	IDXGISwapChain* GetSwapChain() const { return m_SwapChain; }
+	WinSize GetWinSize() const { return m_WinSize; }
 
 private:
 	//Com - Component Object의 약자 - 전부 RefCount방식으로 돌아간다.
@@ -42,6 +43,7 @@ private:
 	IDXGISwapChain* m_SwapChain;			///스왑체인 - 백버퍼를 관리한다.
 	ID3D11RenderTargetView* m_TargerView;   ///랜더타겟뷰 - 출력할 랜더타겟 (디바이스에 등록해놓을 것)
 	ID3D11DepthStencilView* m_DepthView;    ///깊이스탠실뷰
+	WinSize m_WinSize;
 
 public:
 	CLASS_IN_SINGLE(Device)

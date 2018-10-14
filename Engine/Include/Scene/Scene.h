@@ -4,6 +4,9 @@ JEONG_BEGIN
 
 class Layer;
 class SceneComponent;
+class GameObject;
+class Camera_Com;
+class Transform_Com;
 class JEONG_DLL Scene : public RefCount
 {
 public:
@@ -21,6 +24,7 @@ public:
 	void SetEnableLayer(const string& TagName, bool isShow);
 	void SetLayerDie(const string& TagName, bool isActive);
 	Layer* FindLayer(const string& TagName);
+	GameObject* FindObject(const string& TagName);
 
 	template<typename T>
 	bool AddSceneComponent(const string& TagName)
@@ -40,9 +44,20 @@ public:
 		return true;
 	}
 
+	GameObject* CreateCamera(const string& TagName, const Vector3& Pos,CAMERA_TYPE eType, float Width, float Height, float ViewAngle, float Near, float Far);
+	void ChangeCamera(const string& TagName);
+
+private:
+	class GameObject* FindCamera(const string& TagName);
+
 private:
 	list<Layer*> m_LayerList;
 	list<SceneComponent*> m_SceneComponentList;
+
+	unordered_map<string, GameObject*> m_CameraMap;
+	Camera_Com* m_MainCamera;
+	Transform_Com* m_MainCameraTransform;
+	GameObject* m_MainCameraObject;
 
 private:
 	Scene();

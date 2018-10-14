@@ -52,7 +52,7 @@ int Player_Com::Input(float DeltaTime)
 	{
 		GameObject* newClone = GameObject::CreateClone("BulletObject", "Bullet_Clone", m_Layer);
 		newClone->GetTransform()->Rotation(m_Transform->GetWorldRotation());
-		newClone->GetTransform()->Move(m_Transform->GetWorldPos());
+		newClone->GetTransform()->SetWorldPos(m_Transform->GetWorldPos());
 		SAFE_RELEASE(newClone);
 	}
 

@@ -125,6 +125,9 @@ union MATH_DLL Vector3
 	Vector3 TransformCoord(const union Matrix& mat);
 	Vector3 TransformCoord(const XMMATRIX& mat);
 
+	//거리
+	float GetDistance(const Vector3& Vec);
+
 	//내적
 	float Dot(const Vector3& vec) const;
 	float Dot(const XMVECTOR& Xmvec) const;

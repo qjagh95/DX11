@@ -4,6 +4,8 @@ JEONG_BEGIN
 
 //Transform_Com에서는 World행렬을 만들기위하여 S R T결합만 해준다!
 //SIMD 수학연산 Matrix를 사용할것이므로 16바이트 정렬.
+class GameObject;
+class Component_Base;
 class JEONG_DLL __declspec(align(16)) Transform_Com : public Component_Base
 {  
 public:
@@ -49,8 +51,6 @@ public:
 
 	void SetWorldScale(const Vector3& vScale);
 	void SetWorldScale(float x, float y, float z);
-	void SetWorldRotation(const Vector3& vRot);
-	void SetWorldRotation(float x, float y, float z);
 	void SetWorldRotX(float x);
 	void SetWorldRotY(float y);
 	void SetWorldRotZ(float z);
@@ -71,6 +71,10 @@ public:
 	void RotationZ(float z, float DeltaTime);
 	void Rotation(const Vector3& vRot, float DeltaTime);
 	void Rotation(const Vector3& vRot);
+
+	void LookAt(GameObject* object, AXIS eAxis = AXIS_Z);
+	void LookAt(Component_Base* component, AXIS eAxis = AXIS_Z);
+	void LookAt(const Vector3& Vec, AXIS eAxis = AXIS_Z);
 
 private:
 	//행렬연산은 연산자체가 무겁기 때문에 연산을 해줄때만 해주겠다.

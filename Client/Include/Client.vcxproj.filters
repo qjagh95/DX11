@@ -13,9 +13,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp">
-      <Filter>WinMain</Filter>
-    </ClCompile>
     <ClCompile Include="SceneComponent\MainScene.cpp">
       <Filter>SceneComponent</Filter>
     </ClCompile>
@@ -24,6 +21,12 @@
     </ClCompile>
     <ClCompile Include="UserComponent\Bullet_Com.cpp">
       <Filter>UserComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="UserComponent\Monster_Com.cpp">
+      <Filter>UserComponent</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>WinMain</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +40,9 @@
       <Filter>WinMain</Filter>
     </ClInclude>
     <ClInclude Include="UserComponent\Bullet_Com.h">
+      <Filter>UserComponent</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponent\Monster_Com.h">
       <Filter>UserComponent</Filter>
     </ClInclude>
   </ItemGroup>

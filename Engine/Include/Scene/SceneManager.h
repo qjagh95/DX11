@@ -4,6 +4,7 @@ JEONG_BEGIN
 
 class Scene;
 class Layer;
+class GameObject;
 class JEONG_DLL SceneManager
 {
 public:
@@ -20,6 +21,7 @@ public:
 	void AddLayer(const string& TagName, int ZOrder, bool isCurrent = true);
 	void ChangeLayerZOrder(const string& TagName, int ZOrder, bool isCurrent = true);
 	Layer* FindLayer(const string& TagName, bool isCurrent = true);
+	GameObject* FindObject(const string& TagName);
 
 	template<typename T>
 	bool AddSceneComponent(const string& TagName, bool isCurrent = true)

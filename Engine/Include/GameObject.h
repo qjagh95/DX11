@@ -33,7 +33,6 @@ public:
 	void SetRotationZ(float RotZ);
 	static GameObject* CreateObject(const string& TagName, Layer* layer = NULLPTR);
 
-
 	/////////////////////////////////////프로토타입함수(Clone)/////////////////////////////////////
 	static GameObject* CreateProtoType(const string& TagName, bool isCurrent = true);
 	static GameObject* CreateClone(const string& TagName, const string& ProtoTypeTagName, Layer* layer = NULLPTR, bool isCurrent = true);
@@ -84,10 +83,27 @@ public:
 		}
 		return NULLPTR;
 	}
-	///////////////////////////////////////////////////////////////////////////////////////////////
 
-private:
+	template <typename T>
+	T* FindComponentFromType(COMPONENT_TYPE eType)
+	{
+		list<Component_Base*>::iterator	StartIter = m_FindComList.begin();
+		list<Component_Base*>::iterator	EndIter = m_FindComList.end();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			if ((*StartIter)->GetComType() == eType)
+			{
+				(*StartIter)->AddRefCount();
+				return (T*)*StartIter;
+			}
+		}
+
+		return nullptr;
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
 	static GameObject* FindProtoType(Scene* scene, const string& TagName);
+	static GameObject* FindObject(const string& TagName);
 
 private:
 	list<Component_Base*> m_ComponentList;

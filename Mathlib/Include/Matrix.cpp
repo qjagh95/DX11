@@ -117,6 +117,7 @@ XMMATRIX Matrix::Scaling(const Vector3 & Scale)
 	return matrix;
 }
 
+
 XMMATRIX Matrix::Rotation(float x, float y, float z)
 {
 	XMMATRIX matRotX, matRotY, matRotZ;
@@ -166,6 +167,12 @@ XMMATRIX Matrix::Translation(float x, float y, float z)
 XMMATRIX Matrix::Translation(const Vector3 & vPos)
 {
 	matrix = XMMatrixTranslation(vPos.x, vPos.y, vPos.z);
+	return matrix;
+}
+
+XMMATRIX Matrix::RotationAxis(float Angle, Vector3 & Axis)
+{
+	matrix = XMMatrixRotationAxis(Axis.Convert(), DegreeToRadian(Angle));
 	return matrix;
 }
 

@@ -21,6 +21,7 @@ GameObject::GameObject(const GameObject& copyObject)
 	*this = copyObject;
 
 	m_Transform = copyObject.m_Transform->Clone();
+	m_Transform->m_Transform = m_Transform;
 
 	m_ComponentList.clear();
 	m_FindComList.clear();
@@ -48,6 +49,8 @@ bool GameObject::Init()
 {
 	m_Transform = new Transform_Com();
 	m_Transform->Init();
+
+	m_Transform->m_Transform = m_Transform;
 
 	return true;
 }
@@ -349,6 +352,7 @@ void GameObject::DestroyProtoType(Scene * scene)
 		return;
 
 	Safe_Release_Map(FindIter->second);
+
 	m_ProtoTypeMap.erase(FindIter);
 }
 
@@ -397,13 +401,57 @@ GameObject * GameObject::FindProtoType(Scene * scene, const string & TagName)
 	return FindIter2->second;
 }
 
+GameObject * GameObject::FindObject(const string & TagName)
+{
+	return SceneManager::Get()->FindObject(TagName);
+}
+
+const list<Component_Base*>* GameObject::FindComponentFromTag(const string& TagName)
+{
+	Safe_Release_VecList(m_FindComList);
+	m_FindComList.clear();
+
+	list<Component_Base*>::iterator StartIter = m_ComponentList.begin();
+	list<Component_Base*>::iterator EndIter = m_ComponentList.end();
+
+	for (; StartIter != EndIter ; StartIter++)
+	{
+		if ((*StartIter)->GetTag() == TagName)
+		{
+			(*StartIter)->AddRefCount();
+			m_FindComList.push_back(*StartIter);
+		}
+	}
+
+	return &m_FindComList;
+}
+
+const list<Component_Base*>*  GameObject::FindComponentFromType(COMPONENT_TYPE type)
+{
+	Safe_Release_VecList(m_FindComList);
+	m_FindComList.clear();
+
+	list<Component_Base*>::iterator StartIter = m_ComponentList.begin();
+	list<Component_Base*>::iterator EndIter = m_ComponentList.end();
+
+	for (; StartIter != EndIter; StartIter++)
+	{
+		if ((*StartIter)->GetComType() == type)
+		{
+			(*StartIter)->AddRefCount();
+			m_FindComList.push_back(*StartIter);
+		}
+	}
+	return &m_FindComList;
+}
+
 void GameObject::SetTransform(Transform_Com* transform)
 {
 	m_Transform = transform;
 }
 void GameObject::SetRotation(const Vector3& vecRot)
 {
-	m_Transform->SetWorldRotation(vecRot);
+	m_Transform->Rotation(vecRot);	
 }
 
 void GameObject::SetRotationX(float RotX)

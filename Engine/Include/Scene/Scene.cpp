@@ -1,7 +1,12 @@
 #include "Scene.h"
 #include "Layer.h"
 #include "SceneComponent.h"
+
 #include "../GameObject.h"
+
+#include "../Component/Camera_Com.h"
+#include "../Component/Transform_Com.h"
+#include "../Device.h"
 
 JEONG_USING
 
@@ -11,15 +16,26 @@ Scene::Scene()
 
 Scene::~Scene()
 {
+	Safe_Release_Map(m_CameraMap);
 	Safe_Release_VecList(m_LayerList);
 	Safe_Release_VecList(m_SceneComponentList);
 	GameObject::DestroyProtoType(this);
+
+	SAFE_RELEASE(m_MainCamera);
+	SAFE_RELEASE(m_MainCameraTransform);
+	SAFE_RELEASE(m_MainCameraObject);
 }
 
 bool Scene::Init()
 {
 	AddLayer("Default", 0);
 	AddLayer("UI", INT_MAX);
+
+	m_MainCameraObject = CreateCamera("MainCamera", Vector3(0.0f, 0.0f, -5.0f), CT_PERSPECTIVE, (float)Device::Get()->GetWinSize().Width, (float)Device::Get()->GetWinSize().Height, 60.0f, 0.03f, 1000.0f);
+	m_MainCameraTransform = m_MainCameraObject->GetTransform();
+	m_MainCamera = m_MainCameraObject->FindComponentFromType<Camera_Com>(CT_CAMERA);
+
+	SAFE_RELEASE(m_MainCamera);
 
 	return true;
 }
@@ -379,4 +395,66 @@ Layer * Scene::FindLayer(const string & TagName)
 bool Scene::SortLayerFunc(const Layer * Src, const Layer * Dest)
 {
 	return Src->GetZOrder() > Dest->GetZOrder();
+}
+
+GameObject * Scene::FindObject(const string & TagName)
+{
+	list<Layer*>::iterator StartIter = m_LayerList.begin();
+	list<Layer*>::iterator EndIter = m_LayerList.end();
+
+	for (; StartIter != EndIter; StartIter++)
+	{
+		GameObject* getObject = (*StartIter)->FindObject(TagName);
+
+		if(getObject != NULLPTR)
+			return getObject;
+	}
+	return NULLPTR;
+}
+
+GameObject * Scene::CreateCamera(const string & TagName, const Vector3 & Pos, CAMERA_TYPE eType, float Width, float Height, float ViewAngle, float Near, float Far)
+{
+	GameObject* newCameraObject = FindCamera(TagName);
+
+	if (newCameraObject != NULLPTR)
+		return newCameraObject;
+
+	newCameraObject = GameObject::CreateObject(TagName);
+	newCameraObject->GetTransform()->SetWorldPos(Pos);
+
+	Camera_Com* newCameraCom = newCameraObject->AddComponent<Camera_Com>("Camera");
+	newCameraCom->SetCameraInfo(eType, Width, Height, ViewAngle, Near, Far);
+	SAFE_RELEASE(newCameraCom);
+
+	newCameraObject->AddRefCount();
+
+	m_CameraMap.insert(make_pair(TagName, newCameraObject));
+
+	return newCameraObject;
+}
+
+void Scene::ChangeCamera(const string & TagName)
+{
+	GameObject* getCamera = FindCamera(TagName);
+
+	if (getCamera == NULLPTR)
+		return;
+
+	SAFE_RELEASE(m_MainCamera);
+	SAFE_RELEASE(m_MainCameraTransform);
+	SAFE_RELEASE(m_MainCameraObject);
+
+	m_MainCameraObject = getCamera;
+	m_MainCameraTransform = getCamera->GetTransform();
+	m_MainCamera = getCamera->FindComponentFromType<Camera_Com>(CT_CAMERA);
+}
+
+GameObject * Scene::FindCamera(const string & TagName)
+{
+	unordered_map<string, GameObject*>::iterator FindIter = m_CameraMap.find(TagName);
+
+	if (FindIter == m_CameraMap.end())
+		return NULLPTR;
+
+	return FindIter->second;
 }

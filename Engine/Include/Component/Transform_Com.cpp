@@ -1,4 +1,5 @@
 #include "Transform_Com.h"
+#include "../GameObject.h"
 
 JEONG_USING
 
@@ -214,30 +215,6 @@ void Transform_Com::SetWorldScale(float x, float y, float z)
 	m_isUpdate = true;
 }
 
-void Transform_Com::SetWorldRotation(const Vector3 & vRot)
-{
-	//회전값을 받는다
-	m_WorldRotation = vRot;
-	//회전행렬에 곱해준다
-	m_MatWorldRotation.Rotation(m_WorldRotation);
-
-	ComputeWorldAxis();
-
-	m_isUpdate = true;
-}
-
-void Transform_Com::SetWorldRotation(float x, float y, float z)
-{
-	//회전값을 받는다
-	m_WorldRotation = Vector3(x, y, z);
-	//회전행렬에 곱해준다
-	m_MatWorldRotation.Rotation(m_WorldRotation);
-
-	ComputeWorldAxis();
-
-	m_isUpdate = true;
-}
-
 void Transform_Com::SetWorldRotX(float x)
 {
 	//회전값을 받는다
@@ -376,4 +353,36 @@ void Transform_Com::ComputeWorldAxis()
 		//크기1벡터로 만들어서 방향값을 얻어오기 위함.
 		m_WorldAxis[i].Nomallize();
 	}
+}
+
+void Transform_Com::LookAt(GameObject * object, AXIS eAxis)
+{
+	LookAt(object->GetTransform()->GetWorldPos(), eAxis);
+}
+
+void Transform_Com::LookAt(Component_Base * component, AXIS eAxis)
+{
+	LookAt(component->GetTransform()->GetWorldPos(), eAxis);
+}
+
+void Transform_Com::LookAt(const Vector3 & Vec, AXIS eAxis)
+{
+	//바라보려는 방향을 구한다. (벡터뺄셈 = 바라보는방향) 
+	Vector3 View = Vec - m_WorldPos;
+	View.Nomallize();
+
+	//가상축을 선언한다.
+	Vector3 Axis = Vector3::Axis[eAxis];
+
+	//가상축과 바라보려는 방향(View)의 각도를 구한다 (내적)
+	float Angle = Axis.GetAngle(View);
+
+	//가상축과 외적을한다 (2D상에서 외적을하면 Z축이 나오게됨으로 무조건 Z축회전이 일어난다.)
+	Vector3 vRotAxis = Axis.Cross(View);
+	vRotAxis.Nomallize();
+
+	//가상 축에 대한 회전행렬 생성.
+	m_MatWorldRotation.RotationAxis(Angle, vRotAxis);
+
+	m_isUpdate = true;
 }

@@ -90,7 +90,7 @@ int Layer::LateUpdate(float DeltaTime)
 		}
 
 		(*StartIter)->Update(DeltaTime);
-		StartIter++;
+StartIter++;
 	}
 	return 0;
 }
@@ -180,4 +180,20 @@ void Layer::AddObject(GameObject * object)
 	object->AddRefCount();
 
 	m_ObjectList.push_back(object);
+}
+
+GameObject * Layer::FindObject(const string & TagName)
+{
+	list<GameObject*>::iterator StartIter = m_ObjectList.begin();
+	list<GameObject*>::iterator EndIter = m_ObjectList.end();
+
+	for (; StartIter != EndIter; StartIter++)
+	{
+		if ( ((*StartIter)->GetTag() == TagName))
+		{
+			(*StartIter)->AddRefCount();
+			return *StartIter;
+		}
+	}
+	return NULLPTR;
 }

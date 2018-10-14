@@ -1,7 +1,6 @@
 #include "SceneManager.h"
 #include "Scene.h"
 JEONG_USING
-
 SINGLETON_VAR_INIT(SceneManager)
 
 SceneManager::SceneManager()
@@ -95,4 +94,9 @@ Layer * SceneManager::FindLayer(const string & TagName, bool isCurrent)
 		return m_CurScene->FindLayer(TagName);
 	else
 		return m_NextScene->FindLayer(TagName);
+}
+
+GameObject * SceneManager::FindObject(const string & TagName)
+{
+	return m_CurScene->FindObject(TagName);
 }

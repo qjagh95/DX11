@@ -166,15 +166,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="SceneComponent\MainScene.cpp" />
     <ClCompile Include="UserComponent\Bullet_Com.cpp" />
+    <ClCompile Include="UserComponent\Monster_Com.cpp" />
     <ClCompile Include="UserComponent\Player_Com.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ClienHeader.h" />
     <ClInclude Include="SceneComponent\MainScene.h" />
     <ClInclude Include="UserComponent\Bullet_Com.h" />
+    <ClInclude Include="UserComponent\Monster_Com.h" />
     <ClInclude Include="UserComponent\Player_Com.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

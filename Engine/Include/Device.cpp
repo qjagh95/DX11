@@ -24,6 +24,9 @@ Device::~Device()
 
 bool Device::Init(HWND hWnd, unsigned int Width, unsigned int Height, bool isWindowMode)
 {
+	m_WinSize.Width = Width;
+	m_WinSize.Height = Height;
+
 	UINT Flag = 0;
 
 #ifdef _DEBUG

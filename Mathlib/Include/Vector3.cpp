@@ -796,6 +796,11 @@ Vector3 Vector3::TransformCoord(const XMMATRIX & mat)
 	return Vector3(XMVector3TransformCoord(Src, mat));
 }
 
+float Vector3::GetDistance(const Vector3 & Vec)
+{
+	return Vector3(*this - Vec).Lenth();
+}
+
 /////////////////////////////////////////////////////////////////////////
 float Vector3::Dot(const Vector3 & vec) const
 {

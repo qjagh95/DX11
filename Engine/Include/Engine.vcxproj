@@ -177,6 +177,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Component\Camera_Com.h" />
     <ClInclude Include="Component\Component_Base.h" />
     <ClInclude Include="Component\Renderer_Com.h" />
     <ClInclude Include="Component\Transform_Com.h" />
@@ -205,6 +206,7 @@
     <ClInclude Include="UserComponent\UserComponent_Base.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Component\Camera_Com.cpp" />
     <ClCompile Include="Component\Component_Base.cpp" />
     <ClCompile Include="Component\Renderer_Com.cpp" />
     <ClCompile Include="Component\Transform_Com.cpp" />

@@ -35,3 +35,4 @@ using namespace DirectX::PackedVector;
 #include "Flag.h"
 
 #define TrueAssert(Var) assert(!(Var))
+#define new new(_CLIENT_BLOCK,__FILE__,__LINE__)

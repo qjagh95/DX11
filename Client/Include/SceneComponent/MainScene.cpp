@@ -11,6 +11,8 @@
 #include "../UserComponent/Player_Com.h"
 #include "../UserComponent/Bullet_Com.h"
 
+#include "../UserComponent/Monster_Com.h"
+
 MainScene::MainScene()
 {
 }
@@ -29,6 +31,11 @@ bool MainScene::Init()
 	GameObject* BulletObject = GameObject::CreateProtoType("Bullet_Clone");
 	Bullet_Com* bullet_Com = BulletObject->AddComponent<Bullet_Com>("Bullet_Com");
 
+	GameObject* MonsterObject = GameObject::CreateObject("Monster", Default);
+	Monster_Com* monster_Com = MonsterObject->AddComponent<Monster_Com>("Monster_Com");
+
+	SAFE_RELEASE(MonsterObject);
+	SAFE_RELEASE(monster_Com);
 	SAFE_RELEASE(bullet_Com);
 	SAFE_RELEASE(BulletObject);
 	SAFE_RELEASE(player_Com);

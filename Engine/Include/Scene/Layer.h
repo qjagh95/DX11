@@ -20,6 +20,7 @@ public:
 	Scene* GetScene() const { return m_Scene; }
 
 	void AddObject(GameObject* object);
+	GameObject* FindObject(const string& TagName);
 
 private:
 	Scene* m_Scene;

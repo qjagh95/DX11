@@ -137,7 +137,7 @@ void Renderer_Com::UpdateTransform()
 	//변수로 이미 초기화가 되어있다.
 	cBuffer.World = m_Transform->GetWorldMatrix();
 	//뷰 행렬을 만든다 (일단 상수) 1.눈의 위치(카메라위치) 2. 초점의 위치 3. 카메라의 위쪽방향(일반적으로Y)
-	cBuffer.View = XMMatrixLookAtLH(Vector3(0.0f, 0.0f, -2.0f).Convert(), Vector3(0.0f, 0.0f, 0.0f).Convert(), Vector3::Axis[AXIS_Y].Convert());
+	cBuffer.View = XMMatrixLookAtLH(Vector3(0.0f, 0.0f, -5.0f).Convert(), Vector3(0.0f, 0.0f, 0.0f).Convert(), Vector3::Axis[AXIS_Y].Convert());
 	//프로젝션 행렬을 만든다 (일단상수) 1. 시야각, 2. 종횡비, 3. Z값이 0.03부터 1000까지 보겠다.
 	cBuffer.Projection = XMMatrixPerspectiveFovLH(JEONG_PI / 3.0f, 1280.0f / 720.0f, 0.03f, 1000.0f);
 

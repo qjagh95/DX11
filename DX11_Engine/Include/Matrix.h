@@ -50,7 +50,7 @@ union MATH_DLL __declspec(align(16)) Matrix
 	//역행렬
 	XMMATRIX Inverse();
 
-	//S R T결합.
+	//S R T 연산 곱하기.
 	XMMATRIX Scaling(float x, float y, float z);
 	XMMATRIX Scaling(const union Vector3& Scale);
 	XMMATRIX Rotation(float x, float y, float z);
@@ -58,6 +58,10 @@ union MATH_DLL __declspec(align(16)) Matrix
 	XMMATRIX RotationX(float x);
 	XMMATRIX RotationY(float y);
 	XMMATRIX RotationZ(float z);
+
+	//축회전
+	XMMATRIX RotationAxis(float Angle, union Vector3& Axis);
+
 	//행렬이동연산.
 	XMMATRIX Translation(float x, float y, float z);
 	XMMATRIX Translation(const union Vector3& vPos);
