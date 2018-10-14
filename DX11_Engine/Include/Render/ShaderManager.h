@@ -25,7 +25,7 @@ private:
 	unordered_map<string, ID3D11InputLayout*> m_LayOutMap;
 	//InputLayout가 몇개가 생성될지 모르니 vector (시맨틱)
 	vector<D3D11_INPUT_ELEMENT_DESC> m_vecInputElement;
-	//쉐이더로 전해줄 변수(상수버퍼)
+	//쉐이더로 전해줄 버퍼공간
 	unordered_map<string, CBuffer*> m_CBufferMap;
 
 	int m_InputLayOutSize;

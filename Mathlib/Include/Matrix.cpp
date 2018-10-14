@@ -121,8 +121,8 @@ XMMATRIX Matrix::Rotation(float x, float y, float z)
 {
 	XMMATRIX matRotX, matRotY, matRotZ;
 	matRotX = XMMatrixRotationX(DegreeToRadian(x));
-	matRotY = XMMatrixRotationX(DegreeToRadian(y));
-	matRotZ = XMMatrixRotationX(DegreeToRadian(z));
+	matRotY = XMMatrixRotationY(DegreeToRadian(y));
+	matRotZ = XMMatrixRotationZ(DegreeToRadian(z));
 
 	matrix = matRotX * matRotY * matRotZ;
 	return matrix;
@@ -132,8 +132,8 @@ XMMATRIX Matrix::Rotation(const Vector3 & Rot)
 {
 	XMMATRIX matRotX, matRotY, matRotZ;
 	matRotX = XMMatrixRotationX(DegreeToRadian(Rot.x));
-	matRotY = XMMatrixRotationX(DegreeToRadian(Rot.y));
-	matRotZ = XMMatrixRotationX(DegreeToRadian(Rot.z));
+	matRotY = XMMatrixRotationY(DegreeToRadian(Rot.y));
+	matRotZ = XMMatrixRotationZ(DegreeToRadian(Rot.z));
 
 	matrix = matRotX * matRotY * matRotZ;
 	return matrix;

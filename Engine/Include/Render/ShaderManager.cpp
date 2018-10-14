@@ -32,22 +32,23 @@ bool ShaderManager::Init()
 	//쉐이더파일 함수 이름.
 	Entry[ST_VERTEX] = "StandardColorVS";
 	Entry[ST_PIXEL] = "StandardColorPS";
-
+	//쉐이더파일 로드
 	if (LoadShader(STANDARD_COLOR_SHADER, TEXT("Standard.fx"), Entry) == false)
 	{
 		TrueAssert(true);
 		return false;
 	}
 
+	//시맨틱 이름 추가
 	AddInputElement("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 12);
 	AddInputElement("COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 16);
-
+	//InputLayout셋팅
 	if (CreateInputLayOut(POS_COLOR_LAYOUT, STANDARD_COLOR_SHADER) == false)
 	{
 		TrueAssert(true);
 		return false;
 	}
-
+	//상수버퍼 Create
 	CreateCBuffer("Transform", sizeof(TransformCBuffer), CST_VERTEX | CST_PIXEL);
 
 	return true;
@@ -147,7 +148,7 @@ bool ShaderManager::CreateCBuffer(const string & KeyName, int BufferSize, int Sh
 
 	return true;
 }
-
+//버텍스와 픽셀쉐이더에 상수버퍼를 셋팅한다.
 bool ShaderManager::UpdateCBuffer(const string& KeyName, void * Info)
 {
 	CBuffer* getBuffer = FindCBuffer(KeyName);
@@ -156,9 +157,11 @@ bool ShaderManager::UpdateCBuffer(const string& KeyName, void * Info)
 		return false;
 
 	D3D11_MAPPED_SUBRESOURCE mapDesc = {};
-	Device::Get()->GetContext()->Map(getBuffer->cBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapDesc);
 
-	memcpy(mapDesc.pData, Info, getBuffer->BufferSize);
+	Device::Get()->GetContext()->Map(getBuffer->cBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mapDesc);
+	{
+		memcpy(mapDesc.pData, Info, getBuffer->BufferSize);
+	}
 
 	Device::Get()->GetContext()->Unmap(getBuffer->cBuffer, 0);
 

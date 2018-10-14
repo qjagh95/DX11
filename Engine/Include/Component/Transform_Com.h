@@ -2,6 +2,7 @@
 #include "Component_Base.h"
 JEONG_BEGIN
 
+//Transform_Com에서는 World행렬을 만들기위하여 S R T결합만 해준다!
 //SIMD 수학연산 Matrix를 사용할것이므로 16바이트 정렬.
 class JEONG_DLL __declspec(align(16)) Transform_Com : public Component_Base
 {  
@@ -24,6 +25,9 @@ public:
 
 	Vector3 GetWorldSacle() const { return m_WorldScale; }
 	Vector3 GetWorldRotation() const { return m_WorldRotation; }
+	float GetWorldRotationX() const { return m_WorldRotation.x; }
+	float GetWorldRotationY() const { return m_WorldRotation.y; }
+	float GetWorldRotationZ() const { return m_WorldRotation.z; }
 	Vector3 GetWorldPos() const { return m_WorldPos; }
 	Vector3 GetWorldAxis(AXIS eAxis) const { return m_WorldAxis[eAxis]; }
 	const Vector3* GetWorldAxis() const { return m_WorldAxis; }
@@ -53,6 +57,20 @@ public:
 	void SetWorldPos(const Vector3& vPos);
 	void SetWorldPos(float x, float y, float z);
 	void ComputeWorldAxis();
+
+	void Move(AXIS eAxis, float Speed);
+	void Move(AXIS eAxis, float Speed, float DeltaTime);
+	void Move(const Vector3& vDir, float Speed);
+	void Move(const Vector3& vDir, float Speed, float DeltaTime);
+	void Move(const Vector3& vMove);
+	void RotationX(float x);
+	void RotationX(float x, float DeltaTime);
+	void RotationY(float y);
+	void RotationY(float y, float DeltaTime);
+	void RotationZ(float z);
+	void RotationZ(float z, float DeltaTime);
+	void Rotation(const Vector3& vRot, float DeltaTime);
+	void Rotation(const Vector3& vRot);
 
 private:
 	//행렬연산은 연산자체가 무겁기 때문에 연산을 해줄때만 해주겠다.

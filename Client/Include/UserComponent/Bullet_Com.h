@@ -1,8 +1,8 @@
 #pragma once
-#include "Scene/SceneComponent.h"
-
+#include "UserComponent/UserComponent_Base.h"
 JEONG_USING
-class MainScene : public SceneComponent
+
+class Bullet_Com : public UserComponent_Base
 {
 public:
 	bool Init() override;
@@ -12,10 +12,14 @@ public:
 	void Collision(float DeltaTime) override;
 	void CollisionLateUpdate(float DeltaTime) override;
 	void Render(float DeltaTime) override;
+	Bullet_Com* Clone() override;
+
+protected:
+	Bullet_Com();
+	Bullet_Com(const Bullet_Com& userCom);
+	~Bullet_Com();
 
 public:
-	MainScene();
-	~MainScene();
+	friend class GameObject;
 };
-
 

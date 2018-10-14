@@ -67,14 +67,29 @@
     <Filter Include="Core\Object\Base">
       <UniqueIdentifier>{38673b93-2295-49c8-9961-70d4d0b1484e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Object\Component\Base">
+    <Filter Include="Core\Object\Component\UserComponent">
+      <UniqueIdentifier>{1a75c144-9f3f-4f48-9d39-037a536308c7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Object\Component\BaseComponent">
       <UniqueIdentifier>{184c8a48-cb10-4f27-adc5-2a55ddd63cf3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Object\Component\Transform">
+    <Filter Include="Core\Object\Component\BaseComponent\Render">
+      <UniqueIdentifier>{b56deef6-1fbe-4a96-9809-6ed2209d7088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Object\Component\BaseComponent\Transform">
       <UniqueIdentifier>{d5699a0b-85f4-4634-9531-cd9a83043600}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Core\Object\Component\Render">
-      <UniqueIdentifier>{b56deef6-1fbe-4a96-9809-6ed2209d7088}</UniqueIdentifier>
+    <Filter Include="Core\Timer">
+      <UniqueIdentifier>{b94a0837-c2df-4949-bdd2-2da51eb4d744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Timer\Manager">
+      <UniqueIdentifier>{d052e39e-4eb0-4042-959a-1b20ec6b56f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Timer\Timer">
+      <UniqueIdentifier>{37538565-298e-4d60-a002-feff802e7063}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Key">
+      <UniqueIdentifier>{32f91592-336e-4371-8520-8a7cd0a8f5aa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -136,13 +151,25 @@
       <Filter>Core\Object\Base</Filter>
     </ClInclude>
     <ClInclude Include="Component\Component_Base.h">
-      <Filter>Core\Object\Component\Base</Filter>
+      <Filter>Core\Object\Component\BaseComponent</Filter>
     </ClInclude>
     <ClInclude Include="Component\Renderer_Com.h">
-      <Filter>Core\Object\Component\Render</Filter>
+      <Filter>Core\Object\Component\BaseComponent\Render</Filter>
     </ClInclude>
     <ClInclude Include="Component\Transform_Com.h">
-      <Filter>Core\Object\Component\Transform</Filter>
+      <Filter>Core\Object\Component\BaseComponent\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="TimeManager.h">
+      <Filter>Core\Timer\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Core\Timer\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyInput.h">
+      <Filter>Core\Key</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponent\UserComponent_Base.h">
+      <Filter>Core\Object\Component\UserComponent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -194,13 +221,25 @@
       <Filter>Core\Object\Base</Filter>
     </ClCompile>
     <ClCompile Include="Component\Component_Base.cpp">
-      <Filter>Core\Object\Component\Base</Filter>
+      <Filter>Core\Object\Component\BaseComponent</Filter>
     </ClCompile>
     <ClCompile Include="Component\Renderer_Com.cpp">
-      <Filter>Core\Object\Component\Render</Filter>
+      <Filter>Core\Object\Component\BaseComponent\Render</Filter>
     </ClCompile>
     <ClCompile Include="Component\Transform_Com.cpp">
-      <Filter>Core\Object\Component\Transform</Filter>
+      <Filter>Core\Object\Component\BaseComponent\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="TimeManager.cpp">
+      <Filter>Core\Timer\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Core\Timer\Timer</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyInput.cpp">
+      <Filter>Core\Key</Filter>
+    </ClCompile>
+    <ClCompile Include="UserComponent\UserComponent_Base.cpp">
+      <Filter>Core\Object\Component\UserComponent</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

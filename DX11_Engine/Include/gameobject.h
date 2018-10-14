@@ -24,9 +24,25 @@ public:
 	void SetScene(Scene* scene);
 	void SetLayer(Layer* layer);
 
-	static GameObject* CreateObject(const string& TagName, Layer* layer = NULLPTR);
 	Transform_Com* GetTransform() const { return m_Transform; }
+	void SetTransform(Transform_Com* transform);
 
+	void SetRotation(const Vector3& vecRot);
+	void SetRotationX(float RotX);
+	void SetRotationY(float RotY);
+	void SetRotationZ(float RotZ);
+	static GameObject* CreateObject(const string& TagName, Layer* layer = NULLPTR);
+
+
+	/////////////////////////////////////프로토타입함수(Clone)/////////////////////////////////////
+	static GameObject* CreateProtoType(const string& TagName, bool isCurrent = true);
+	static GameObject* CreateClone(const string& TagName, const string& ProtoTypeTagName, Layer* layer = NULLPTR, bool isCurrent = true);
+	static void DestroyProtoType(Scene* scene);
+	static void DestroyProtoType(Scene* scene, const string& TagName);
+	static void DestroyProtoType();
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+	/////////////////////////////////////AddComponent함수//////////////////////////////////////////
 	Component_Base* AddComponent(Component_Base* component);
 	template<typename T>
 	T* AddComponent(const string& TagName)
@@ -45,12 +61,43 @@ public:
 		}
 		return (T*)AddComponent(newComponent);
 	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	/////////////////////////////////////FindComponent함수/////////////////////////////////////////
+	const list<Component_Base*>* FindComponentFromTag(const string& TagName);
+	const list<Component_Base*>* FindComponentFromType(COMPONENT_TYPE type);
+
+	template<typename T>
+	T* FindComponentFromTag(const string& TagName)
+	{
+		list<Component_Base*>::iterator StartIter = m_FindComList.begin();
+		list<Component_Base*>::iterator EndIter = m_FindComList.end();
+
+		for (; StartIter != EndIter; StartIter++)
+		{
+			if ((*StartIter)->GetTag() == TagName)
+			{
+				(*StartIter)->AddRefCount();
+				return (T*)*StartIter;
+			}
+		}
+		return NULLPTR;
+	}
+	///////////////////////////////////////////////////////////////////////////////////////////////
+
+private:
+	static GameObject* FindProtoType(Scene* scene, const string& TagName);
 
 private:
 	list<Component_Base*> m_ComponentList;
 	Transform_Com* m_Transform;
+
 	Scene* m_Scene;
 	Layer* m_Layer;
+	
+	list<Component_Base*> m_FindComList;
+	static unordered_map<Scene*, unordered_map<string, GameObject*>> m_ProtoTypeMap;
 
 private:
 	GameObject();

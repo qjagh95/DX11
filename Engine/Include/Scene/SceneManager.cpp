@@ -34,7 +34,7 @@ int SceneManager::Input(float DeltaTime)
 
 int SceneManager::Update(float DeltaTime)
 {
-	m_CurScene->Input(DeltaTime);
+	m_CurScene->Update(DeltaTime);
 	return 0;
 }
 
@@ -64,6 +64,13 @@ Scene * SceneManager::GetCurScene() const
 	m_CurScene->AddRefCount();
 
 	return m_CurScene;
+}
+
+Scene * SceneManager::GetNextScene() const
+{
+	m_NextScene->AddRefCount();
+
+	return m_NextScene;
 }
 
 void SceneManager::AddLayer(const string & TagName, int ZOrder, bool isCurrent)

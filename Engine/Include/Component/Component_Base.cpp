@@ -13,13 +13,13 @@ Component_Base::Component_Base()
 {
 }
 
-Component_Base::~Component_Base()
-{
-}
-
 Component_Base::Component_Base(const Component_Base & copyObject)
 {
 	*this = copyObject;
+}
+
+Component_Base::~Component_Base()
+{
 }
 
 int Component_Base::Input(float DeltaTime)

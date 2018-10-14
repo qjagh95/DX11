@@ -8,6 +8,7 @@ enum COMPONENT_TYPE
 	CT_NONE,
 	CT_TRANSFORM,
 	CT_RENDER,
+	CT_MAX,
 };
 
 //각 축의 방향

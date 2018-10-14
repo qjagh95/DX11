@@ -11,6 +11,9 @@
 
 #include "Scene/SceneManager.h"
 
+#include "Timer.h"
+#include "TimeManager.h"
+
 JEONG_USING
 SINGLETON_VAR_INIT(Core)
 bool Core::m_isLoop = true;
@@ -18,7 +21,7 @@ bool Core::m_isLoop = true;
 Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(5399);
+	//_CrtSetBreakAlloc(393);
 	ZeroMemory(ClearColor, sizeof(float) * 4);
 }
 
@@ -29,6 +32,8 @@ Core::~Core()
 	ShaderManager::Delete();
 	PathManager::Delete();
 	SceneManager::Delete();
+	RenderManager::Delete();
+	TimeManager::Delete();
 }
 
 bool Core::Init(HINSTANCE hInst, unsigned int Width, unsigned int Height, const TCHAR * TitleName, const TCHAR * ClassName, int iIconID, int iSmallIconID, bool bWindowMode)
@@ -58,6 +63,12 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 	}
 
 	if (PathManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
+		return false;
+	}
+
+	if (TimeManager::Get()->Init() == false)
 	{
 		TrueAssert(true);
 		return false;
@@ -108,12 +119,17 @@ int Core::Run()
 
 void Core::Logic()
 {
-	Input(0.0f);
-	Update(0.0f);
-	LateUpdate(0.0f);
-	Collsion(0.0f);
-	CollsionLateUpdate(0.0f);
-	Render(1.0f);
+	Timer* getTimer = TimeManager::Get()->FindTimer("MainTimer");
+	getTimer->Update();
+
+	float Time = getTimer->GetDeltaTime();
+
+	Input(Time);
+	Update(Time);
+	LateUpdate(Time);
+	Collsion(Time);
+	CollsionLateUpdate(Time);
+	Render(Time);
 }
 
 void Core::SetClearColor(unsigned char r, unsigned char g, unsigned char b, unsigned char a)

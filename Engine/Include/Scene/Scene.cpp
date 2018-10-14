@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "Layer.h"
 #include "SceneComponent.h"
+#include "../GameObject.h"
 
 JEONG_USING
 
@@ -12,7 +13,7 @@ Scene::~Scene()
 {
 	Safe_Release_VecList(m_LayerList);
 	Safe_Release_VecList(m_SceneComponentList);
-
+	GameObject::DestroyProtoType(this);
 }
 
 bool Scene::Init()

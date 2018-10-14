@@ -16,6 +16,7 @@ public:
 	void Render(float DeltaTime);
 
 	Scene* GetCurScene() const;
+	Scene* GetNextScene() const;
 	void AddLayer(const string& TagName, int ZOrder, bool isCurrent = true);
 	void ChangeLayerZOrder(const string& TagName, int ZOrder, bool isCurrent = true);
 	Layer* FindLayer(const string& TagName, bool isCurrent = true);

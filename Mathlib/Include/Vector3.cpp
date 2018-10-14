@@ -358,7 +358,8 @@ void Vector3::operator+=(const Vector3 & vec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&vec);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
 
 void Vector3::operator+=(const XMVECTOR & Xmvec)
@@ -368,7 +369,8 @@ void Vector3::operator+=(const XMVECTOR & Xmvec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Xmvec);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
 
 void Vector3::operator+=(const XMFLOAT3 & XmFloat)
@@ -378,8 +380,10 @@ void Vector3::operator+=(const XMFLOAT3 & XmFloat)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&XmFloat);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
+
 void Vector3::operator+=(float Val)
 {
 	XMVECTOR Src, Dest;
@@ -388,7 +392,8 @@ void Vector3::operator+=(float Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
 
 void Vector3::operator+=(int Val)
@@ -399,7 +404,8 @@ void Vector3::operator+=(int Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
 
 void Vector3::operator+=(float ValArr[3])
@@ -410,7 +416,8 @@ void Vector3::operator+=(float ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
 void Vector3::operator+=(int ValArr[3])
 {
@@ -420,7 +427,8 @@ void Vector3::operator+=(int ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src += Dest);
+	Src += Dest;
+	Convert(Src);
 }
 ///////////////////////////////////////////////////////////////////////////////////
 void Vector3::operator-=(const Vector3 & vec)
@@ -430,7 +438,8 @@ void Vector3::operator-=(const Vector3 & vec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&vec);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator-=(const XMVECTOR & Xmvec)
@@ -440,7 +449,8 @@ void Vector3::operator-=(const XMVECTOR & Xmvec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Xmvec);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator-=(const XMFLOAT3 & XmFloat)
@@ -450,7 +460,8 @@ void Vector3::operator-=(const XMFLOAT3 & XmFloat)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&XmFloat);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 void Vector3::operator-=(float Val)
 {
@@ -460,7 +471,8 @@ void Vector3::operator-=(float Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator-=(int Val)
@@ -471,7 +483,8 @@ void Vector3::operator-=(int Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 void Vector3::operator-=(float ValArr[3])
 {
@@ -481,7 +494,8 @@ void Vector3::operator-=(float ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 void Vector3::operator-=(int ValArr[3])
 {
@@ -491,7 +505,8 @@ void Vector3::operator-=(int ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src -= Dest);
+	Src -= Dest;
+	Convert(Src);
 }
 ////////////////////////////////////////////////////////////////////////////////
 void Vector3::operator*=(const Vector3 & vec)
@@ -501,7 +516,8 @@ void Vector3::operator*=(const Vector3 & vec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&vec);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator*=(const XMVECTOR & Xmvec)
@@ -511,7 +527,8 @@ void Vector3::operator*=(const XMVECTOR & Xmvec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Xmvec);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator*=(const XMFLOAT3 & XmFloat)
@@ -521,7 +538,8 @@ void Vector3::operator*=(const XMFLOAT3 & XmFloat)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&XmFloat);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
 void Vector3::operator*=(float Val)
 {
@@ -531,7 +549,8 @@ void Vector3::operator*=(float Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator*=(int Val)
@@ -542,8 +561,10 @@ void Vector3::operator*=(int Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
+
 void Vector3::operator*=(float ValArr[3])
 {
 	XMVECTOR Src, Dest;
@@ -552,8 +573,10 @@ void Vector3::operator*=(float ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
+
 void Vector3::operator*=(int ValArr[3])
 {
 	XMVECTOR Src, Dest;
@@ -562,8 +585,10 @@ void Vector3::operator*=(int ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src *= Dest);
+	Src *= Dest;
+	Convert(Src);
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 void Vector3::operator/=(const Vector3 & vec)
 {
@@ -572,7 +597,8 @@ void Vector3::operator/=(const Vector3 & vec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&vec);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator/=(const XMVECTOR & Xmvec)
@@ -582,7 +608,8 @@ void Vector3::operator/=(const XMVECTOR & Xmvec)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Xmvec);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator/=(const XMFLOAT3 & XmFloat)
@@ -592,8 +619,10 @@ void Vector3::operator/=(const XMFLOAT3 & XmFloat)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&XmFloat);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
+
 void Vector3::operator/=(float Val)
 {
 	XMVECTOR Src, Dest;
@@ -602,7 +631,8 @@ void Vector3::operator/=(float Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
 
 void Vector3::operator/=(int Val)
@@ -613,8 +643,10 @@ void Vector3::operator/=(int Val)
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
+
 void Vector3::operator/=(float ValArr[3])
 {
 	XMVECTOR Src, Dest;
@@ -623,8 +655,10 @@ void Vector3::operator/=(float ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
+
 void Vector3::operator/=(int ValArr[3])
 {
 	XMVECTOR Src, Dest;
@@ -633,8 +667,10 @@ void Vector3::operator/=(int ValArr[3])
 	Src = XMLoadFloat3((XMFLOAT3*)this);
 	Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	*this = (Src /= Dest);
+	Src /= Dest;
+	Convert(Src);
 }
+
 ////////////////////////////////////////////////////////////////////////////////
 bool Vector3::operator==(const Vector3 & vec) const
 {
@@ -741,6 +777,7 @@ Vector3 Vector3::TransformNormal(const Matrix & mat)
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	return Vector3(XMVector3TransformNormal(Src, mat.matrix));
 }
+
 //º¤ÅÍ Çà·Ä°ö
 Vector3 Vector3::TransformNormal(const XMMATRIX & mat)
 {
@@ -940,4 +977,9 @@ float Vector3::GetAngle(int Val[3]) const
 XMVECTOR Vector3::Convert()
 {
 	return XMLoadFloat3((XMFLOAT3*)this);;
+}
+
+void Vector3::Convert(const XMVECTOR & Xmvec)
+{
+	XMStoreFloat3((XMFLOAT3*)this, Xmvec);
 }

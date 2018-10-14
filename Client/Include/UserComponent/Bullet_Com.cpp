@@ -1,0 +1,63 @@
+#include "Bullet_Com.h"
+#include "GameObject.h"
+
+#include "Component/Transform_Com.h"
+#include "Component/Renderer_Com.h"
+
+Bullet_Com::Bullet_Com()
+{
+}
+
+Bullet_Com::Bullet_Com(const Bullet_Com & userCom)
+	:UserComponent_Base(userCom)
+{
+	*this = userCom;
+}
+
+Bullet_Com::~Bullet_Com()
+{
+}
+
+bool Bullet_Com::Init()
+{
+	Renderer_Com* RenderComponent = m_Object->AddComponent<Renderer_Com>("BulletRender");
+	RenderComponent->SetMesh("ColorTri");
+	SAFE_RELEASE(RenderComponent);
+
+	return true;
+}
+
+int Bullet_Com::Input(float DeltaTime)
+{
+	return 0;
+}
+
+int Bullet_Com::Update(float DeltaTime)
+{
+	m_Transform->Move(AXIS_Y, 2.0f, DeltaTime);
+	//0 1 0
+
+	return 0;
+}
+
+int Bullet_Com::LateUpdate(float DeltaTime)
+{
+	return 0;
+}
+
+void Bullet_Com::Collision(float DeltaTime)
+{
+}
+
+void Bullet_Com::CollisionLateUpdate(float DeltaTime)
+{
+}
+
+void Bullet_Com::Render(float DeltaTime)
+{
+}
+
+Bullet_Com * Bullet_Com::Clone()
+{
+	return new Bullet_Com(*this);
+}

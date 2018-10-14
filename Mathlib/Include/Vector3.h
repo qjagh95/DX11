@@ -147,6 +147,7 @@ union MATH_DLL Vector3
 	Vector3 Cross(int Val[3]) const;
 
 	XMVECTOR Convert();
+	void Convert(const XMVECTOR & Xmvec);
 
 	static Vector3 Nomallize(const Vector3& vec);
 

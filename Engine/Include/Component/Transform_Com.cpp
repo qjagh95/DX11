@@ -12,7 +12,7 @@ Transform_Com::Transform_Com()
 Transform_Com::Transform_Com(const Transform_Com& copyObject)
 	:Component_Base(copyObject)
 {
-	
+	*this = copyObject;
 }
 
 Transform_Com::~Transform_Com()
@@ -24,6 +24,7 @@ bool Transform_Com::Init()
 	for (int i = 0; i < 3; i++)
 	{
 		m_LocalAxis[i] = Vector3::Axis[i];
+		m_WorldAxis[i] = Vector3::Axis[i];
 	}
 
 	return true;
@@ -33,7 +34,8 @@ int Transform_Com::Input(float DeltaTime)
 {
 	return 0;
 }
-
+//여기선 어차피 오브젝트가 계속 돌린다.
+//오브젝트가 따로 Transform을 가지고있다.
 int Transform_Com::Update(float DeltaTime)
 {
 	if (m_isStatic == true)
@@ -108,6 +110,8 @@ void Transform_Com::SetLocalRotation(const Vector3 & vRot)
 	//회전행렬에 곱해준다
 	m_MatLocalRotation.Rotation(m_LocalRotation);
 
+	ComputeLocalAxis();
+
 	m_isUpdate = true;
 }
 
@@ -117,6 +121,8 @@ void Transform_Com::SetLocalRotation(float x, float y, float z)
 	m_LocalRotation = Vector3(x, y, z);
 	//회전행렬에 곱해준다
 	m_MatLocalRotation.Rotation(m_LocalRotation);
+
+	ComputeLocalAxis();
 
 	m_isUpdate = true;
 }
@@ -128,6 +134,8 @@ void Transform_Com::SetLocalRotX(float x)
 	//회전행렬에 곱해준다
 	m_MatLocalRotation.Rotation(m_LocalRotation);
 
+	ComputeLocalAxis();
+
 	m_isUpdate = true;
 }
 
@@ -138,6 +146,8 @@ void Transform_Com::SetLocalRotY(float y)
 	//회전행렬에 곱해준다
 	m_MatLocalRotation.Rotation(m_LocalRotation);
 
+	ComputeLocalAxis();
+
 	m_isUpdate = true;
 }
 
@@ -147,6 +157,8 @@ void Transform_Com::SetLocalRotZ(float z)
 	m_LocalRotation.z = z;
 	//회전행렬에 곱해준다
 	m_MatLocalRotation.Rotation(m_LocalRotation);
+
+	ComputeLocalAxis();
 
 	m_isUpdate = true;
 }
@@ -209,6 +221,8 @@ void Transform_Com::SetWorldRotation(const Vector3 & vRot)
 	//회전행렬에 곱해준다
 	m_MatWorldRotation.Rotation(m_WorldRotation);
 
+	ComputeWorldAxis();
+
 	m_isUpdate = true;
 }
 
@@ -218,6 +232,8 @@ void Transform_Com::SetWorldRotation(float x, float y, float z)
 	m_WorldRotation = Vector3(x, y, z);
 	//회전행렬에 곱해준다
 	m_MatWorldRotation.Rotation(m_WorldRotation);
+
+	ComputeWorldAxis();
 
 	m_isUpdate = true;
 }
@@ -229,6 +245,8 @@ void Transform_Com::SetWorldRotX(float x)
 	//회전행렬에 곱해준다
 	m_MatWorldRotation.Rotation(m_WorldRotation);
 
+	ComputeWorldAxis();
+
 	m_isUpdate = true;
 }
 
@@ -239,6 +257,8 @@ void Transform_Com::SetWorldRotY(float y)
 	//회전행렬에 곱해준다
 	m_MatWorldRotation.Rotation(m_WorldRotation);
 
+	ComputeWorldAxis();
+
 	m_isUpdate = true;
 }
 
@@ -248,6 +268,8 @@ void Transform_Com::SetWorldRotZ(float z)
 	m_WorldRotation.z = z;
 	//회전행렬에 곱해준다
 	m_MatWorldRotation.Rotation(m_WorldRotation);
+
+	ComputeWorldAxis();
 
 	m_isUpdate = true;
 }
@@ -267,6 +289,80 @@ void Transform_Com::SetWorldPos(float x, float y, float z)
 
 	m_MatWorldPos.Translation(m_WorldPos);
 
+	m_isUpdate = true;
+}
+
+void Transform_Com::Move(AXIS eAxis, float Speed)
+{
+	Move(m_WorldAxis[eAxis] * Speed );
+}
+
+void Transform_Com::Move(AXIS eAxis, float Speed, float DeltaTime)
+{
+	Move(m_WorldAxis[eAxis] * Speed * DeltaTime);
+}
+
+void Transform_Com::Move(const Vector3 & vDir, float Speed)
+{
+	Move(vDir * Speed);
+}
+
+void Transform_Com::Move(const Vector3 & vDir, float Speed, float DeltaTime)
+{
+	Move(vDir * Speed * DeltaTime);
+}
+
+void Transform_Com::Move(const Vector3 & vMove)
+{
+	m_WorldPos += vMove;
+
+	m_MatWorldPos.Translation(m_WorldPos);
+
+	m_isUpdate = true;
+}
+
+void Transform_Com::RotationX(float x)
+{	
+	Rotation(Vector3(x, 0.0f, 0.0f));
+}
+
+void Transform_Com::RotationX(float x, float DeltaTime)
+{
+	Rotation(Vector3(x * DeltaTime, 0.0f, 0.0f));
+}
+
+void Transform_Com::RotationY(float y)
+{
+	Rotation(Vector3(0.0f, y, 0.0f));
+}
+
+void Transform_Com::RotationY(float y, float DeltaTime)
+{
+	Rotation(Vector3(0.0f, y * DeltaTime , 0.0f));
+}
+
+void Transform_Com::RotationZ(float z)
+{
+	Rotation(Vector3(0.0f, 0.0f, z));
+}
+
+void Transform_Com::RotationZ(float z, float DeltaTime)
+{
+	//로테이션함수에서 += 해준다.
+	Rotation(Vector3(0.0f, 0.0f, z * DeltaTime));
+}
+
+void Transform_Com::Rotation(const Vector3 & vRot, float DeltaTime)
+{
+	Rotation(vRot * DeltaTime);
+}
+
+void Transform_Com::Rotation(const Vector3 & vRot)
+{
+	m_WorldRotation += vRot;
+	m_MatWorldRotation.Rotation(m_WorldRotation);
+	//단위벡터로만들어서 방향을 만든다.
+	ComputeWorldAxis();
 	m_isUpdate = true;
 }
 
