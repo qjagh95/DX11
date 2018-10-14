@@ -1,6 +1,7 @@
 #include "Core.h"
 #include "Device.h"
 #include "./Resource/ResourceManager.h"
+#include "PathManager.h"
 
 JEONG_USING
 
@@ -45,6 +46,9 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 		return false;
 
 	if (ResourceManager::Get()->Init() == false)
+		return false;
+
+	if (PathManager::Get()->Init() == false)
 		return false;
 
 	SetClearColor(0, 150, 255, 0);

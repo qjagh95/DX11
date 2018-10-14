@@ -2,13 +2,12 @@
 
 JEONG_USING
 
-RefCount::RefCount()
-	:ReferanceCount(1)
+RefCount::RefCount(): ReferanceCount(1)
 {
 }
 
 RefCount::~RefCount()
-{
+{    
 }
 
 int RefCount::Release()

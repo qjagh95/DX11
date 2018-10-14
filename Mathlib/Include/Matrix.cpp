@@ -63,7 +63,7 @@ XMMATRIX & Matrix::operator*=(int val)
 	return matrix *= (float)val;
 }
 
-//(항등행렬로 만든다)ㄴ
+//(항등행렬로 만든다)
 XMMATRIX Matrix::Identity()
 {
 	matrix = XMMatrixIdentity();
@@ -149,4 +149,19 @@ XMMATRIX Matrix::Translation(const Vector3 & vPos)
 {
 	matrix = XMMatrixTranslation(vPos.x, vPos.y, vPos.z);
 	return matrix;
+}
+
+Vector4 & Matrix::operator[](unsigned int Index)
+{
+	return vec[Index];
+}
+
+void Matrix::operator delete(void * Data)
+{
+	_aligned_free(Data);
+}
+
+void* Matrix::operator new(size_t Size)
+{
+	return _aligned_malloc(Size, 16);
 }

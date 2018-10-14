@@ -29,22 +29,26 @@ void Mesh::Render()
 {
 	for (size_t i = 0; i < m_vecMeshContainer.size(); i++)
 	{
+		//도형 위상구조를 지정한다.
 		Device::Get()->GetContext()->IASetPrimitiveTopology(m_vecMeshContainer[i]->PrimitiveType);
 
 		//스트라이드 : 해당 버텍스버퍼에서 사용될 크기(사이즈)
 		UINT Stride = m_vecMeshContainer[i]->vertexBuffer.vSize;
 		UINT Offset = 0;
-
+		//버텍스버퍼를 셋팅한다. (버텍스 쉐이더에 정점정보를 넣는 준비를 한다. (입력 레지스터에 넣는다)
 		Device::Get()->GetContext()->IASetVertexBuffers(0, 1, &m_vecMeshContainer[i]->vertexBuffer.vBuffer, &Stride, &Offset);
-
+		//인덱스버퍼가 있는지 체크한다.
 		if (m_vecMeshContainer[i]->vecIndexBuffer.empty())
 		{
+			//없다면 버텍스버퍼로 그림
 			Device::Get()->GetContext()->Draw(m_vecMeshContainer[i]->vertexBuffer.vCount, 0);
 		}
 		else
 		{
+			//인덱스버퍼가 있다면 인덱스를 그릴 순서 지정 후 인덱스로 그림.
 			for (size_t j = 0; j < m_vecMeshContainer[i]->vecIndexBuffer.size(); j++)
 			{
+				//쉐이더에 정점정보를 넣는준비를 한다(입력 레지스터에 넣는다)
 				Device::Get()->GetContext()->IASetIndexBuffer(m_vecMeshContainer[i]->vecIndexBuffer[j].iBuffer, m_vecMeshContainer[i]->vecIndexBuffer[j].iFormat, 0);
 				Device::Get()->GetContext()->DrawIndexed(m_vecMeshContainer[i]->vecIndexBuffer[j].iCount, 0, 0); ///인덱스버퍼의 갯수, 위치(첫번째), 추가되는값(0)
 			}
@@ -72,7 +76,7 @@ bool Mesh::CreateMesh(const string & TagName, const string & ShaderKeyName, cons
 
 bool Mesh::CreateVertexBuffer(void * vertexInfo, int vertexCount, int vertexSize, D3D11_USAGE vertexUsage)
 {
-	//항상 마지막꺼를 가져온다.
+	//항상 마지막에 추가된 것을 가져온다.
 	MeshContainer* getContainer = m_vecMeshContainer[m_vecMeshContainer.size() - 1];
 	getContainer->vertexBuffer.vCount = vertexCount;
 	getContainer->vertexBuffer.vInfo = new char[vertexSize * vertexCount];
@@ -100,7 +104,7 @@ bool Mesh::CreateVertexBuffer(void * vertexInfo, int vertexCount, int vertexSize
 
 bool Mesh::CreateIndexBuffer(void * indexInfo, int indexCount, int indexSize, D3D11_USAGE indexUsage, DXGI_FORMAT indexFormat)
 {
-	//항상 마지막꺼를 가져온다.
+	//항상 마지막에 추가된 것을 가져온다.
 	MeshContainer* getContainer = m_vecMeshContainer[m_vecMeshContainer.size() - 1];
 
 	IndexBuffer TempIndexBuffer;

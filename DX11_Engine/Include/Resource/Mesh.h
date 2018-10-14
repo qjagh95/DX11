@@ -7,35 +7,35 @@ JEONG_BEGIN
 struct JEONG_DLL VertexBuffer
 {
 	ID3D11Buffer* vBuffer;  ///버퍼객체
-	void* vInfo; ///버텍스 정보를 담을 void* 
-	int vCount; ///버텍스 갯수
-	int vSize; ///버텍스 사이즈
-	D3D11_USAGE vUsage; ///어떻게 출력?? (동적출력, 수정불가출력...)
+	void* vInfo;			///버텍스 정보를 담을 void* 
+	int vCount;				///버텍스 갯수
+	int vSize;				///버텍스 사이즈
+	D3D11_USAGE vUsage;		///어떻게 출력?? (동적출력, 수정불가출력...)
 
 	VertexBuffer() : vBuffer(NULLPTR), vInfo(NULLPTR), vCount(0), vSize(0), vUsage(D3D11_USAGE_DEFAULT) {}
 };
 
 struct JEONG_DLL IndexBuffer
 {
-	ID3D11Buffer* iBuffer;  ///버퍼객체
-	void* iInfo; ///인덱스 정보를 담을 void* 
-	int iCount; ///인덱스 갯수
-	int iSize; ///인덱스 사이즈
-	D3D11_USAGE iUsage; ///어떻게 출력?? (동적출력, 수정불가출력...)
-	DXGI_FORMAT iFormat; ///포맷 (R16 = 16비트) 하나의 메쉬당 인덱스 버퍼의 갯수를 65535개 사용하겠다.
+	ID3D11Buffer* iBuffer;		///버퍼객체
+	void* iInfo;				///인덱스 정보를 담을 void* 
+	int iCount;					///인덱스 갯수
+	int iSize;					///인덱스 사이즈
+	D3D11_USAGE iUsage;			///어떻게 출력?? (동적출력, 수정불가출력...)
+	DXGI_FORMAT iFormat;		///포맷 (R16 = 16비트) 하나의 메쉬당 인덱스 버퍼의 갯수를 65535개 사용하겠다.
 
 	//DXGI_FORMAT_R16_UINT (16비트) 2바이트 갯수만큼 정점갯수 지정. (65535개)
 	IndexBuffer() : iBuffer(NULLPTR), iInfo(NULLPTR), iCount(0), iSize(0), iUsage(D3D11_USAGE_DEFAULT), iFormat(DXGI_FORMAT_R16_UINT) {}
 };
 
 //사람으로 치자면 팔, 몸통, 다리, 머리 -> 컨테이너
-//(팔)이라는 컨테이너 안에 상 중 하의 서브셋
+//(팔)이라는 컨테이너 안에 상단 중단 하단의 서브셋
 //-> 큰 버텍스 버퍼안에 인덱스버퍼가 여러개있는꼴.
 struct JEONG_DLL MeshContainer
 {
 	VertexBuffer vertexBuffer;
 	vector<IndexBuffer> vecIndexBuffer;
-
+	//triangle "list", triangle "strip"
 	D3D11_PRIMITIVE_TOPOLOGY PrimitiveType;
 };
 

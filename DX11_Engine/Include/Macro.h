@@ -23,6 +23,10 @@
 
 #define NULLPTR nullptr
 
+#define ROOT_PATH "RootPath"
+#define TEXTURE_PATH "TexturPath"
+#define SHADER_PATH "ShaderPath"
+
 template<typename T>
 void Safe_Delete_VecList(T& p)
 {

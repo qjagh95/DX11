@@ -1,8 +1,9 @@
 #pragma once
 //경고를 무시한다
 #pragma warning(disable:4251)
-
 #include "MathHeader.h"
+#include "Vector4.h"
+
 //바이트정렬 바이트를 16배수로 맞춰준다 (SIMD 레지스터를 사용한다)
 union MATH_DLL __declspec(align(16)) Matrix
 {
@@ -13,6 +14,11 @@ union MATH_DLL __declspec(align(16)) Matrix
 		float	_21, _22, _23, _24;
 		float	_31, _32, _33, _34;
 		float	_41, _42, _43, _44;
+	};
+
+	struct
+	{
+		Vector4 vec[4];
 	};
 
 	Matrix();
@@ -28,6 +34,11 @@ union MATH_DLL __declspec(align(16)) Matrix
 	XMMATRIX& operator *= (const XMMATRIX& mat);
 	XMMATRIX& operator *= (float val);
 	XMMATRIX& operator *= (int val);
+
+	Vector4& operator[] (unsigned int Index);
+
+	void* operator new (size_t Size);
+	void operator delete (void* Data);
 
 	//항등행렬
 	XMMATRIX Identity();

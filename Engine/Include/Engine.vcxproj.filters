@@ -25,6 +25,24 @@
     <Filter Include="Core\RefCount">
       <UniqueIdentifier>{e24e819e-22fc-4c40-8635-1e8d175b6e71}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Render">
+      <UniqueIdentifier>{1e371516-fa6f-4b94-a585-9a4254130f42}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\RenderManager">
+      <UniqueIdentifier>{41d0be40-0767-4c2b-a4d1-0e4c3a5d96c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\ShaderManager">
+      <UniqueIdentifier>{107d8a47-923b-4667-937e-bc97e947bb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\Shader">
+      <UniqueIdentifier>{00f20cd5-16d9-46f1-adf4-c2e712b1379f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\HLSLSorce">
+      <UniqueIdentifier>{da6b4533-ff14-4867-8946-0da362646699}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\PathManager">
+      <UniqueIdentifier>{48f6e9a7-548c-4725-8616-1a4015796c91}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -54,6 +72,18 @@
     <ClInclude Include="Resource\Mesh.h">
       <Filter>Core\Resource\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="Render\RenderManager.h">
+      <Filter>Core\Render\RenderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\ShaderManager.h">
+      <Filter>Core\Render\ShaderManager</Filter>
+    </ClInclude>
+    <ClInclude Include="PathManager.h">
+      <Filter>Core\PathManager</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Shader.h">
+      <Filter>Core\Render\Shader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
@@ -76,6 +106,18 @@
     <ClCompile Include="Resource\Mesh.cpp">
       <Filter>Core\Resource\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Render\Shader.cpp">
+      <Filter>Core\Render\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderManager.cpp">
+      <Filter>Core\Render\RenderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\ShaderManager.cpp">
+      <Filter>Core\Render\ShaderManager</Filter>
+    </ClCompile>
+    <ClCompile Include="PathManager.cpp">
+      <Filter>Core\PathManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="icon1.ico">
@@ -86,5 +128,13 @@
     <ResourceCompile Include="Engine.rc">
       <Filter>Core\Window</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Bin\Shader\Standard.fx">
+      <Filter>Core\Render\HLSLSorce</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Bin\Shader\Share.fx">
+      <Filter>Core\Render\HLSLSorce</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>
