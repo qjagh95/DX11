@@ -28,6 +28,9 @@
     <ClCompile Include="WinMain.cpp">
       <Filter>WinMain</Filter>
     </ClCompile>
+    <ClCompile Include="BulletRot_Com.cpp">
+      <Filter>UserComponent</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SceneComponent\MainScene.h">
@@ -44,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="ClientHeader.h">
       <Filter>WinMain</Filter>
+    </ClInclude>
+    <ClInclude Include="UserComponent\BulletRot_Com.h">
+      <Filter>UserComponent</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

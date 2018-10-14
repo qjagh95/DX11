@@ -911,10 +911,9 @@ float Vector3::GetAngle(const Vector3 & vec) const
 	float Angle = Src.Dot(Dest);
 
 	//나온 cos각도를 역함수로 진짜각도로 변환한다
-	Angle = acosf(Angle);
+	Angle = RadianToDegree(acosf(Angle));
 
-	//Degree로 변환한다.
-	return RadianToDegree(Angle);
+	return Angle;
 }
 float Vector3::GetAngle(const XMVECTOR & Xmvec) const
 {

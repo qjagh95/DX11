@@ -1,5 +1,6 @@
 #pragma once
 #include "UserComponent/UserComponent_Base.h"
+#include "../ClientHeader.h"
 JEONG_USING
 
 class Monster_Com : public UserComponent_Base
@@ -17,6 +18,8 @@ public:
 private:
 	GameObject* Target;
 	string TargetTag;
+	float TimeVar;
+
 
 protected:
 	Monster_Com();

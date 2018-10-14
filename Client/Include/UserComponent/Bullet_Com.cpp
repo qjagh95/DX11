@@ -3,9 +3,12 @@
 
 #include "Component/Transform_Com.h"
 #include "Component/Renderer_Com.h"
+#include "Component/Material_Com.h"
 
 Bullet_Com::Bullet_Com()
+	:MoveSpeed(500.0f)
 {
+	m_ComType = (COMPONENT_TYPE)UT_BULLET;
 }
 
 Bullet_Com::Bullet_Com(const Bullet_Com & userCom)
@@ -21,10 +24,16 @@ Bullet_Com::~Bullet_Com()
 bool Bullet_Com::Init()
 {
 	Renderer_Com* RenderComponent = m_Object->AddComponent<Renderer_Com>("BulletRender");
-	RenderComponent->SetMesh("ColorTri");
+	RenderComponent->SetMesh("TextureRect");
+	RenderComponent->SetRenderState(ALPHA_BLEND);
 	SAFE_RELEASE(RenderComponent);
 
-	m_Transform->SetWorldScale(100.0f, 100.0f, 0.0f);
+	Material_Com* MaterialComponent = m_Object->FindComponentFromType<Material_Com>(CT_MATERIAL);
+	MaterialComponent->SetDiffuseTexture(0, "JeongEn", TEXT("JeongEn.png"));
+	SAFE_RELEASE(MaterialComponent);
+
+	m_Transform->SetWorldScale(150.0f, 150.0f, 0.0f);
+	m_Transform->SetWorldPivot(0.5f, 0.0f, 0.0f);
 
 	return true;
 }
@@ -37,7 +46,7 @@ int Bullet_Com::Input(float DeltaTime)
 int Bullet_Com::Update(float DeltaTime)
 {
 	//생성할때 로테이션 함수에서 이미 WorldAxis변수를 갱신한다.
-	m_Transform->Move(AXIS_Y, 500.0f, DeltaTime);
+	m_Transform->Move(AXIS_Y, MoveSpeed, DeltaTime);
 
 	if (m_Transform->GetWorldPos().x <= 0.0f)
 		m_Object->SetIsActive(false);

@@ -1,6 +1,9 @@
 #include "Core.h"
 #include "Device.h"
 #include "PathManager.h"
+#include "Timer.h"
+#include "TimeManager.h"
+#include "KeyInput.h"
 
 #include "Resource\ResourceManager.h"
 #include "Resource/Mesh.h"
@@ -10,9 +13,6 @@
 #include "Render/RenderManager.h"
 
 #include "Scene/SceneManager.h"
-
-#include "Timer.h"
-#include "TimeManager.h"
 
 JEONG_USING
 SINGLETON_VAR_INIT(Core)
@@ -130,6 +130,8 @@ void Core::Logic()
 	getTimer->Update();
 
 	float Time = getTimer->GetDeltaTime();
+
+	KeyInput::Get().Update();
 
 	Input(Time);
 	Update(Time);

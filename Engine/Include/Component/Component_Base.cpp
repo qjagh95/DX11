@@ -48,10 +48,12 @@ void Component_Base::CollisionLateUpdate(float DeltaTime)
 void Component_Base::Render(float DeltaTime)
 {
 }
+
 const list<Component_Base*>* Component_Base::FindComponentFromTag(const string& TagName)
 {
 	return m_Object->FindComponentFromTag(TagName);
 }
+
 const list<Component_Base*>* Component_Base::FindComponentFromType(COMPONENT_TYPE type)
 {
 	return m_Object->FindComponentFromType(type);
@@ -59,7 +61,6 @@ const list<Component_Base*>* Component_Base::FindComponentFromType(COMPONENT_TYP
 
 GameObject * Component_Base::GetGameObject() const
 {
-	m_Object->AddRefCount();
 	return m_Object;
 }
 

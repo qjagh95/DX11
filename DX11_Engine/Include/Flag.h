@@ -42,4 +42,12 @@ enum RENDER_STATE
 	RS_END
 };
 
+enum MOVE_DIR
+{
+	MD_RIGHT = 1,
+	MD_LEFT = -1,
+	MD_UP = 1,
+	MD_DOWN = -1
+};
+
 JEONG_END

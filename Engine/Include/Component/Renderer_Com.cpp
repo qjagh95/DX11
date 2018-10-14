@@ -205,6 +205,9 @@ void Renderer_Com::UpdateTransform()
 	cBuffer.WV = cBuffer.World * cBuffer.View;
 	cBuffer.WVP = cBuffer.WV * cBuffer.Projection;
 
+	cBuffer.Pivot = m_Transform->GetPivot();
+	cBuffer.Lenth = m_Mesh->GetLanth();
+
 	//쉐이더로 전해주기위하여 전치행렬로 변환한다.
 	cBuffer.World.Transpose();
 	cBuffer.View.Transpose();

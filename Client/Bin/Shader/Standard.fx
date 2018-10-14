@@ -34,6 +34,7 @@ VS_OUTPUT_UV Standard_UV_VS(VS_INPUT_UV input)
     VS_OUTPUT_UV output = (VS_OUTPUT_UV)0;
 
     //API때 했던 중심점공식 (newPos = Pos - Size * Pivot)이거랑 똑같음.
+    //버텍스의 투영공간변환 전 좌표가 0.n상태에서 중심점을 잡는다.
     float3 TempPos = input.vPos - (g_Pivot * g_Length);
 
     output.vPos = mul(float4(TempPos, 1.0f), g_WVP);

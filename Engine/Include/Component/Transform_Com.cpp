@@ -277,7 +277,6 @@ void Transform_Com::SetWorldPivot(float x, float y, float z)
 	m_Pivot = Vector3(x, y, z);
 }
 
-
 void Transform_Com::Move(AXIS eAxis, float Speed)
 {
 	Move(m_WorldAxis[eAxis] * Speed );

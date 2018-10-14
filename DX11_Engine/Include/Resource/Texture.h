@@ -10,6 +10,7 @@ public:
 	bool LoadTexture(const string& TextureName, const TCHAR* FileName, const string& PathKey = TEXTURE_PATH);
 	bool LoadTextureFromFullPath(const string& TextureName, const TCHAR* FullPath);
 	void SetShaderResource(int RegisterNumber);
+	size_t GetTextureCount() const { return m_vecImage.size(); }
 
 private:
 	bool CreateShaderResource();

@@ -26,6 +26,10 @@
 #define TEXTURE_PATH "TexturPath"
 #define SHADER_PATH "ShaderPath"
 
+#define KEYPRESS(Key) KeyInput::Get()->KeyPress(key)
+#define KEYUP(Key) KeyInput::Get()->KeyUp(key)
+#define KEYPDOWN(Key) KeyInput::Get()->KeyDown(key)
+
 //BaseShader
 #define STANDARD_COLOR_SHADER "StandardColorShader"
 #define STANDARD_UV_SHADER "StandardUVShader"

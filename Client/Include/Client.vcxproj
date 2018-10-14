@@ -166,6 +166,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BulletRot_Com.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="SceneComponent\MainScene.cpp" />
     <ClCompile Include="UserComponent\Bullet_Com.cpp" />
@@ -175,6 +176,7 @@
   <ItemGroup>
     <ClInclude Include="ClientHeader.h" />
     <ClInclude Include="SceneComponent\MainScene.h" />
+    <ClInclude Include="UserComponent\BulletRot_Com.h" />
     <ClInclude Include="UserComponent\Bullet_Com.h" />
     <ClInclude Include="UserComponent\Monster_Com.h" />
     <ClInclude Include="UserComponent\Player_Com.h" />

@@ -1,9 +1,9 @@
 #pragma once
 #include "UserComponent/UserComponent_Base.h"
 #include "../ClientHeader.h"
-JEONG_USING
+JEONG_BEGIN
 
-class Bullet_Com : public UserComponent_Base
+class BulletRot_Com : public UserComponent_Base
 {
 public:
 	bool Init() override;
@@ -13,19 +13,27 @@ public:
 	void Collision(float DeltaTime) override;
 	void CollisionLateUpdate(float DeltaTime) override;
 	void Render(float DeltaTime) override;
-	Bullet_Com* Clone() override;
+	BulletRot_Com* Clone() override;
 
-	void SetMoveSpeed(float Var) { MoveSpeed = Var; }
+	void SetTarget(GameObject* target);
+	void SetRotAngle(float Var) { RotAngle = Var; }
+	void SetMulti(float time) { Time = time; }
 
 private:
+	GameObject* Target;
+	float RotAngle;
 	float MoveSpeed;
+	float Time;
+	bool isGap;
 
 protected:
-	Bullet_Com();
-	Bullet_Com(const Bullet_Com& userCom);
-	~Bullet_Com();
+	BulletRot_Com();
+	BulletRot_Com(const BulletRot_Com& userCom);
+	~BulletRot_Com();
 
 public:
 	friend class GameObject;
 };
+
+JEONG_END
 

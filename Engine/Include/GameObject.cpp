@@ -11,7 +11,7 @@ JEONG_USING
 unordered_map<Scene*, unordered_map<string, GameObject*>> GameObject::m_ProtoTypeMap;
 
 GameObject::GameObject()
-	:m_Scene(NULLPTR), m_Layer(NULLPTR), m_Transform(NULLPTR)
+	:m_Scene(NULLPTR), m_Layer(NULLPTR), m_Transform(NULLPTR), m_MoveDir(MD_UP)
 {
 	SetTag("GameObject");
 }

@@ -36,6 +36,7 @@ public:
 	Matrix GetWorldMatrix()	const { return m_MatWorld; }
 	float GetAngle(GameObject* Target);
 	float GetAngle(Transform_Com* Target);
+	Vector3 GetPivot() const { return m_Pivot; }
 
 	//안움직이는 놈인가용?
 	void SetIsStatic(bool isStatic) { m_isStatic = isStatic; }

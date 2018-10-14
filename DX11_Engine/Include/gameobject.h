@@ -20,6 +20,8 @@ public:
 
 	Scene* GetScene() const { return m_Scene; }
 	Layer* GetLayer() const { return m_Layer; }
+	MOVE_DIR GetMoveDir() const { return m_MoveDir; }
+	void SetMoveDir(MOVE_DIR dir) { m_MoveDir = dir; }
 
 	void SetScene(Scene* scene);
 	void SetLayer(Layer* layer);
@@ -70,8 +72,8 @@ public:
 	template<typename T>
 	T* FindComponentFromTag(const string& TagName)
 	{
-		list<Component_Base*>::iterator StartIter = m_FindComList.begin();
-		list<Component_Base*>::iterator EndIter = m_FindComList.end();
+		list<Component_Base*>::iterator StartIter = m_ComponentList.begin();
+		list<Component_Base*>::iterator EndIter = m_ComponentList.end();
 
 		for (; StartIter != EndIter; StartIter++)
 		{
@@ -110,6 +112,7 @@ private:
 
 	Scene* m_Scene;
 	Layer* m_Layer;
+	MOVE_DIR m_MoveDir;
 	
 	list<Component_Base*> m_FindComList;
 	static unordered_map<Scene*, unordered_map<string, GameObject*>> m_ProtoTypeMap;

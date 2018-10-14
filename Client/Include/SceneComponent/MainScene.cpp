@@ -11,6 +11,7 @@
 
 #include "../UserComponent/Player_Com.h"
 #include "../UserComponent/Bullet_Com.h"
+#include "../UserComponent/BulletRot_Com.h"
 
 #include "../UserComponent/Monster_Com.h"
 
@@ -35,10 +36,15 @@ bool MainScene::Init()
 
 	GameObject* BulletObject = GameObject::CreateProtoType("Bullet_Clone");
 	Bullet_Com* bullet_Com = BulletObject->AddComponent<Bullet_Com>("Bullet_Com");
+
+	GameObject* BulletObject2 = GameObject::CreateProtoType("BulletRot_Clone");
+	BulletRot_Com* bullet_Com2 = BulletObject2->AddComponent<BulletRot_Com>("BulletRot_Com");
 	 
 	GameObject* MonsterObject = GameObject::CreateObject("Monster", Default);
 	Monster_Com* monster_Com = MonsterObject->AddComponent<Monster_Com>("Monster_Com");
 
+	SAFE_RELEASE(BulletObject2);
+	SAFE_RELEASE(bullet_Com2);
 	SAFE_RELEASE(mainCamera);
 	SAFE_RELEASE(MonsterObject);
 	SAFE_RELEASE(monster_Com);
