@@ -103,6 +103,18 @@
     <Filter Include="Core\Resource\Sampler">
       <UniqueIdentifier>{16c7ad73-aa08-4347-957f-fc25406dd022}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Object\Component\BaseComponent\Matiral">
+      <UniqueIdentifier>{e6898ea8-e3cb-4a5b-aa32-7f98f4c0ae01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\RenderState">
+      <UniqueIdentifier>{b88ad729-4b30-457c-a013-dab90fd43a44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\RenderState\BlendState">
+      <UniqueIdentifier>{9debeb6a-49cc-448b-97a3-d82222e79d4f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\Render\RenderState\Base">
+      <UniqueIdentifier>{e46dcb8c-8812-4cdf-8a06-8c2ab36b7c6d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -192,6 +204,15 @@
     <ClInclude Include="Resource\Sampler.h">
       <Filter>Core\Resource\Sampler</Filter>
     </ClInclude>
+    <ClInclude Include="Component\Material_Com.h">
+      <Filter>Core\Object\Component\BaseComponent\Matiral</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\RenderState.h">
+      <Filter>Core\Render\RenderState\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\BlendState.h">
+      <Filter>Core\Render\RenderState\BlendState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
@@ -270,6 +291,15 @@
     </ClCompile>
     <ClCompile Include="Resource\Sampler.cpp">
       <Filter>Core\Resource\Sampler</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Material_Com.cpp">
+      <Filter>Core\Object\Component\BaseComponent\Matiral</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\RenderState.cpp">
+      <Filter>Core\Render\RenderState\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\BlendState.cpp">
+      <Filter>Core\Render\RenderState\BlendState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

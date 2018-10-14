@@ -56,6 +56,26 @@ void Mesh::Render()
 	}
 }
 
+void Mesh::Render(int Container, int Subset)
+{
+	Device::Get()->GetContext()->IASetPrimitiveTopology(m_vecMeshContainer[Container]->PrimitiveType);
+
+	UINT Stride = m_vecMeshContainer[Container]->vertexBuffer.vSize;
+	UINT Offset = 0;
+
+	Device::Get()->GetContext()->IASetVertexBuffers(0, 1, &m_vecMeshContainer[Container]->vertexBuffer.vBuffer, &Stride, &Offset);
+
+	if (m_vecMeshContainer[Container]->vecIndexBuffer.empty())
+	{
+		Device::Get()->GetContext()->Draw(m_vecMeshContainer[Container]->vertexBuffer.vCount, 0);
+	}
+	else
+	{
+		Device::Get()->GetContext()->IASetIndexBuffer(m_vecMeshContainer[Container]->vecIndexBuffer[Subset].iBuffer, m_vecMeshContainer[Container]->vecIndexBuffer[Subset].iFormat, 0);
+		Device::Get()->GetContext()->DrawIndexed(m_vecMeshContainer[Container]->vecIndexBuffer[Subset].iCount, 0, 0);
+	}
+}
+
 bool Mesh::CreateMesh(const string & TagName, const string & ShaderKeyName, const string & LayOutKeyName, void * vertexInfo, int vertexCount, int vertexSize, D3D11_USAGE vertexUsage, D3D11_PRIMITIVE_TOPOLOGY primitiveType, void * indexInfo, int indexCount, int indexSize, D3D11_USAGE indexUsage, DXGI_FORMAT indexFormat)
 {
 	SetTag(TagName);
@@ -170,6 +190,5 @@ void Mesh::UpdateVertexBuffer(void * vertexInfo, int ContainerIndex)
 			Device::Get()->GetContext()->Unmap(m_vecMeshContainer[ContainerIndex]->vertexBuffer.vBuffer, 0);
 		}
 			break;
-	}
-
+	}//switch
 }

@@ -1,6 +1,9 @@
 #include "Renderer_Com.h"
 #include "Transform_Com.h"
 #include "Camera_Com.h"
+#include "Material_Com.h"
+
+#include "../GameObject.h"
 
 #include "../Scene/Scene.h"
 
@@ -14,7 +17,7 @@
 JEONG_USING
 
 Renderer_Com::Renderer_Com()
-	:m_Mesh(NULLPTR), m_Shader(NULLPTR), m_LayOut(NULLPTR)
+	:m_Mesh(NULLPTR), m_Shader(NULLPTR), m_LayOut(NULLPTR), m_Material(NULLPTR)
 {
 	m_ComType = CT_RENDER;
 }
@@ -36,10 +39,13 @@ Renderer_Com::~Renderer_Com()
 {
 	SAFE_RELEASE(m_Mesh);
 	SAFE_RELEASE(m_Shader);
+	SAFE_RELEASE(m_Material);
 }
 
 bool Renderer_Com::Init()
 {
+	m_Material = AddComponent<Material_Com>("Material");
+
 	return true;
 }
 
@@ -50,7 +56,9 @@ int Renderer_Com::Input(float DeltaTime)
 
 int Renderer_Com::Update(float DeltaTime)
 {
-	int a = 0;
+	if (m_Material != NULLPTR)
+		m_Material->FindComponentFromType<Material_Com>(CT_MATERIAL);
+
 	return 0;
 }
 
@@ -75,7 +83,15 @@ void Renderer_Com::Render(float DeltaTime)
 
 	Device::Get()->GetContext()->IASetInputLayout(m_LayOut);
 	m_Shader->SetShader();
-	m_Mesh->Render();
+
+	for (size_t i = 0; i < m_Mesh->GetContainerCount(); i++)
+	{
+		for (size_t j = 0; j < m_Mesh->GetSubsetCount((int)i); j++)
+		{
+			m_Material->SetShader((int)i, (int)j);
+			m_Mesh->Render((int)i, (int)j);
+		}
+	}
 }
 
 Renderer_Com * Renderer_Com::Clone()
@@ -132,6 +148,7 @@ void Renderer_Com::SetLayOut(const string & KeyName)
 {
 	m_LayOut = ShaderManager::Get()->FindInputLayOut(KeyName);
 }
+
 //여기에서 실질적인 투영을위한 변환을 해준다!
 void Renderer_Com::UpdateTransform()
 {
@@ -141,7 +158,7 @@ void Renderer_Com::UpdateTransform()
 	//변수로 이미 초기화가 되어있다.
 
 	Camera_Com* getCamera = m_Scene->GetMainCamera();
-
+	
 	cBuffer.World = m_Transform->GetWorldMatrix();
 	cBuffer.View = getCamera->GetViewMatrix();
 	cBuffer.Projection = getCamera->GetProjection();

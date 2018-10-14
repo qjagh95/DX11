@@ -59,3 +59,8 @@ cbuffer Transform : register(b0)
     matrix g_WV;    //World * View
     matrix g_WVP;   //World * View * Projection
 }
+
+cbuffer Material : register(b1)
+{
+    float4 g_MaterialDiffuse;
+}

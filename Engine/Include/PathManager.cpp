@@ -29,7 +29,7 @@ bool PathManager::Init()
 
 	PathMap.insert(make_pair(ROOT_PATH, strPath));
 
-	AddPath(TEXTURE_PATH, TEXT("Textures\\"));
+	AddPath(TEXTURE_PATH, TEXT("Texture\\"));
 	AddPath(SHADER_PATH, TEXT("Shader\\"));
 
 	return true;

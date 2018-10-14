@@ -4,6 +4,7 @@ JEONG_BEGIN
 
 class Mesh;
 class Shader;
+class Material_Com;
 class JEONG_DLL Renderer_Com : public Component_Base
 {
 public:
@@ -29,6 +30,7 @@ private:
 private:
 	Mesh* m_Mesh;
 	Shader* m_Shader;
+	Material_Com* m_Material;
 	ID3D11InputLayout* m_LayOut;
 	float Temp;
 

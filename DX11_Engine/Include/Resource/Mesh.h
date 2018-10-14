@@ -44,12 +44,16 @@ class Mesh : public RefCount
 public:
 	bool CreateMesh(const string& TagName, const string& ShaderKeyName, const string& LayOutKeyName, void* vertexInfo, int vertexCount, int vertexSize, D3D11_USAGE vertexUsage, D3D11_PRIMITIVE_TOPOLOGY primitiveType, void* indexInfo = NULLPTR, int indexCount = 0,	int indexSize = 0, D3D11_USAGE indexUsage = D3D11_USAGE_DEFAULT, DXGI_FORMAT indexFormat = DXGI_FORMAT_R16_UINT);
 	void Render();
+	void Render(int Container, int Subset);
 
 	string GetShaderKey() const { return m_ShaderKeyName; }
 	string GetLayOutKey() const { return m_LayOutKeyName; }
 	void* GetVertexInfo(int Index) const { return m_vecMeshContainer[Index]->vertexBuffer.vInfo; }
 
 	void UpdateVertexBuffer(void* vertexInfo, int ContainerIndex = 0);
+
+	size_t GetContainerCount() const { return m_vecMeshContainer.size(); }
+	size_t GetSubsetCount(int Container) const { return m_vecMeshContainer[Container]->vecIndexBuffer.size(); }
 
 private:
 	vector<MeshContainer*> m_vecMeshContainer;

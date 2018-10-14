@@ -12,7 +12,7 @@ public:
 	//1.쉐이더파일 시맨틱 이름 2. 인덱스 3. 포맷 4. 바이트사이즈 5.디폴트값 셋팅
 	void AddInputElement(char* Semantic, int Index, DXGI_FORMAT Format, int Size, int InputSlot = 0, D3D11_INPUT_CLASSIFICATION eInputClass = D3D11_INPUT_PER_VERTEX_DATA, int InstanceStepRate = 0);
 	bool CreateInputLayOut(const string& InputLayoutKey, const string& ShaderKey);
-	bool CreateCBuffer(const string& KeyName, int BufferSize, int ShaderType);
+	bool CreateCBuffer(const string& KeyName, int BufferSize, int RegisterNumber,int ShaderType);
 	bool UpdateCBuffer(const string& KeyName, void *Info);
 
 	CBuffer* FindCBuffer(const string& KeyName);

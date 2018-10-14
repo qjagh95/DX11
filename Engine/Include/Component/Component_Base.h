@@ -25,6 +25,27 @@ public:
 	Transform_Com* GetTransform() const;
 	COMPONENT_TYPE GetComType() const { return m_ComType; }
 
+	const list<Component_Base*>* FindComponentFromTag(const string& TagName);
+	const list<Component_Base*>* FindComponentFromType(COMPONENT_TYPE type);
+
+	template<typename T>
+	T* AddComponent(const string& TagName)
+	{
+		return m_Object->AddComponent<T>(TagName);
+	}
+
+	template<typename T>
+	T* FindComponentFromTag(const string& TagName)
+	{
+		return m_Object->FindComponentFromTag<T>(TagName);
+	}
+
+	template<typename T>
+	T* FindComponentFromType(COMPONENT_TYPE type)
+	{
+		return m_Object->FindComponentFromType<T>(type);
+	}
+
 protected:
 	Scene* m_Scene;
 	Layer* m_Layer;

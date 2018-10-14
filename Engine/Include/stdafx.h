@@ -17,7 +17,6 @@
 //이전에는 프로젝트 템플릿(VS기능)을 이용하여 프로젝트를 먼저 만들어놓고 추가해서 사용했다.
 #include <d3d11.h>
 #include <d3dcompiler.h> //shader를 컴파일하는 기능을 제공한다.
-#include <DirectXColors.h>
 
 //DirectX11에서 제공하는 수학 기능을 사용하기위함
 #include <DirectXMath.h>
@@ -29,6 +28,7 @@ using namespace DirectX::PackedVector;
 
 #pragma comment(lib, "d3d11")
 #pragma comment(lib, "d3dcompiler")
+#pragma warning(disable:4099)
 
 #include "Type.h"
 #include "Macro.h"

@@ -41,7 +41,7 @@ private:
 	ID3D11Device* m_Device;					///디바이스 - 그래픽카드와 연결하여 명령을 대신 내려주는 놈.
 	ID3D11DeviceContext* m_Context;			///디바이스 컨텍스트 - 디바이스의 상태설정을 담당한다
 	IDXGISwapChain* m_SwapChain;			///스왑체인 - 백버퍼를 관리한다.
-	ID3D11RenderTargetView* m_TargerView;   ///랜더타겟뷰 - 출력할 랜더타겟 (디바이스에 등록해놓을 것)
+	ID3D11RenderTargetView* m_TargerView;   ///랜더타겟뷰 - 출력할 랜더타겟 (디바이스에 등록해놓을 것) 그냥 백퍼버
 	ID3D11DepthStencilView* m_DepthView;    ///깊이스탠실뷰
 	WinSize m_WinSize;
 

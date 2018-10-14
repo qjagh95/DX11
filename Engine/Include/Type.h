@@ -54,6 +54,7 @@ struct JEONG_DLL CBuffer
 	ID3D11Buffer* cBuffer;
 	int BufferSize;
 	int ShaderType;
+	int RegisterNumber;
 };
 
 struct JEONG_DLL TransformCBuffer
@@ -63,6 +64,14 @@ struct JEONG_DLL TransformCBuffer
 	Matrix Projection;
 	Matrix WV;
 	Matrix WVP;
+};
+
+struct JEONG_DLL Material
+{
+	//재질정보 (색상) 나중에 추가 예정.
+	Vector4 Diffuse;
+
+	Material() : Diffuse(Vector4::White) {}
 };
 
 JEONG_END

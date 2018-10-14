@@ -68,7 +68,8 @@ bool ShaderManager::Init()
 	}
 
 	//상수버퍼 Create
-	CreateCBuffer("Transform", sizeof(TransformCBuffer), CST_VERTEX | CST_PIXEL);
+	CreateCBuffer("Transform", sizeof(TransformCBuffer), 0, CST_VERTEX | CST_PIXEL);
+	CreateCBuffer("Material", sizeof(Material), 1, CST_PIXEL);
 
 	return true;
 }
@@ -143,7 +144,7 @@ bool ShaderManager::CreateInputLayOut(const string & InputLayoutKeyName, const s
 	return true;
 }
 
-bool ShaderManager::CreateCBuffer(const string & KeyName, int BufferSize, int ShaderType)
+bool ShaderManager::CreateCBuffer(const string & KeyName, int BufferSize, int RegisterNumber, int ShaderType)
 {
 	CBuffer* newCBuffer = FindCBuffer(KeyName);
 
@@ -153,6 +154,7 @@ bool ShaderManager::CreateCBuffer(const string & KeyName, int BufferSize, int Sh
 	newCBuffer = new CBuffer();
 	newCBuffer->BufferSize = BufferSize;
 	newCBuffer->ShaderType = ShaderType;
+	newCBuffer->RegisterNumber = RegisterNumber;
 
 	D3D11_BUFFER_DESC bufferDesc = {};
 	bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
@@ -185,9 +187,9 @@ bool ShaderManager::UpdateCBuffer(const string& KeyName, void * Info)
 	Device::Get()->GetContext()->Unmap(getBuffer->cBuffer, 0);
 
 	if (getBuffer->ShaderType & CST_VERTEX)
-		Device::Get()->GetContext()->VSSetConstantBuffers(0, 1, &getBuffer->cBuffer);//시작위치, 번호
+		Device::Get()->GetContext()->VSSetConstantBuffers(getBuffer->RegisterNumber, 1, &getBuffer->cBuffer);//시작위치, 번호
 	if(getBuffer->ShaderType & CST_PIXEL)
-		Device::Get()->GetContext()->PSSetConstantBuffers(0, 1, &getBuffer->cBuffer);//시작위치, 번호
+		Device::Get()->GetContext()->PSSetConstantBuffers(getBuffer->RegisterNumber, 1, &getBuffer->cBuffer);//시작위치, 번호
 
 	return true;
 }

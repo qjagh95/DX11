@@ -3,6 +3,7 @@
 
 #include "Component/Transform_Com.h"
 #include "Component/Renderer_Com.h"
+#include "Component/Material_Com.h"
 
 Player_Com::Player_Com()
 {
@@ -20,8 +21,13 @@ Player_Com::~Player_Com()
 bool Player_Com::Init()
 {
 	Renderer_Com* RenderComponent = m_Object->AddComponent<Renderer_Com>("PlayerRender");
-	RenderComponent->SetMesh("ColorRect");
+	RenderComponent->SetMesh("TextureRect");
 	SAFE_RELEASE(RenderComponent);
+
+	Material_Com* MaterialComponent = m_Object->FindComponentFromType<Material_Com>(CT_MATERIAL);
+	MaterialComponent->SetMaterial(Vector4::Yellow);
+	MaterialComponent->SetDiffuseTexture(0, "yso", TEXT("yso.jpg"));
+	SAFE_RELEASE(MaterialComponent);
 
 	m_Transform->SetWorldScale(100.0f, 100.0f, 1.0f);
 
@@ -30,7 +36,10 @@ bool Player_Com::Init()
 
 int Player_Com::Input(float DeltaTime)
 {
-	//나는 정면에서 보고있고 그리는건 앞 에서 그리기때문에 -
+	Material_Com* getMaterial = m_Object->FindComponentFromType<Material_Com>(CT_MATERIAL);
+	getMaterial->SetMaterial(Vector4::White);
+
+	//나는 정면에서 보고있고 그리는건 앞 에서 그리기때문에 각도-
 	if (GetAsyncKeyState('A') & 0x8000)
 	{
 		m_Transform->RotationZ(180.0f, DeltaTime);
@@ -44,8 +53,7 @@ int Player_Com::Input(float DeltaTime)
 	{
 		m_Transform->Move(AXIS_Y, 2.0f, DeltaTime);
 	}
-
-	if (GetAsyncKeyState('S') & 0x8000)
+	else if (GetAsyncKeyState('S') & 0x8000)
 	{
 		m_Transform->Move(AXIS_Y, -2.0f, DeltaTime);
 	}
@@ -56,7 +64,11 @@ int Player_Com::Input(float DeltaTime)
 		newClone->GetTransform()->Rotation(m_Transform->GetWorldRotation());
 		newClone->GetTransform()->SetWorldPos(m_Transform->GetWorldPos());
 		SAFE_RELEASE(newClone);
+
+		getMaterial->SetMaterial(Vector4::DarkCyan);
 	}
+
+	SAFE_RELEASE(getMaterial);
 
 	return 0;
 }

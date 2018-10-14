@@ -179,6 +179,7 @@
   <ItemGroup>
     <ClInclude Include="Component\Camera_Com.h" />
     <ClInclude Include="Component\Component_Base.h" />
+    <ClInclude Include="Component\Material_Com.h" />
     <ClInclude Include="Component\Renderer_Com.h" />
     <ClInclude Include="Component\Transform_Com.h" />
     <ClInclude Include="Core.h" />
@@ -188,7 +189,9 @@
     <ClInclude Include="Macro.h" />
     <ClInclude Include="PathManager.h" />
     <ClInclude Include="RefCount.h" />
+    <ClInclude Include="Render\BlendState.h" />
     <ClInclude Include="Render\RenderManager.h" />
+    <ClInclude Include="Render\RenderState.h" />
     <ClInclude Include="Render\Shader.h" />
     <ClInclude Include="Render\ShaderManager.h" />
     <ClInclude Include="resource.h" />
@@ -210,6 +213,7 @@
   <ItemGroup>
     <ClCompile Include="Component\Camera_Com.cpp" />
     <ClCompile Include="Component\Component_Base.cpp" />
+    <ClCompile Include="Component\Material_Com.cpp" />
     <ClCompile Include="Component\Renderer_Com.cpp" />
     <ClCompile Include="Component\Transform_Com.cpp" />
     <ClCompile Include="Core.cpp" />
@@ -218,7 +222,9 @@
     <ClCompile Include="KeyInput.cpp" />
     <ClCompile Include="PathManager.cpp" />
     <ClCompile Include="RefCount.cpp" />
+    <ClCompile Include="Render\BlendState.cpp" />
     <ClCompile Include="Render\RenderManager.cpp" />
+    <ClCompile Include="Render\RenderState.cpp" />
     <ClCompile Include="Render\Shader.cpp" />
     <ClCompile Include="Render\ShaderManager.cpp" />
     <ClCompile Include="Resource\Mesh.cpp" />

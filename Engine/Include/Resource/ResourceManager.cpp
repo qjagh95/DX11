@@ -20,7 +20,7 @@ ResourceManager::~ResourceManager()
 
 bool ResourceManager::Init()
 {
-	VertexColor vInfo[3] =
+	VertexColor ColorTri[3] =
 	{
 		//투영공간은 -1 ~ 0의 범위를 갖는다.
 		VertexColor(Vector3(0.0f, 0.5f, 0.0f), Vector4::Chartreuse),
@@ -30,7 +30,7 @@ bool ResourceManager::Init()
 
 	unsigned short IndexTri[3] = { 0, 1, 2 };
 
-	VertexColor vInfoRect[4] =
+	VertexColor ColorRect[4] =
 	{
 		//투영공간은 -1 ~ 0의 범위를 갖는다.
 		VertexColor(Vector3(0.0f, 1.0f, 0.0f), Vector4::Red),
@@ -41,20 +41,18 @@ bool ResourceManager::Init()
 
 	unsigned short IndexRect[6] = { 0, 1, 3, 0, 3, 2 };
 
-	CreateMesh("ColorTri", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, vInfo, 3, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexTri, 3, 2);
-	CreateMesh("ColorRect", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, vInfoRect, 4, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexRect, 6, 2);
+	CreateMesh("ColorTri", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, ColorTri, 3, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexTri, 3, 2);
+	CreateMesh("ColorRect", STANDARD_COLOR_SHADER, POS_COLOR_LAYOUT, ColorRect, 4, sizeof(VertexColor), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexRect, 6, 2);
 
-	VertexUV TexRect[4] =
+	VertexUV UVRect[4] =
 	{
-		VertexUV(Vector3(0.f, 1.f, 0.f), Vector2(0.f, 0.f)),
-		VertexUV(Vector3(1.f, 1.f, 0.f), Vector2(1.f, 0.f)),
-		VertexUV(Vector3(0.f, 0.f, 0.f), Vector2(0.f, 1.f)),
-		VertexUV(Vector3(1.f, 0.f, 0.f), Vector2(1.f, 1.f))
+		VertexUV(Vector3(0.0f, 1.0f, 0.0f), Vector2(0.0f, 0.0f)),
+		VertexUV(Vector3(1.0f, 1.0f, 0.0f), Vector2(1.0f, 0.0f)),
+		VertexUV(Vector3(0.0f, 0.0f, 0.0f), Vector2(0.0f, 1.0f)),
+		VertexUV(Vector3(1.0f, 0.0f, 0.0f), Vector2(1.0f, 1.0f))
 	};
 
-	CreateMesh("UVRect", STANDARD_UV_SHADER, POS_UV_LAYOUT, vInfoRect, 4, sizeof(VertexUV), D3D11_USAGE_DEFAULT, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexRect, 6, 2);
-
-	CreateTexture("Yso", TEXT("Yso.jpg"));
+	CreateMesh("TextureRect", STANDARD_UV_SHADER, POS_UV_LAYOUT, UVRect, 4, sizeof(VertexUV), D3D11_USAGE_DEFAULT,	D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST, IndexRect, 6, 2);
 	CreateSampler(LINER_SAMPLER);	
 
 	return true;
