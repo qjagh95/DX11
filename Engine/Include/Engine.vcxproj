@@ -194,6 +194,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="Resource\Mesh.h" />
     <ClInclude Include="Resource\ResourceManager.h" />
+    <ClInclude Include="Resource\Sampler.h" />
     <ClInclude Include="Resource\Texture.h" />
     <ClInclude Include="Scene\Layer.h" />
     <ClInclude Include="Scene\Scene.h" />
@@ -222,6 +223,7 @@
     <ClCompile Include="Render\ShaderManager.cpp" />
     <ClCompile Include="Resource\Mesh.cpp" />
     <ClCompile Include="Resource\ResourceManager.cpp" />
+    <ClCompile Include="Resource\Sampler.cpp" />
     <ClCompile Include="Resource\Texture.cpp" />
     <ClCompile Include="Scene\Layer.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />

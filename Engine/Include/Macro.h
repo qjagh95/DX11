@@ -27,12 +27,15 @@
 #define SHADER_PATH "ShaderPath"
 
 //BaseShader
-
 #define STANDARD_COLOR_SHADER "StandardColorShader"
+#define STANDARD_UV_SHADER "StandardUVShader"
 
 //Base InputLayOut
-
 #define POS_COLOR_LAYOUT "PosColorLayOut"
+#define POS_UV_LAYOUT "PosUVLayOut"
+
+//Sampler
+#define LINER_SAMPLER "Linear"
 
 template<typename T>
 void Safe_Delete_VecList(T& p)

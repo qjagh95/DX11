@@ -28,6 +28,16 @@ struct VertexColor
 	VertexColor(const Vector3& vec3, const Vector4& vec4) { m_Pos = vec3, m_Color = vec4; }
 };
 
+struct VertexUV
+{
+	Vector3 m_Pos;
+	Vector2 m_UV;
+
+	VertexUV() {}
+	VertexUV(const VertexUV& Value) { *this = Value; }
+	VertexUV(const Vector3& vec3, const Vector2& vec2) { m_Pos = vec3, m_UV = vec2; }
+};
+
 enum JEONG_DLL SHADER_TYPE
 {
 	ST_VERTEX,

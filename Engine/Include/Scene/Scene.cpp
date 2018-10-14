@@ -36,6 +36,8 @@ bool Scene::Init()
 	m_MainCameraTransform = m_MainCameraObject->GetTransform();
 	m_MainCamera = m_MainCameraObject->FindComponentFromType<Camera_Com>(CT_CAMERA);
 
+	//CreateCamera함수에서 AddComponent
+
 	return true;
 }
 

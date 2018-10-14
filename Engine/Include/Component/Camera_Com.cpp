@@ -81,11 +81,10 @@ void Camera_Com::SetCameraType(CAMERA_TYPE eType)
 			-0.5, -0.5, 0, 1	0   0   1 0
 
 			//위에서 곱한 최종 월드행렬을 직교투영공식에 변환과정.
-			100 100 0 1
-			100, 150, 0, 1		1/400 0      0 0
-			150, 50, 0, 1		0     1/-300 0 0
-			50, 50, 0, 1		0     0      1 0
-								-1    1      1 1
+			100 100 0 1	100,	1/400 0      0 0
+			150, 0, 1			0     1/-300 0 0
+			150, 50, 0, 1		0     0      1 0
+			50, 50, 0, 1		-1    1      1 1
 
 			//곱한 값
 			-0.75, 0.5
@@ -101,6 +100,7 @@ void Camera_Com::SetCameraType(CAMERA_TYPE eType)
 			//여기서 Pos가 뒤집어진 결과가 나온다. (좌상단기준)
 			m_Projection = XMMatrixOrthographicOffCenterLH(0.0f, m_Width, 0.0f, m_Height, m_Near, m_Far);
 			break;
+			//투영공식을 위 공식을 통하여 내보내겠다는 뜻.
 	}
 }
 
@@ -149,11 +149,8 @@ Matrix Camera_Com::GetViewMatrix() const
 {
 	return m_View;
 }
+
 Matrix Camera_Com::GetProjection() const
 {
-	char Buffer[255];
-	sprintf(Buffer, "tq : %f \n", m_Projection._11);
-	_cprintf(Buffer);
-
 	return m_Projection;
 }

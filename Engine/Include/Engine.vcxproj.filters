@@ -100,6 +100,9 @@
     <Filter Include="Core\Resource\Texture">
       <UniqueIdentifier>{d0316049-0b79-47ad-a19b-b02bf72e7dea}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\Resource\Sampler">
+      <UniqueIdentifier>{16c7ad73-aa08-4347-957f-fc25406dd022}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -186,6 +189,9 @@
     <ClInclude Include="Resource\Texture.h">
       <Filter>Core\Resource\Texture</Filter>
     </ClInclude>
+    <ClInclude Include="Resource\Sampler.h">
+      <Filter>Core\Resource\Sampler</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
@@ -261,6 +267,9 @@
     </ClCompile>
     <ClCompile Include="Resource\Texture.cpp">
       <Filter>Core\Resource\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource\Sampler.cpp">
+      <Filter>Core\Resource\Sampler</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

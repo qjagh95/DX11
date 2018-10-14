@@ -30,8 +30,8 @@ bool ShaderManager::Init()
 	char* Entry[ST_MAX] = {};
 
 	//쉐이더파일 함수 이름.
-	Entry[ST_VERTEX] = "StandardColorVS";
-	Entry[ST_PIXEL] = "StandardColorPS";
+	Entry[ST_VERTEX] = "Standard_Color_VS";
+	Entry[ST_PIXEL] = "Standard_Color_PS";
 	//쉐이더파일 로드
 	if (LoadShader(STANDARD_COLOR_SHADER, TEXT("Standard.fx"), Entry) == false)
 	{
@@ -48,6 +48,25 @@ bool ShaderManager::Init()
 		TrueAssert(true);
 		return false;
 	}
+
+	Entry[ST_VERTEX] = "Standard_UV_VS";
+	Entry[ST_PIXEL] = "Standard_UV_PS";
+
+	if (LoadShader(STANDARD_UV_SHADER, TEXT("Standard.fx"), Entry) == false)
+	{
+		TrueAssert(true);
+		return false;
+	}
+
+	AddInputElement("POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 12);
+	AddInputElement("TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 8);
+
+	if (CreateInputLayOut(POS_UV_LAYOUT, STANDARD_UV_SHADER) == false)
+	{
+		TrueAssert(true);
+		return false;
+	}
+
 	//상수버퍼 Create
 	CreateCBuffer("Transform", sizeof(TransformCBuffer), CST_VERTEX | CST_PIXEL);
 

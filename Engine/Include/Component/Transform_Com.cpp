@@ -194,7 +194,6 @@ void Transform_Com::ComputeLocalAxis()
 	}
 }
 
-/////////
 void Transform_Com::SetWorldScale(const Vector3 & vScale)
 {
 	//크기값을 받는다
@@ -383,6 +382,9 @@ void Transform_Com::LookAt(const Vector3 & Vec, AXIS eAxis)
 
 	//가상 축에 대한 회전행렬 생성.
 	m_MatWorldRotation.RotationAxis(Angle, vRotAxis);
+
+	//사족 : RotationZ도 되긴한다. 하지만 가상축에 대한 각도연산이 아니고 
+	//ㄹㅇ각도를 가지고 연산하기때문에(acos) 방향에 제한이 있다.
 
 	m_isUpdate = true;
 }

@@ -23,6 +23,24 @@ struct VS_OUTPUT_COLOR
     float4 vColor : COLOR;
 };
 
+/////////////////////////////////////////////////////////////////////
+struct VS_INPUT_UV
+{
+    float3 vPos : POSITION;
+    float2 vUV : TEXCOORD;
+};
+
+struct VS_OUTPUT_UV
+{
+    float4 vPos : SV_POSITION;
+    float2 vUV : TEXCOORD;
+};
+
+Texture2D Diffuse : register(t0);
+SamplerState DiffuseSampler : register(s0);
+
+/////////////////////////////////////////////////////////////////////
+
 struct PS_OUTPUT_SINGLE
 {
     float4 vTarget0 : SV_Target;
