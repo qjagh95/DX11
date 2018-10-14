@@ -89,7 +89,7 @@ int Layer::LateUpdate(float DeltaTime)
 			continue;
 		}
 
-		(*StartIter)->Update(DeltaTime);
+		(*StartIter)->LateUpdate(DeltaTime);
 		StartIter++;
 	}
 	return 0;

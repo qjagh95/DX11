@@ -385,12 +385,16 @@ void Transform_Com::LookAt(const Vector3 & Vec, AXIS eAxis)
 	//가상축과 바라보려는 방향(View)의 각도를 구한다 (내적)
 	float Angle = Axis.GetAngle(View);
 
-	//가상축과 외적을한다 (2D상에서 외적을하면 Z축이 나오게됨으로 무조건 Z축회전이 일어난다)
+	char Buffer[255] = {};
+	sprintf_s(Buffer, "Angle : %f \n", Angle);
+	_cprintf(Buffer);
+
 	Vector3 vRotAxis = Axis.Cross(View);
 	vRotAxis.Nomallize();
 
 	//가상 축에 대한 회전행렬 생성.
 	m_MatWorldRotation.RotationAxis(Angle, vRotAxis);
+	ComputeWorldAxis();
 
 	m_isUpdate = true;
 }

@@ -59,6 +59,7 @@ struct JEONG_DLL CBuffer
 	int RegisterNumber;
 };
 
+//16
 struct JEONG_DLL TransformCBuffer
 {
 	Matrix World;
@@ -66,18 +67,25 @@ struct JEONG_DLL TransformCBuffer
 	Matrix Projection;
 	Matrix WV;
 	Matrix WVP;
-	Vector3 Pivot;
+	Vector3 Pivot; //12
 	float Empty1;	//4바이트
-	Vector3 Lenth;
+	Vector3 Lenth; //12
 	float Empty2;   //4바이트 (16바이트패딩으로 바이트 맞춰주기위함)
 };
 
 struct JEONG_DLL Material
 {
-	//재질정보 (색상) 나중에 추가 예정.
+	//재질정보 (색상) 나머지필요한 변수들은 나중에 추가 예정.
 	Vector4 Diffuse;
-
+		
 	Material() : Diffuse(Vector4::White) {}
+};
+
+//나중에 추가할 컴포넌트가 상수버퍼를 사용하는지 안하는지를 판단하는 상수버퍼.
+struct JEONG_DLL ComponentCBuffer
+{
+	int TextureAnimation2D;
+	Vector3 Empty;
 };
 
 struct JEONG_DLL Clip2DFrame
@@ -88,21 +96,35 @@ struct JEONG_DLL Clip2DFrame
 
 struct JEONG_DLL AnimationClip2D
 {
-	ANIMATION2D_TYPE AnimationType;
-	ANIMATION_OPTION AnimationOption;
-	string AnimationName;
-	class Texture* CurTexture;
-	float TextureWidth;
-	float TextureHeight;
-	vector<Clip2DFrame>	vecFrame;
-	int Frame;
-	float PlayTime;
-	float PlayLimitTime;
+	ANIMATION2D_TYPE AnimationType;		///이미지종류(아틀라스, 프레임)
+	ANIMATION_OPTION AnimationOption;	///루프여부
+	string AnimationName;				///현재 내 애니메이션 이름
+	class Texture* CurTexture;			///나를 돌리고있는 텍스쳐
+	float TextureWidth;					///이미지크기
+	float TextureHeight;				
+	vector<Clip2DFrame>	vecFrame;		///이미지위치(프레임위치)
+	int Frame;							///현재프레임
+	float PlayTime;						///애니메이션 진행 시간
+	float PlayLimitTime;				///모든 애니메이션 완료 시간.
 };
 
+//쉐이더에서 이미지를 쪼개서 뿌려줄것이기때문에 쉐이더로 넘겨줄 상수버퍼 선언
 struct JEONG_DLL Animation2DCBuffer
 {
+	Vector2 LeftTopUV;
+	Vector2 RightBottomUV; 
+	int Frame;
+	Vector3 Empty;
+};
 
+//이걸 또 선언해주는 이유는 위에선언된 2DCBuffer를 void*로 넘겨주기위함이다.
+//어차피 상수버퍼도 똑같은 바이트크기여서 위 내용 그대로 포인터로받아서 넘겨주는형식이다.
+//왜나하면 map, unmap에서 memcpy후 쉐이더에 셋팅해주기때문.
+struct JEONG_DLL RendererCBuffer
+{
+	void* pBuffer;
+	string Name;
+	int BufferSize;
 };
 
 JEONG_END

@@ -3,6 +3,8 @@
 
 JEONG_BEGIN
 
+//이클래스는 2D 3D모드에따라서 모든 오브젝트들에게 하나씩 깊이버퍼를 사용하거나, 사용하지 않을것을 
+//디바이스에 알리기위한것이다.
 class DepthStancilState : public RenderState
 {
 public:

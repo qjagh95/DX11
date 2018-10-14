@@ -8,7 +8,9 @@ class JEONG_DLL Texture : public RefCount
 {
 public:
 	bool LoadTexture(const string& TextureName, const TCHAR* FileName, const string& PathKey = TEXTURE_PATH);
+	bool LoadTexture(const string& TextureName, const vector<const TCHAR*>& FileNames, const string& PathKey = TEXTURE_PATH);
 	bool LoadTextureFromFullPath(const string& TextureName, const TCHAR* FullPath);
+	bool LoadTextureFromFullPath(const string& TextureName, const vector<const TCHAR*>& FullPaths);
 	void SetShaderResource(int RegisterNumber);
 	size_t GetTextureCount() const { return m_vecImage.size(); }
 
@@ -19,6 +21,7 @@ public:
 
 private:
 	bool CreateShaderResource();
+	bool CreateShaderResourceArray();
 
 private:
 	///DirectXTex에서 제공되는 이미지함수

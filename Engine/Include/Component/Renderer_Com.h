@@ -26,8 +26,15 @@ public:
 	void SetLayOut(const string& KeyName);
 	void SetRenderState(const string& KeyName);
 
+	bool CreateRendererCBuffer(const string& KeyName, void* pData, int BufferSize);
+	void UpdateRendererCBuffer(const string& KeyName, void* pData, int BufferSize);
+
+	void CheckComponent();
+	void DeleteComponentCBuffer(Component_Base* DeleteCom);
+
 private:
 	void UpdateTransform();
+	RendererCBuffer* FindCBuffer(const string& KeyName);
 
 private:
 	//랜더 컴포넌트가 매쉬, 쉐이더, 재질정보를 갖고있는다.
@@ -38,6 +45,9 @@ private:
 	Material_Com* m_Material;
 	ID3D11InputLayout* m_LayOut;
 	RenderState* m_RenderState[RS_END];
+	ComponentCBuffer m_ComponentCBuffer;
+
+	unordered_map<string, RendererCBuffer*> m_CBufferMap;
 
 private:
 	Renderer_Com();

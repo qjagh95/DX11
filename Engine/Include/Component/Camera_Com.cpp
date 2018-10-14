@@ -23,6 +23,7 @@ Camera_Com::Camera_Com(const Camera_Com & camera)
 
 bool Camera_Com::Init()
 {
+
 	return true;
 }
 
@@ -33,10 +34,10 @@ int Camera_Com::Input(float DeltaTime)
 
 int Camera_Com::Update(float DeltaTime)
 {
-	m_View.Identity();
+	//m_View.Identity();
 
-	//memcpy 41 ~ 43위치 == Pos위치임.
-	memcpy(&m_View[3][0], &m_Transform->GetWorldPos(), sizeof(Vector3));
+	////memcpy 41 ~ 43위치 == Pos위치임.
+	//memcpy(&m_View[3][0], &m_Transform->GetWorldPos(), sizeof(Vector3));
 
 	return 0;
 }

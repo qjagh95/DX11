@@ -42,8 +42,8 @@ int Monster_Com::Input(float DeltaTime)
 
 int Monster_Com::Update(float DeltaTime)
 {
-	//if (m_Transform->GetWorldPos().GetDistance(Target->GetTransform()->GetWorldPos()) < 300.0f)
-	//	m_Transform->LookAt(Target, AXIS_Y);
+	if (m_Transform->GetWorldPos().GetDistance(Target->GetTransform()->GetWorldPos()) < 300.0f)
+		m_Transform->LookAt(Target, AXIS_Y);
 
 	TimeVar += DeltaTime;
 

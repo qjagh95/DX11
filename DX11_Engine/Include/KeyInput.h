@@ -34,7 +34,9 @@ private:
 		}
 
 		// 이녀석 없으면 터진다.
-		void PushKeyData()	{}
+		void PushKeyData()
+		{
+		}
 
 	public:
 		// 키를 체크하는 단계
@@ -42,7 +44,10 @@ private:
 		bool AllKeyCheck();
 
 	public:
-		InputData(size_t _Count) : m_bUpStay(true), m_bUp(false), m_bDown(false), m_bDownStay(false) {	m_AllKey.reserve(_Count);}
+		InputData(size_t _Count) : m_bUpStay(true), m_bUp(false), m_bDown(false), m_bDownStay(false)
+		{
+			m_AllKey.reserve(_Count);
+		}
 		~InputData() {}
 
 	private:
@@ -70,7 +75,10 @@ public:
 		InputData* pNewKey = FindKey(Name);
 
 		if (nullptr != pNewKey)
+		{
+			TrueAssert(true);
 			return false;
+		}
 
 		pNewKey = new InputData(sizeof...(_Arg));
 		pNewKey->PushKeyData(_Arg...);

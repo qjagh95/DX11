@@ -1,6 +1,9 @@
 #pragma once
 #include "UserComponent/UserComponent_Base.h"
 #include "../ClientHeader.h"
+
+#include "Component/Animation2D_Com.h"
+
 JEONG_USING
 
 class Player_Com : public UserComponent_Base
@@ -20,6 +23,7 @@ private:
 	bool isAlive;
 	float ScaleVar;
 	GameObject* BaseBullet;
+	Animation2D_Com* myAnimation;
 
 protected:
 	Player_Com();

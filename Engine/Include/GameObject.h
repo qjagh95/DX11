@@ -35,6 +35,8 @@ public:
 	void SetRotationZ(float RotZ);
 	static GameObject* CreateObject(const string& TagName, Layer* layer = NULLPTR);
 
+	const list<Component_Base*>* GetComponentList() const;
+
 	/////////////////////////////////////프로토타입함수(Clone)/////////////////////////////////////
 	static GameObject* CreateProtoType(const string& TagName, bool isCurrent = true);
 	static GameObject* CreateClone(const string& TagName, const string& ProtoTypeTagName, Layer* layer = NULLPTR, bool isCurrent = true);

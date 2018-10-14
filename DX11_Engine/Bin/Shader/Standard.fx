@@ -1,6 +1,14 @@
 #include "Share.fx"
 //fx파일은 버텍스와 픽셀쉐이더 두개 동시에 처리가 가능하다.
 
+cbuffer Animation2D : register(b8)
+{
+    float2 g_LeftTopUV;
+    float2 g_RightBottomUV;
+    int g_Frame;
+    float3 g_Empty3;
+}
+
 //////////////////////////////////ColorShader//////////////////////////
 
 VS_OUTPUT_COLOR Standard_Color_VS(VS_INPUT_COLOR input)
@@ -38,7 +46,23 @@ VS_OUTPUT_UV Standard_UV_VS(VS_INPUT_UV input)
     float3 TempPos = input.vPos - (g_Pivot * g_Length);
 
     output.vPos = mul(float4(TempPos, 1.0f), g_WVP);
-    output.vUV = input.vUV;
+
+    //애니메이션이 있다면 UV조절 후 출력 (UV값은 CPU연산 후 들어온다)
+    //없다면 그냥 출력
+    if (g_Animation2DEnable == 1)
+    {
+        if (input.vUV.x == 0.0f)
+            output.vUV.x = g_LeftTopUV.x;
+        else
+            output.vUV.x = g_RightBottomUV.x;
+
+        if (input.vUV.y == 0.0f)
+            output.vUV.y = g_LeftTopUV.y;
+        else
+            output.vUV.y = g_RightBottomUV.y;
+    }
+    else
+        output.vUV = input.vUV;
 
     return output;
 }

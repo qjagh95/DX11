@@ -854,7 +854,12 @@ Vector3 Vector3::Cross(const Vector3 & vec) const
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	XMVECTOR Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	return Vector3(XMVector3Cross(Src, Dest));
+	Vector3 Result = Vector3(XMVector3Cross(Src, Dest));
+
+	if (isnan(Result.x) || isnan(Result.z) || isnan(Result.z))
+		return Vector3();
+
+	return Result;
 }
 
 Vector3 Vector3::Cross(const XMVECTOR & Xmvec) const
@@ -862,7 +867,12 @@ Vector3 Vector3::Cross(const XMVECTOR & Xmvec) const
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	XMVECTOR Dest = XMLoadFloat3((XMFLOAT3*)&Xmvec);
 
-	return Vector3(XMVector3Cross(Src, Dest));
+	Vector3 Result = Vector3(XMVector3Cross(Src, Dest));
+
+	if (isnan(Result.x) || isnan(Result.z) || isnan(Result.z))
+		return Vector3();
+
+	return Result;
 }
 
 Vector3 Vector3::Cross(const XMFLOAT3 & XmFloat) const
@@ -870,7 +880,12 @@ Vector3 Vector3::Cross(const XMFLOAT3 & XmFloat) const
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	XMVECTOR Dest = XMLoadFloat3((XMFLOAT3*)&XmFloat);
 
-	return Vector3(XMVector3Cross(Src, Dest));
+	Vector3 Result = Vector3(XMVector3Cross(Src, Dest));
+
+	if (isnan(Result.x) || isnan(Result.z) || isnan(Result.z))
+		return Vector3();
+
+	return Result;
 }
 
 Vector3 Vector3::Cross(float Val[3]) const
@@ -880,7 +895,12 @@ Vector3 Vector3::Cross(float Val[3]) const
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	XMVECTOR Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	return Vector3(XMVector3Cross(Src, Dest));
+	Vector3 Result = Vector3(XMVector3Cross(Src, Dest));
+
+	if (isnan(Result.x) || isnan(Result.z) || isnan(Result.z))
+		return Vector3();
+
+	return Result;
 }
 
 Vector3 Vector3::Cross(int Val[3]) const
@@ -890,7 +910,12 @@ Vector3 Vector3::Cross(int Val[3]) const
 	XMVECTOR Src = XMLoadFloat3((XMFLOAT3*)this);
 	XMVECTOR Dest = XMLoadFloat3((XMFLOAT3*)&Temp);
 
-	return Vector3(XMVector3Cross(Src, Dest));
+	Vector3 Result = Vector3(XMVector3Cross(Src, Dest));
+
+	if (isnan(Result.x) || isnan(Result.z) || isnan(Result.z))
+		return Vector3();
+
+	return Result;
 }
 
 Vector3 Vector3::Nomallize(const Vector3 & vec)

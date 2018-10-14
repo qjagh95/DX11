@@ -1,4 +1,8 @@
 #include "Material_Com.h"
+#include "Animation2D_Com.h"
+
+#include "../GameObject.h"
+
 #include "../Resource/ResourceManager.h"
 #include "../Resource/Sampler.h"
 #include "../Resource/Texture.h"
@@ -107,7 +111,7 @@ void Material_Com::SetMaterial(const Vector4 & Diffuse, int Container, int Subse
 		SubsetMaterial* newMaterial = new SubsetMaterial();
 		m_vecMaterial[Container].push_back(newMaterial);
 	}
-	//추가했으면 추가한곳에 셋팅한다.
+	//색상정보셋팅
 	m_vecMaterial[Container][Subset]->MatrialInfo.Diffuse = Diffuse;
 }
 
@@ -154,6 +158,27 @@ void Material_Com::SetDiffuseTexture(int RegisterNumber, const string & KeyName,
 	ResourceManager::Get()->CreateTexture(KeyName, FileName, PathKey);
 	//가져다 쓴다.
 	getMaterial->DiffuseTexture = ResourceManager::Get()->FindTexture(KeyName);
+	getMaterial->TextureRegister = RegisterNumber;
+}
+
+void Material_Com::SetDiffuseTexture(int RegisterNumber, Texture * pTexture, int Container, int Subset)
+{
+	if (Container >= m_vecMaterial.size())
+	{
+		vector<SubsetMaterial*>	newVec;
+		m_vecMaterial.push_back(newVec);
+	}
+
+	if (Subset >= m_vecMaterial[Container].size())
+	{
+		SubsetMaterial* newMaterial = new SubsetMaterial();
+		m_vecMaterial[Container].push_back(newMaterial);
+	}
+
+	SubsetMaterial*	getMaterial = m_vecMaterial[Container][Subset];
+	pTexture->AddRefCount();
+	
+	getMaterial->DiffuseTexture = pTexture;
 	getMaterial->TextureRegister = RegisterNumber;
 }
 

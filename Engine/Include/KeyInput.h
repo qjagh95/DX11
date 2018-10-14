@@ -63,9 +63,7 @@ private:
 		unordered_map<string, InputData*>::iterator FindIter = m_MapInputData.find(Name);
 
 		if (FindIter == m_MapInputData.end())
-		{
 			return NULLPTR;
-		}
 
 		return FindIter->second;
 	}
@@ -78,13 +76,13 @@ public:
 
 		if (nullptr != pNewKey)
 		{
-			TASSERT(true);
+			TrueAssert(true);
 			return false;
 		}
 
 		pNewKey = new InputData(sizeof...(_Arg));
 		pNewKey->PushKeyData(_Arg...);
-		m_MapInputData.insert(std::map<std::wstring, InputData*>::value_type(_Name, pNewKey));
+		m_MapInputData.insert(make_pair(Name, newKey));
 
 		return true;
 	}

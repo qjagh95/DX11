@@ -172,7 +172,7 @@ XMMATRIX Matrix::Translation(const Vector3 & vPos)
 XMMATRIX Matrix::RotationAxis(float Angle, Vector3 & Axis)
 {
 	matrix = XMMatrixRotationAxis(Axis.Convert(), DegreeToRadian(Angle));
-	return matrix;
+	return matrix;  
 }
 
 Vector4 & Matrix::operator[](unsigned int Index)

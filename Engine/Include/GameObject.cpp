@@ -5,6 +5,7 @@
 #include "Scene/Scene.h"
 
 #include "Component/Transform_Com.h"
+#include "Component/Renderer_Com.h"
 
 JEONG_USING
 
@@ -37,6 +38,14 @@ GameObject::GameObject(const GameObject& copyObject)
 
 		m_ComponentList.push_back(newComponent);
 	}
+
+	Renderer_Com* getRender = FindComponentFromType<Renderer_Com>(CT_RENDER);
+
+	if(getRender != NULLPTR)
+	{
+		getRender->CheckComponent();
+		SAFE_RELEASE(getRender);
+	}
 }
 
 GameObject::~GameObject()
@@ -65,6 +74,13 @@ int GameObject::Input(float DeltaTime)
 	{
 		if ((*StartIter)->GetIsActive() == false)
 		{
+			Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+			if (pRenderer != NULLPTR)
+			{
+				pRenderer->DeleteComponentCBuffer(*StartIter);
+				SAFE_RELEASE(pRenderer);
+			}
+
 			SAFE_RELEASE((*StartIter));
 			StartIter = m_ComponentList.erase(StartIter);
 			continue;
@@ -90,6 +106,13 @@ int GameObject::Update(float DeltaTime)
 	{
 		if ((*StartIter)->GetIsActive() == false)
 		{
+			Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+			if (pRenderer != NULLPTR)
+			{
+				pRenderer->DeleteComponentCBuffer(*StartIter);
+				SAFE_RELEASE(pRenderer);
+			}
+
 			SAFE_RELEASE((*StartIter));
 			StartIter = m_ComponentList.erase(StartIter);
 			continue;
@@ -117,6 +140,13 @@ int GameObject::LateUpdate(float DeltaTime)
 	{
 		if ((*StartIter)->GetIsActive() == false)
 		{
+			Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+			if (pRenderer != NULLPTR)
+			{
+				pRenderer->DeleteComponentCBuffer(*StartIter);
+				SAFE_RELEASE(pRenderer);
+			}
+
 			SAFE_RELEASE((*StartIter));
 			StartIter = m_ComponentList.erase(StartIter);
 			continue;
@@ -143,6 +173,13 @@ void GameObject::Collision(float DeltaTime)
 	{
 		if ((*StartIter)->GetIsActive() == false)
 		{
+			Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+			if (pRenderer != NULLPTR)
+			{
+				pRenderer->DeleteComponentCBuffer(*StartIter);
+				SAFE_RELEASE(pRenderer);
+			}
+
 			SAFE_RELEASE((*StartIter));
 			StartIter = m_ComponentList.erase(StartIter);
 			continue;
@@ -166,6 +203,13 @@ void GameObject::CollisionLateUpdate(float DeltaTime)
 
 	for (; StartIter != EndIter;)
 	{
+		Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+		if (pRenderer != NULLPTR)
+		{
+			pRenderer->DeleteComponentCBuffer(*StartIter);
+			SAFE_RELEASE(pRenderer);
+		}
+
 		if ((*StartIter)->GetIsActive() == false)
 		{
 			SAFE_RELEASE((*StartIter));
@@ -194,6 +238,13 @@ void GameObject::Render(float DeltaTime)
 	{
 		if ((*StartIter)->GetIsActive() == false)
 		{
+			Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+			if (pRenderer != NULLPTR)
+			{
+				pRenderer->DeleteComponentCBuffer(*StartIter);
+				SAFE_RELEASE(pRenderer);
+			}
+
 			SAFE_RELEASE((*StartIter));
 			StartIter = m_ComponentList.erase(StartIter);
 			continue;
@@ -222,9 +273,7 @@ void GameObject::SetScene(Scene * scene)
 	list<Component_Base*>::iterator EndIter = m_ComponentList.end();
 
 	for (;StartIter != EndIter; StartIter++)
-	{
 		(*StartIter)->m_Scene = scene;
-	}
 }
 
 void GameObject::SetLayer(Layer * layer)
@@ -236,9 +285,7 @@ void GameObject::SetLayer(Layer * layer)
 	list<Component_Base*>::iterator EndIter = m_ComponentList.end();
 
 	for (;StartIter != EndIter; StartIter++)
-	{
 		(*StartIter)->m_Layer = layer;
-	}
 }
 
 GameObject * GameObject::CreateObject(const string & TagName, Layer * layer)
@@ -254,11 +301,14 @@ GameObject * GameObject::CreateObject(const string & TagName, Layer * layer)
 
 	//해당 레이어에 오브젝트 추가를 해준다.
 	if (layer != NULLPTR)
-	{
 		layer->AddObject(newObject);
-	}
 
 	return newObject;
+}
+
+const list<Component_Base*>* GameObject::GetComponentList() const
+{
+	return &m_ComponentList;
 }
 
 Component_Base * GameObject::AddComponent(Component_Base * component)
@@ -270,6 +320,14 @@ Component_Base * GameObject::AddComponent(Component_Base * component)
 	component->AddRefCount();
 
 	m_ComponentList.push_back(component);
+
+	Renderer_Com* pRender = FindComponentFromType<Renderer_Com>(CT_RENDER);
+
+	if (pRender != NULLPTR)
+	{
+		pRender->CheckComponent();
+		SAFE_RELEASE(pRender);
+	}
 
 	return component;
 }
@@ -337,10 +395,8 @@ GameObject * GameObject::CreateClone(const string & TagName, const string & Prot
 	GameObject*	pClone = newCloneObject->Clone();
 	pClone->SetTag(TagName);
 
-	if (layer != nullptr)
-	{
+	if (layer != NULLPTR)
 		layer->AddObject(pClone);
-	}
 
 	return pClone;
 }

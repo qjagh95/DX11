@@ -11,17 +11,19 @@
 #include "../UserComponent/BulletRot_Com.h"
 
 Player_Com::Player_Com()
-	:isCharge(false),isAlive(false), ScaleVar(0.0f)
+	:isCharge(false), isAlive(false), ScaleVar(0.0f), myAnimation(NULLPTR)
 {
 }
 
 Player_Com::Player_Com(const Player_Com & userCom)
 	:UserComponent_Base(userCom)
 {
+	myAnimation = NULLPTR;
 }
 
 Player_Com::~Player_Com()
 {
+	SAFE_RELEASE(myAnimation);
 }
 
 bool Player_Com::Init()
@@ -36,6 +38,7 @@ bool Player_Com::Init()
 	KeyInput::Get().CreateKey("S3", VK_F3);
 	KeyInput::Get().CreateKey("S4", VK_F4);
 
+	KeyInput::Get().CreateKey("ChangeAnimation", VK_SPACE);
 
 	Renderer_Com* RenderComponent = m_Object->AddComponent<Renderer_Com>("PlayerRender");
 	RenderComponent->SetMesh("TextureRect");
@@ -51,13 +54,43 @@ bool Player_Com::Init()
 	m_Transform->SetWorldPivot(0.5f, 0.0f, 0.0f);
 	m_Transform->SetWorldPos(600.0f, 0.0f, 1.0f);
 
+	myAnimation = m_Object->AddComponent<Animation2D_Com>("PlayerAnimation");
+		
+	vector<Clip2DFrame>	vecClipFrame;
+	Clip2DFrame	tFrame = {};
+
+	for (int i = 0; i < 14; ++i)
+	{
+		tFrame.LeftTop = Vector2(0.0f + i * 45.0f, 60.f);
+		tFrame.RightBottom = Vector2(45.0f + i * 45.0f, 120.f);
+		vecClipFrame.push_back(tFrame);
+	}
+
+ 	myAnimation->AddClip("Idle", A2D_ATLS, AO_LOOP, 1.0f, vecClipFrame, "Player", L"Player.png");
+	vecClipFrame.clear();
+
+	for (int i = 0; i < 21; ++i)
+	{
+		tFrame.LeftTop = Vector2(0.0f + i * 45.0f, 180.0f);
+		tFrame.RightBottom = Vector2(45.0f + i * 45.0f, 240.0f);
+		vecClipFrame.push_back(tFrame);
+	}
+
+	myAnimation->AddClip("Attack", A2D_ATLS, AO_LOOP, 1.0f, vecClipFrame, "Player", L"Player.png");
 	return true;
 }
 
 int Player_Com::Input(float DeltaTime)
 {
+	if (myAnimation == NULLPTR)
+		myAnimation = m_Object->FindComponentFromType<Animation2D_Com>(CT_ANIMATION2D);
+
 	Material_Com* getMaterial = m_Object->FindComponentFromType<Material_Com>(CT_MATERIAL);
 	getMaterial->SetMaterial(Vector4::White);
+
+	if (KeyInput::Get().KeyDown("ChangeAnimation"))
+	{
+	}
 
 	//나는 정면에서 보고있고 그리는건 앞 에서 그리기때문에 각도-
 	//if (KeyInput::Get().KeyPress("MoveLeft"))

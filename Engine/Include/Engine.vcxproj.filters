@@ -121,6 +121,21 @@
     <Filter Include="Core\08. Object\Component\BaseComponent\Animation2D">
       <UniqueIdentifier>{c4138794-dde1-4f21-bec5-9bfff7da8a8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Core\12. Collsion">
+      <UniqueIdentifier>{4c2bbe28-d5a0-42a8-a2c5-fe3df4a70a5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\12. Collsion\Manager">
+      <UniqueIdentifier>{4785ddae-e82c-4960-8fe0-ec39722cb748}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\12. Collsion\Collider">
+      <UniqueIdentifier>{c8175c9d-9101-4cc4-9046-658f4299e3d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\12. Collsion\Collider\Base">
+      <UniqueIdentifier>{146b06ae-55f3-4052-8a98-e146c6d11ade}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core\12. Collsion\Collider\ColliderRect">
+      <UniqueIdentifier>{c7277f72-48ca-4d6f-8e09-309415cca4f5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -225,6 +240,15 @@
     <ClInclude Include="Component\Animation2D_Com.h">
       <Filter>Core\08. Object\Component\BaseComponent\Animation2D</Filter>
     </ClInclude>
+    <ClInclude Include="CollsionManager.h">
+      <Filter>Core\12. Collsion\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\Collider_Com.h">
+      <Filter>Core\12. Collsion\Collider\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\ColliderRect_Com.h">
+      <Filter>Core\12. Collsion\Collider\ColliderRect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Copy.bat">
@@ -318,6 +342,15 @@
     </ClCompile>
     <ClCompile Include="Component\Animation2D_Com.cpp">
       <Filter>Core\08. Object\Component\BaseComponent\Animation2D</Filter>
+    </ClCompile>
+    <ClCompile Include="CollsionManager.cpp">
+      <Filter>Core\12. Collsion\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\Collider_Com.cpp">
+      <Filter>Core\12. Collsion\Collider\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\ColliderRect_Com.cpp">
+      <Filter>Core\12. Collsion\Collider\ColliderRect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

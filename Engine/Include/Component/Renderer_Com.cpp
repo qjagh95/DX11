@@ -9,6 +9,7 @@
 
 #include "../Resource/ResourceManager.h"
 #include "../Resource/Mesh.h"
+
 #include "../Render/Shader.h"
 #include "../Render/ShaderManager.h"
 #include "../Render/RenderState.h"
@@ -23,9 +24,10 @@ Renderer_Com::Renderer_Com()
 {
 	m_ComType = CT_RENDER;
 	ZeroMemory(m_RenderState, sizeof(RenderState*) * RS_END);
+	ZeroMemory(&m_ComponentCBuffer, sizeof(ComponentCBuffer));
 
 	if (RenderManager::Get()->GetGameMode() == GM_2D)
-		SetRenderState(DEPTH_DISABLE);
+		SetRenderState(DEPTH_DISABLE); //여기서 2D오브젝트들은 이미 Set을 해줌 알파 XX
 }
 
 Renderer_Com::Renderer_Com(const Renderer_Com& copyObject)
@@ -46,8 +48,22 @@ Renderer_Com::Renderer_Com(const Renderer_Com& copyObject)
 	}
 
 	m_Material = NULLPTR;
-}
 
+	m_CBufferMap.clear();
+
+	unordered_map<string, RendererCBuffer*>::const_iterator StartIter = copyObject.m_CBufferMap.begin();
+	unordered_map<string, RendererCBuffer*>::const_iterator EndIter = copyObject.m_CBufferMap.end();
+
+	for (; StartIter != EndIter; StartIter++)
+	{
+		RendererCBuffer* newCBuffer = new RendererCBuffer();
+		newCBuffer->Name = StartIter->second->Name;
+		newCBuffer->BufferSize = StartIter->second->BufferSize;
+		newCBuffer->pBuffer = new char[newCBuffer->BufferSize];
+
+		m_CBufferMap.insert(make_pair(StartIter->first, newCBuffer));
+	}
+}
 
 Renderer_Com::~Renderer_Com()
 {
@@ -57,6 +73,17 @@ Renderer_Com::~Renderer_Com()
 
 	for (int i = 0; i < RS_END; ++i)
 		SAFE_RELEASE(m_RenderState[i]);
+
+	unordered_map<string, RendererCBuffer*>::iterator StartIter = m_CBufferMap.begin();
+	unordered_map<string, RendererCBuffer*>::iterator EndIter = m_CBufferMap.end();
+
+	for (; StartIter != EndIter; StartIter++)
+	{
+		SAFE_DELETE_ARRARY(StartIter->second->pBuffer);
+		SAFE_DELETE(StartIter->second);
+	}
+
+	m_CBufferMap.clear();
 }
 
 bool Renderer_Com::Init()
@@ -64,6 +91,8 @@ bool Renderer_Com::Init()
 	//내가 가지고있는 오브젝트에 AddComponent
 	m_Material = AddComponent<Material_Com>("Material");
 	SAFE_RELEASE(m_Material);
+
+	CheckComponent();
 
 	return true;
 }
@@ -100,14 +129,25 @@ void Renderer_Com::Render(float DeltaTime)
 	//랜더러 컴포넌트에서 투영변환(Projection)을하고, 쉐이더에 버퍼정보를 보낸다.(UpdateTransform)
 	UpdateTransform();
 
-	Device::Get()->GetContext()->IASetInputLayout(m_LayOut);
-	m_Shader->SetShader();
-
 	for (int i = 0; i < RS_END; i++)
 	{
 		if (m_RenderState[i] != NULLPTR)
 			m_RenderState[i]->SetState();
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////
+	//여기서 아틀라스이미지의 UV값을 쉐이더로 보낸다.
+	unordered_map<string, RendererCBuffer*>::iterator StartIter = m_CBufferMap.begin();
+	unordered_map<string, RendererCBuffer*>::iterator EndIter = m_CBufferMap.end();
+
+	for (; StartIter != EndIter ; StartIter++)
+		ShaderManager::Get()->UpdateCBuffer(StartIter->first, StartIter->second->pBuffer);
+
+	////////////////////////////////////////////////////////////////////////////////////////////
+
+	ShaderManager::Get()->UpdateCBuffer("Component", &m_ComponentCBuffer);
+
+	Device::Get()->GetContext()->IASetInputLayout(m_LayOut);
+	m_Shader->SetShader();
 
 	for (size_t i = 0; i < m_Mesh->GetContainerCount(); i++)
 	{
@@ -164,9 +204,7 @@ void Renderer_Com::SetShader(Shader * shader)
 	m_Shader = shader;
 
 	if (shader != NULLPTR)
-	{
 		shader->AddRefCount();
-	}
 }
 
 void Renderer_Com::SetShader(const string & KeyName)
@@ -189,6 +227,39 @@ void Renderer_Com::SetRenderState(const string & KeyName)
 
 	//멤버변수 배열에 가져온 타입상수번째에 집어넣는다.
 	m_RenderState[getState->GetStateEnum()] = getState;
+}
+
+bool Renderer_Com::CreateRendererCBuffer(const string & KeyName, void * pData, int BufferSize)
+{
+	RendererCBuffer* newCBuffer = FindCBuffer(KeyName);
+
+	if (newCBuffer != NULLPTR)
+		return false;
+
+	newCBuffer = new RendererCBuffer();
+	newCBuffer->Name = KeyName;
+	newCBuffer->pBuffer = new char[BufferSize];
+	newCBuffer->BufferSize = BufferSize;
+
+	m_CBufferMap.insert(make_pair(KeyName, newCBuffer));
+	return true;
+}
+
+void Renderer_Com::UpdateRendererCBuffer(const string & KeyName, void * pData, int BufferSize)
+{
+	//여기선 메모리 복사만 해놓고 랜더에서 쉐이더로 넘긴다.
+	RendererCBuffer* getCBuffer = FindCBuffer(KeyName);
+
+	if (getCBuffer == NULLPTR)
+	{
+		getCBuffer = new RendererCBuffer();
+		getCBuffer->Name = KeyName;
+		getCBuffer->pBuffer = new char[BufferSize];
+		getCBuffer->BufferSize = BufferSize;
+
+		m_CBufferMap.insert(make_pair(KeyName, getCBuffer));
+	}
+	memcpy(getCBuffer->pBuffer, pData, BufferSize);
 }
 
 //여기에서 실질적인 투영을위한 변환을 해준다!
@@ -224,3 +295,42 @@ void Renderer_Com::UpdateTransform()
 
 	SAFE_RELEASE(getCamera);
 }
+
+RendererCBuffer * Renderer_Com::FindCBuffer(const string & KeyName)
+{
+	unordered_map<string, RendererCBuffer*>::iterator FindIter = m_CBufferMap.find(KeyName);
+
+	if (FindIter == m_CBufferMap.end())
+		return NULLPTR;
+
+	return FindIter->second;
+}
+
+void Renderer_Com::CheckComponent()
+{
+	const list<Component_Base*>* TempList = m_Object->GetComponentList();
+
+	list<Component_Base*>::const_iterator StartIter = TempList->begin();
+	list<Component_Base*>::const_iterator EndIter = TempList->end();
+
+	for (;StartIter != EndIter ;StartIter++)
+	{
+		switch ((*StartIter)->GetComType())
+		{
+			case CT_ANIMATION2D:
+				m_ComponentCBuffer.TextureAnimation2D = 1;
+				break;
+		}
+	}
+}
+
+void Renderer_Com::DeleteComponentCBuffer(Component_Base * DeleteCom)
+{
+	switch (DeleteCom->GetComType())
+	{
+		case CT_ANIMATION2D:
+			m_ComponentCBuffer.TextureAnimation2D = 1;
+			break;
+	}
+}
+	

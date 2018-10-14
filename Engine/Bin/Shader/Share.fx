@@ -43,11 +43,6 @@ struct PS_OUTPUT_SINGLE
 
 /////////////////////////////////////////////////////////////////////
 
-Texture2D Diffuse : register(t0);
-SamplerState DiffuseSampler : register(s0);
-
-/////////////////////////////////////////////////////////////////////
-
 //CBuffer는 상수버퍼 (C++코드에서 쉐이더로 값을 받아오기 위함)
 //cbuffer 함수명 : 레지스터에 b0에 저장하겠다.
 cbuffer Transform : register(b0)
@@ -71,3 +66,17 @@ cbuffer Material : register(b1)
 {
     float4 g_MaterialDiffuse;
 }
+
+cbuffer Componeent : register(b2)
+{
+    int g_Animation2DEnable;
+    float3 g_Empty;
+}
+
+//변수라인
+/////////////////////////////////////////////////////////////////////
+
+Texture2D Diffuse : register(t0);
+SamplerState DiffuseSampler : register(s0);
+
+/////////////////////////////////////////////////////////////////////

@@ -70,7 +70,9 @@ bool ShaderManager::Init()
 
 	//상수버퍼 Create
 	CreateCBuffer("Transform", sizeof(TransformCBuffer), 0, CST_VERTEX | CST_PIXEL);
-	CreateCBuffer("Material", sizeof(Material), 1, CST_PIXEL);
+	CreateCBuffer("Material", sizeof(Material), 1, CST_VERTEX | CST_PIXEL);
+	CreateCBuffer("Animation2D", sizeof(Animation2DCBuffer), 8, CST_VERTEX | CST_PIXEL);
+	CreateCBuffer("Component", sizeof(ComponentCBuffer), 2, CST_VERTEX | CST_PIXEL);
 
 	return true;
 }

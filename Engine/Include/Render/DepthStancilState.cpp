@@ -17,7 +17,7 @@ bool DepthStancilState::CreateState(BOOL bDepthEnable, D3D11_DEPTH_WRITE_MASK eM
 {
 	D3D11_DEPTH_STENCIL_DESC depthDesc;
 	depthDesc.DepthEnable = bDepthEnable;			//±íÀÌ¹öÆÛ »ç¿ëÇÒ²¨ÀÓ?
-	depthDesc.DepthWriteMask = eMask;		
+	depthDesc.DepthWriteMask = eMask;				//ALL(¾²±â»ç¿ë), ZERO(²û)
 	depthDesc.DepthFunc = eDepthFunc;				//¿¬»êÀÚ
 	depthDesc.StencilEnable = bStencilEnable;		//½ºÅÄ½Ç »ç¿ëÇÒ²¨?
 	depthDesc.StencilReadMask = iStencilReadMask; 
@@ -34,7 +34,7 @@ bool DepthStancilState::CreateState(BOOL bDepthEnable, D3D11_DEPTH_WRITE_MASK eM
 void DepthStancilState::SetState()
 {
 	Device::Get()->GetContext()->OMGetDepthStencilState((ID3D11DepthStencilState**)&m_OldRenderState, &m_OldStencilRef);
-	Device::Get()->GetContext()->OMSetDepthStencilState((ID3D11DepthStencilState*)m_RenderState, m_OldStencilRef);
+	Device::Get()->GetContext()->OMSetDepthStencilState((ID3D11DepthStencilState*)m_RenderState, m_StencilRef);
 }
 
 void DepthStancilState::ResetState()

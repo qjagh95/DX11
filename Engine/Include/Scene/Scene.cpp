@@ -309,7 +309,6 @@ void Scene::Render(float DeltaTime)
 		(*StartIter1)->Render(DeltaTime);
 		StartIter1++;
 	}
-
 }
 
 void Scene::AddLayer(const string & TagName, int ZOrder)

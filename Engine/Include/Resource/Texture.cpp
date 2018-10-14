@@ -29,6 +29,57 @@ bool Texture::LoadTexture(const string & TextureName, const TCHAR * FileName, co
 	return LoadTextureFromFullPath(TextureName, FullPath);
 }
 
+bool Texture::LoadTexture(const string & TextureName, const vector<const TCHAR*>& FileNames, const string & PathKey)
+{
+	SetTag(TextureName);
+
+	for (size_t i = 0; i < FileNames.size(); ++i)
+	{
+		const TCHAR* pPath = PathManager::Get()->FindPath(PathKey);
+		TCHAR strFullPath[MAX_PATH] = {};
+
+		if (pPath)
+			lstrcpy(strFullPath, pPath);
+
+		lstrcat(strFullPath, FileNames[i]);
+
+		memcpy(strFullPath, strFullPath, sizeof(TCHAR) * MAX_PATH);
+
+		TCHAR strExt[_MAX_EXT] = {};
+		char ext[_MAX_EXT] = {};
+
+#ifdef UNICODE
+		_wsplitpath_s(FileNames[i], NULLPTR, 0, NULLPTR, 0, NULLPTR, 0, strExt,	_MAX_EXT);
+		WideCharToMultiByte(CP_UTF8, 0, strExt, -1, ext, lstrlen(strExt), 0, 0);
+#else
+		_splitpath_s(FileNames[i], NULLPTR, 0, NULLPTR, 0, NULLPTR, 0, ext,	_MAX_EXT);
+#endif // UNICODE
+		_strupr_s(ext);
+
+		ScratchImage* pImage = new ScratchImage();
+
+		if (strcmp(ext, ".DDS") == 0)
+		{
+			if (FAILED(LoadFromDDSFile(m_FullPath, DDS_FLAGS_NONE, NULLPTR, *pImage)))
+				return false;
+		}
+		else if (strcmp(ext, ".TGA") == 0)
+		{
+			if (FAILED(LoadFromTGAFile(m_FullPath, NULLPTR, *pImage)))
+				return false;
+		}
+		else
+		{
+			if (FAILED(LoadFromWICFile(m_FullPath, WIC_FLAGS_NONE, NULLPTR, *pImage)))
+				return false;
+		}
+
+		m_vecImage.push_back(pImage);
+	}
+
+	return CreateShaderResourceArray();
+}
+
 bool Texture::LoadTextureFromFullPath(const string & TextureName, const TCHAR * FullPath)
 {
 	SetTag(TextureName);
@@ -73,12 +124,61 @@ bool Texture::LoadTextureFromFullPath(const string & TextureName, const TCHAR * 
 	return CreateShaderResource();
 }
 
+bool Texture::LoadTextureFromFullPath(const string & TextureName, const vector<const TCHAR*>& FullPaths)
+{
+	SetTag(TextureName);
+
+	for (size_t i = 0; i < FullPaths.size(); ++i)
+	{
+		memcpy(m_FullPath, FullPaths[i], sizeof(TCHAR) * MAX_PATH);
+
+		TCHAR strExt[_MAX_EXT] = {};
+		char ext[_MAX_EXT] = {};
+
+#ifdef UNICODE
+		_wsplitpath_s(FullPaths[i], NULLPTR, 0, NULLPTR, 0, NULLPTR, 0, strExt, _MAX_EXT);
+		WideCharToMultiByte(CP_UTF8, 0, strExt, -1, ext, lstrlen(strExt), 0, 0);
+#else
+		_splitpath_s(vecFullPath[i], NULLPTR, 0, NULLPTR, 0, NULLPTR, 0, ext,_MAX_EXT);
+#endif // UNICODE
+		_strupr_s(ext);
+
+		ScratchImage* pImage = new ScratchImage();
+
+		if (strcmp(ext, ".DDS") == 0)
+		{
+			if (FAILED(LoadFromDDSFile(m_FullPath, DDS_FLAGS_NONE, NULLPTR, *pImage)))
+				return false;
+		}
+
+		else if (strcmp(ext, ".TGA") == 0)
+		{
+			if (FAILED(LoadFromTGAFile(m_FullPath, NULLPTR, *pImage)))
+				return false;
+		}
+		else
+		{
+			if (FAILED(LoadFromWICFile(m_FullPath, WIC_FLAGS_NONE, NULLPTR, *pImage)))
+				return false;
+		}
+
+		m_vecImage.push_back(pImage);
+	}
+
+	return CreateShaderResourceArray();
+}
+
 bool Texture::CreateShaderResource()
 {
 	//기본제공함수를 사용하여 이미지의 픽셀정보를 ShaderResourceView변수로 넘긴다.
 	if (FAILED(CreateShaderResourceView(Device::Get()->GetDevice(), m_vecImage[0]->GetImages(), m_vecImage[0]->GetImageCount(), m_vecImage[0]->GetMetadata(), &m_ShaderResourceView)))
 		return false;
 
+	return true;
+}
+
+bool Texture::CreateShaderResourceArray()
+{
 	return true;
 }
 
