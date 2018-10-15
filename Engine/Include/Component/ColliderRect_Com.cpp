@@ -10,6 +10,7 @@ ColliderRect_Com::ColliderRect_Com()
 ColliderRect_Com::ColliderRect_Com(const ColliderRect_Com & CopyCollider)
 	:Collider_Com(CopyCollider)
 {
+	m_Virtual = CopyCollider.m_Virtual;
 }
 
 ColliderRect_Com::~ColliderRect_Com()
@@ -18,7 +19,7 @@ ColliderRect_Com::~ColliderRect_Com()
 
 bool ColliderRect_Com::Init()
 {
-	return false;
+	return true;
 }
 
 int ColliderRect_Com::Input(float DeltaTime)

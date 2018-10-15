@@ -39,7 +39,7 @@ bool MainScene::Init()
 
 	GameObject* BulletObject2 = GameObject::CreateProtoType("BulletRot_Clone");
 	BulletRot_Com* bullet_Com2 = BulletObject2->AddComponent<BulletRot_Com>("BulletRot_Com");
-	 
+
 	GameObject* MonsterObject = GameObject::CreateObject("Monster", Default);
 	Monster_Com* monster_Com = MonsterObject->AddComponent<Monster_Com>("Monster_Com");
 

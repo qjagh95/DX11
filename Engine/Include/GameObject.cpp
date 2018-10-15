@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "CollsionManager.h"
 
 #include "Scene/Layer.h"
 #include "Scene/SceneManager.h"
@@ -166,34 +167,36 @@ int GameObject::LateUpdate(float DeltaTime)
 
 void GameObject::Collision(float DeltaTime)
 {
-	list<Component_Base*>::iterator StartIter = m_ComponentList.begin();
-	list<Component_Base*>::iterator EndIter = m_ComponentList.end();
+	CollsionManager::Get()->AddCollsion(this);
 
-	for (; StartIter != EndIter;)
-	{
-		if ((*StartIter)->GetIsActive() == false)
-		{
-			Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
-			if (pRenderer != NULLPTR)
-			{
-				pRenderer->DeleteComponentCBuffer(*StartIter);
-				SAFE_RELEASE(pRenderer);
-			}
+	//list<Component_Base*>::iterator StartIter = m_ComponentList.begin();
+	//list<Component_Base*>::iterator EndIter = m_ComponentList.end();
 
-			SAFE_RELEASE((*StartIter));
-			StartIter = m_ComponentList.erase(StartIter);
-			continue;
-		}
-		else if ((*StartIter)->GetIsShow() == false)
-		{
-			StartIter++;
-			continue;
-		}
-		(*StartIter)->Collision(DeltaTime);
-		StartIter++;
-	}
+	//for (; StartIter != EndIter;)
+	//{
+	//	if ((*StartIter)->GetIsActive() == false)
+	//	{
+	//		Renderer_Com* pRenderer = FindComponentFromType<Renderer_Com>(CT_RENDER);
+	//		if (pRenderer != NULLPTR)
+	//		{
+	//			pRenderer->DeleteComponentCBuffer(*StartIter);
+	//			SAFE_RELEASE(pRenderer);
+	//		}
 
-	m_Transform->Collision(DeltaTime);
+	//		SAFE_RELEASE((*StartIter));
+	//		StartIter = m_ComponentList.erase(StartIter);
+	//		continue;
+	//	}
+	//	else if ((*StartIter)->GetIsShow() == false)
+	//	{
+	//		StartIter++;
+	//		continue;
+	//	}
+	//	(*StartIter)->Collision(DeltaTime);
+	//	StartIter++;
+	//}
+
+	//m_Transform->Collision(DeltaTime);
 }
 
 void GameObject::CollisionLateUpdate(float DeltaTime)
@@ -309,6 +312,19 @@ GameObject * GameObject::CreateObject(const string & TagName, Layer * layer)
 const list<Component_Base*>* GameObject::GetComponentList() const
 {
 	return &m_ComponentList;
+}
+
+bool GameObject::CheckComponentType(COMPONENT_TYPE eType)
+{
+	list<Component_Base*>::const_iterator StartIter = m_ComponentList.begin();
+	list<Component_Base*>::const_iterator EndIter = m_ComponentList.end();
+
+	for (; StartIter != EndIter; StartIter++)
+	{
+		if ((*StartIter)->GetComType() == eType)
+			return true;
+	}
+	return false;
 }
 
 Component_Base * GameObject::AddComponent(Component_Base * component)

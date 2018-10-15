@@ -4,6 +4,7 @@
 #include "Timer.h"
 #include "TimeManager.h"
 #include "KeyInput.h"
+#include "CollsionManager.h"
 
 #include "Resource\ResourceManager.h"
 #include "Resource/Mesh.h"
@@ -38,6 +39,7 @@ Core::~Core()
 	SceneManager::Delete();
 	RenderManager::Delete();
 	TimeManager::Delete();
+	CollsionManager::Delete();
 
 #ifdef _DEBUG
 	FreeConsole();
@@ -95,6 +97,12 @@ bool Core::Init(HINSTANCE hInst, HWND hWnd, unsigned int Width, unsigned int Hei
 	}
 
 	if (SceneManager::Get()->Init() == false)
+	{
+		TrueAssert(true);
+		return false;
+	}
+
+	if (CollsionManager::Get()->Init() == false)
 	{
 		TrueAssert(true);
 		return false;

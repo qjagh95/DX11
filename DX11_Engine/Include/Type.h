@@ -59,6 +59,21 @@ struct JEONG_DLL CBuffer
 	int RegisterNumber;
 };
 
+struct JEONG_DLL Material
+{
+	//재질정보 (색상) 나머지필요한 변수들은 나중에 추가 예정.
+	Vector4 Diffuse;
+
+	Material() : Diffuse(Vector4::White) {}
+};
+
+struct JEONG_DLL BoxInfo
+{
+	Vector3 Min;
+	Vector3 Max;
+};
+
+
 //16
 struct JEONG_DLL TransformCBuffer
 {
@@ -71,14 +86,6 @@ struct JEONG_DLL TransformCBuffer
 	float Empty1;	//4바이트
 	Vector3 Lenth; //12
 	float Empty2;   //4바이트 (16바이트패딩으로 바이트 맞춰주기위함)
-};
-
-struct JEONG_DLL Material
-{
-	//재질정보 (색상) 나머지필요한 변수들은 나중에 추가 예정.
-	Vector4 Diffuse;
-		
-	Material() : Diffuse(Vector4::White) {}
 };
 
 //나중에 추가할 컴포넌트가 상수버퍼를 사용하는지 안하는지를 판단하는 상수버퍼.

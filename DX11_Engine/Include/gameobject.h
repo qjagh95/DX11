@@ -36,6 +36,7 @@ public:
 	static GameObject* CreateObject(const string& TagName, Layer* layer = NULLPTR);
 
 	const list<Component_Base*>* GetComponentList() const;
+	bool CheckComponentType(COMPONENT_TYPE eType);
 
 	/////////////////////////////////////프로토타입함수(Clone)/////////////////////////////////////
 	static GameObject* CreateProtoType(const string& TagName, bool isCurrent = true);

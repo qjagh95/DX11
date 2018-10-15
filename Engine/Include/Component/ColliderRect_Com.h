@@ -15,6 +15,13 @@ public:
 	void Render(float DeltaTime) override;
 	ColliderRect_Com* Clone() override;
 
+	BoxInfo GetInfo() const { return m_Virtual; }
+	void SetInfo(const Vector3& Min, const Vector3& Max) { m_Virtual.Min = Min, m_Virtual.Max = Max; }
+
+private:
+	BoxInfo m_Virtual;
+	BoxInfo m_WorldInfo;
+
 protected:
 	ColliderRect_Com();
 	ColliderRect_Com(const ColliderRect_Com& CopyCollider);

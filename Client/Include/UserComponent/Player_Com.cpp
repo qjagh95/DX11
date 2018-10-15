@@ -1,8 +1,8 @@
 #include "Player_Com.h"
 #include "GameObject.h"
-
 #include "KeyInput.h"
 
+#include "Component/ColliderRect_Com.h"
 #include "Component/Transform_Com.h"
 #include "Component/Renderer_Com.h"
 #include "Component/Material_Com.h"
@@ -49,6 +49,10 @@ bool Player_Com::Init()
 	MaterialComponent->SetMaterial(Vector4::Yellow);
 	MaterialComponent->SetDiffuseTexture(0, "Player", TEXT("Player.png"));
 	SAFE_RELEASE(MaterialComponent);
+
+	ColliderRect_Com* RectColl = m_Object->AddComponent<ColliderRect_Com>("PlayerBody");
+	RectColl->SetInfo(Vector3(0.0f, 0.0f, 0.0f), Vector3(100.0f, 100.0f, 0.0f));
+	SAFE_RELEASE(RectColl);
 
 	m_Transform->SetWorldScale(100.0f, 100.0f, 1.0f);
 	m_Transform->SetWorldPivot(0.5f, 0.0f, 0.0f);
