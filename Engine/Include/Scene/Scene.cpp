@@ -467,7 +467,6 @@ GameObject * Scene::GetMainCameraObject() const
 
 Transform_Com * Scene::GetMainCameraTransform() const
 {
-	m_MainCameraTransform->AddRefCount();
 	return m_MainCameraTransform;
 }
 

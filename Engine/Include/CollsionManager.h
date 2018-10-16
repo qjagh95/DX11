@@ -27,7 +27,7 @@ private:
 	struct CollsionGroup
 	{
 		COLLSION_GROUP_TYPE Type;
-		CollsionSelection* SelectionList;
+		CollsionSelection* SectionList;
 		int CountX;
 		int CountY;
 		int CountZ;
@@ -45,6 +45,7 @@ public:
 	void AddCollsion(GameObject* object);
 
 private:
+	//그룹하나하나당 똑같은 직육면체 하나씩 존재한다고 생각하면 편하다.
 	unordered_map<string, CollsionGroup*> m_GroupMap;
 
 private:

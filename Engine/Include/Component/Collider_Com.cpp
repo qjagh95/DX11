@@ -14,6 +14,7 @@ JEONG_USING
 Collider_Com::Collider_Com()
 {
 	m_CollType = CT_RECT;
+	m_ComType = CT_COLLIDER;
 	m_CollisionGroupName = "Default";
 	m_UpdateCollision = true;
 

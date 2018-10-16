@@ -23,7 +23,7 @@ public:
 	Vector3 GetSectionMin()	const { return m_SectionMin; }
 	Vector3 GetSectionMax()	const { return m_SectionMax; }
 	bool GetUpdateCollision() const { return m_UpdateCollision; }
-	string GetCollisionGroup() const { return m_CollisionGroupName; }
+	string GetCollisionGroupName() const { return m_CollisionGroupName; }
 	const list<int>* GetColisionSection() const { return &m_SelectionIndexList; }
 
 	void SetPivot(const Vector3& vPivot) { m_Pivot = vPivot; }
@@ -50,6 +50,7 @@ protected:
 	list<Collider_Com*> m_PrevCollision;
 	list<function<void(Collider_Com*, Collider_Com*, float)>> m_CollisionFunc[CCT_END];
 	list<int> m_SelectionIndexList;
+
 	Vector3 m_Pivot;
 	Vector3	m_SectionPos[8];
 	Vector3	m_SectionMin;

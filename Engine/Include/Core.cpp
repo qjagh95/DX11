@@ -22,7 +22,7 @@ bool Core::m_isLoop = true;
 Core::Core()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-	//_CrtSetBreakAlloc(328);
+	//_CrtSetBreakAlloc(483);
 	ZeroMemory(ClearColor, sizeof(float) * 4);
 
 #ifdef _DEBUG
